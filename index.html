@@ -3,114 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CV - Kacper Frelek</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Projekty - Kacper Frelek</title>
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-  
   <header>
     <nav>
       <ul class="navbar">
-        <li><a href="#section1" id="home-link">Strona Główna</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle">Section2</a>
-          <ul class="dropdown-content hidden">
-            <li><a href="#project1">Projekt 1</a></li>
-            <li><a href="#project2">Projekt 2</a></li>
-            <li><a href="#project3">Projekt 3</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle">Section3</a>
-          <ul class="dropdown-content hidden">
-            <li><a href="#project4">Projekt 4</a></li>
-            <li><a href="#project5">Projekt 5</a></li>
-            <li><a href="#project6">Projekt 6</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle">Section4</a>
-          <ul class="dropdown-content hidden">
-            <li><a href="#project7">Projekt 7</a></li>
-            <li><a href="#project8">Projekt 8</a></li>
-            <li><a href="#project9">Projekt 9</a></li>
-          </ul>
-        </li>
+        <li><a href="../index.html">Strona Główna</a></li>
       </ul>
     </nav>
   </header>
-  
   <main>
-    <section id="section1">
-      <h2>Strona Główna</h2>
-      <p>Witaj na mojej stronie CV. Tutaj znajdziesz informacje o moich projektach i doświadczeniu.</p>
-    </section>
-    
-    <!-- Projekt 1 (Section2) z podziałem na slider i opis -->
-    <section id="project1" class="hidden">
+    <!-- Projekt 1 -->
+    <section id="project1">
       <h3>Projekt 1</h3>
       <div class="project-container">
         <div class="slider-container">
           <button class="slider-btn left-btn">&#9664;</button>
           <div class="slider">
-            <img src="./images/jpg1.jpg" alt="Zdjęcie 1" class="slider-image active">
-            <img src="./images/jpg2.jpg" alt="Zdjęcie 2" class="slider-image">
-            <img src="./images/jpg3.jpg" alt="Zdjęcie 3" class="slider-image">
+            <img src="../images/proj1_1.jpg" alt="Zdjęcie 1" class="slider-image active">
+            <img src="../images/proj1_2.jpg" alt="Zdjęcie 2" class="slider-image">
+            <img src="../images/proj1_3.jpg" alt="Zdjęcie 3" class="slider-image">
           </div>
           <button class="slider-btn right-btn">&#9654;</button>
         </div>
         <div class="project-description">
-          <p>
-            Opis projektu: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-          <a href="./projects/CFD/JSR_2011_Paper_published_1.48331_plus.pdf" download>Pobierz projekt</a>
+          <p>Opis projektu 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <a href="../projects/CFD/Projekt1.pdf" download>Pobierz projekt</a>
         </div>
       </div>
     </section>
-    
-    <!-- Pozostałe projekty -->
-    <section id="project2" class="hidden">
+
+    <!-- Projekt 2 -->
+    <section id="project2">
       <h3>Projekt 2</h3>
-      <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt...</p>
+      <div class="project-container">
+        <div class="slider-container">
+          <button class="slider-btn left-btn">&#9664;</button>
+          <div class="slider">
+            <img src="../images/proj2_1.jpg" alt="Zdjęcie 1" class="slider-image active">
+            <img src="../images/proj2_2.jpg" alt="Zdjęcie 2" class="slider-image">
+            <img src="../images/proj2_3.jpg" alt="Zdjęcie 3" class="slider-image">
+          </div>
+          <button class="slider-btn right-btn">&#9654;</button>
+        </div>
+        <div class="project-description">
+          <p>Opis projektu 2: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <a href="../projects/CFD/Projekt2.pdf" download>Pobierz projekt</a>
+        </div>
+      </div>
     </section>
-    <section id="project3" class="hidden">
+
+    <!-- Projekt 3 -->
+    <section id="project3">
       <h3>Projekt 3</h3>
-      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+      <div class="project-container">
+        <div class="slider-container">
+          <button class="slider-btn left-btn">&#9664;</button>
+          <div class="slider">
+            <img src="../images/proj3_1.jpg" alt="Zdjęcie 1" class="slider-image active">
+            <img src="../images/proj3_2.jpg" alt="Zdjęcie 2" class="slider-image">
+            <img src="../images/proj3_3.jpg" alt="Zdjęcie 3" class="slider-image">
+          </div>
+          <button class="slider-btn right-btn">&#9654;</button>
+        </div>
+        <div class="project-description">
+          <p>Opis projektu 3: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+          <a href="../projects/CFD/Projekt3.pdf" download>Pobierz projekt</a>
+        </div>
+      </div>
     </section>
-    <section id="project4" class="hidden">
+
+    <!-- Projekt 4 -->
+    <section id="project4">
       <h3>Projekt 4</h3>
-      <p>Ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet...</p>
-    </section>
-    <section id="project5" class="hidden">
-      <h3>Projekt 5</h3>
-      <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...</p>
-    </section>
-    <section id="project6" class="hidden">
-      <h3>Projekt 6</h3>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</p>
-    </section>
-    <section id="project7" class="hidden">
-      <h3>Projekt 7</h3>
-      <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt...</p>
-    </section>
-    <section id="project8" class="hidden">
-      <h3>Projekt 8</h3>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum...</p>
-    </section>
-    <section id="project9" class="hidden">
-      <h3>Projekt 9</h3>
-      <p>Anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      <div class="project-container">
+        <div class="slider-container">
+          <button class="slider-btn left-btn">&#9664;</button>
+          <div class="slider">
+            <img src="../images/proj4_1.jpg" alt="Zdjęcie 1" class="slider-image active">
+            <img src="../images/proj4_2.jpg" alt="Zdjęcie 2" class="slider-image">
+            <img src="../images/proj4_3.jpg" alt="Zdjęcie 3" class="slider-image">
+          </div>
+          <button class="slider-btn right-btn">&#9654;</button>
+        </div>
+        <div class="project-description">
+          <p>Opis projektu 4: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+          <a href="../projects/CFD/Projekt4.pdf" download>Pobierz projekt</a>
+        </div>
+      </div>
     </section>
   </main>
-  
   <footer>
     <p>
-      <a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae</a> | 
+      <a href="../projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae</a> |
       <a href="https://www.linkedin.com/in/kacper-frelek-741545235/" target="_blank">LinkedIn</a>
     </p>
   </footer>
-  
-  <script src="script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
