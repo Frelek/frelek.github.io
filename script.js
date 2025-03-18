@@ -51,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function() {
         section.classList.add("hidden");
       });
       // Pokaż stronę główną
-      document.getElementById("section1").classList.remove("hidden");
+      document.getElementById("introduction").classList.remove("hidden");
+
     });
   
     // Globalny klik – jeżeli klikniesz poza dropdownem, schowa wszystkie dropdowny
@@ -64,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   
     // Domyślnie pokaż stronę główną
-    document.getElementById("section1").classList.remove("hidden");
+    document.getElementById("introduction").classList.remove("hidden");
+
   
     // Inicjalizacja slidera w projekcie 1 (jeśli istnieje)
     let project1Slider = document.querySelector("#project1 .slider-container");
