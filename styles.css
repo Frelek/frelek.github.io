@@ -345,3 +345,47 @@ figcaption {
 .slider-image {
     cursor: zoom-in;
 }
+
+.slider-container {
+  position: relative;
+  max-width: 600px;
+  margin: auto;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider-image {
+  display: none;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.slider-image.active {
+  display: block;
+}
+
+.slider-btn {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
+}
