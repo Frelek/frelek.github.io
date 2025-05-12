@@ -218,3 +218,39 @@ figcaption {
   color: #555;
   margin-top: 4px;
 }
+
+/* Full-width slider */
+.full-width-slider {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.slider-image {
+  min-width: 90%;
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.slider-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+figcaption {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #444;
+}
