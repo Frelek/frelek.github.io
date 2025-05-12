@@ -75,96 +75,35 @@ document.addEventListener("DOMContentLoaded", () => {
     if (intro) intro.classList.remove("hidden");
 
     // ----- Slider Logic (Improved Accessibility) -----
-    function initSlider(sliderContainer) {
-        const slides = sliderContainer.querySelectorAll('figure.slider-image');
-        if (!slides.length) return;
-        let currentIndex = 0;
-        const leftBtn = sliderContainer.querySelector('.left-btn');
-        const rightBtn = sliderContainer.querySelector('.right-btn');
+    // ----- Slider Logic -----
+function initSlider(sliderContainer) {
+  const slides = sliderContainer.querySelectorAll('.slider > .slider-image');
+  if (!slides.length) return;
+  let currentIndex = 0;
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-        }
-
-        function updateButtons() {
-            if (leftBtn) leftBtn.disabled = currentIndex === 0;
-            if (rightBtn) rightBtn.disabled = currentIndex === slides.length - 1;
-        }
-
-        // Initialize
-        showSlide(0);
-        updateButtons();
-
-        // Button events
-        if (leftBtn) {
-            leftBtn.setAttribute("aria-label", "Previous image");
-            leftBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                showSlide(currentIndex);
-                updateButtons();
-            });
-        }
-
-        if (rightBtn) {
-            rightBtn.setAttribute("aria-label", "Next image");
-            rightBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-                updateButtons();
-            });
-        }
-    }
-
-    // Initialize all sliders
-    document.querySelectorAll('.slider-container').forEach(initSlider);
-
-    // ----- Fullscreen Modal Logic (Improved Closing) -----
-    const modal = document.getElementById("image-modal");
-    const modalImg = document.getElementById("modal-img");
-    const closeBtn = document.getElementById("modal-close");
-
-    document.querySelectorAll(".slider-image img").forEach(img => {
-        img.style.cursor = 'zoom-in'; // Ensure cursor for non-hover zoom
-
-        img.addEventListener("click", () => {
-            modal.classList.remove("hidden");
-            modalImg.src = img.src;
-            modalImg.alt = img.alt;
-            // Trap focus in modal (basic implementation)
-            closeBtn?.focus();
-        });
+  function show(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
     });
+  }
+  show(0);
 
-    function closeModal() {
-        modal.classList.add("hidden");
-        modalImg.src = "";
-        // Restore focus to the image that opened the modal (more advanced)
-        const activeImage = document.querySelector('.slider-image.active img:focus') || document.querySelector('.slider-image.active img');
-        if (activeImage) {
-            activeImage.focus();
-        }
-    }
+  const leftBtn = sliderContainer.querySelector('.left-btn');
+  const rightBtn = sliderContainer.querySelector('.right-btn');
 
-    modal.addEventListener("click", (event) => {
-        // Close only if the user clicks outside the image
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
+  leftBtn?.addEventListener('click', e => {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    show(currentIndex);
+  });
+  rightBtn?.addEventListener('click', e => {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % slides.length;
+    show(currentIndex);
+  });
+}
 
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeModal);
-        closeBtn.setAttribute("aria-label", "Close image modal");
-    }
+// initialize all sliders
+document.querySelectorAll('.slider-container').forEach(initSlider);
 
-    // Keyboard navigation for modal
-    modal.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            closeModal();
-        }
-    });
 });
