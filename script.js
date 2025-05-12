@@ -69,10 +69,11 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("introduction").classList.remove("hidden");
 
   // Inicjalizacja slidera w projekcie 1 (jeśli istnieje)
-  let project1Slider = document.querySelector("#project1 .slider-container");
-  if (project1Slider) {
-    initSlider(project1Slider);
-  }
+ // Inicjalizacja wszystkich sliderów
+document.querySelectorAll(".slider-container").forEach(function(slider) {
+  initSlider(slider);
+});
+
 
   // Funkcja inicjująca slider
   function initSlider(sliderContainer) {
