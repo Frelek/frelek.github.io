@@ -45,30 +45,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ----- Slider Logic -----
   function initSlider(sliderContainer) {
-    const slides = sliderContainer.querySelectorAll(".slider > figure");
+    const slides = sliderContainer.querySelectorAll('figure.slider-image');
     let currentIndex = 0;
-    // Show slide at index, hide others
-    function show(i) {
-      slides.forEach((slide, idx) => {
-        slide.style.display = idx === i ? "block" : "none";
+
+    function show(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
       });
     }
-    // Initial display
+
     show(currentIndex);
-    // Prev/Next
-    sliderContainer.querySelector(".left-btn").addEventListener("click", e => {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      show(currentIndex);
-    });
-    sliderContainer.querySelector(".right-btn").addEventListener("click", e => {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % slides.length;
-      show(currentIndex);
-    });
+
+    const leftBtn = sliderContainer.querySelector('.left-btn');
+    const rightBtn = sliderContainer.querySelector('.right-btn');
+
+    if (leftBtn) {
+      leftBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        show(currentIndex);
+      });
+    }
+    if (rightBtn) {
+      rightBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % slides.length;
+        show(currentIndex);
+      });
+    }
   }
-  // Initialize all sliders
-  document.querySelectorAll(".slider-container").forEach(initSlider);
 
   // ----- Fullscreen Modal Logic -----
   const modal = document.getElementById("image-modal");
