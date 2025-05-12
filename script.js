@@ -112,3 +112,30 @@ document.querySelectorAll(".slider-container").forEach(function(slider) {
   showImage(currentIndex);
 }
 });
+
+// Fullscreen modal logic
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+  const closeBtn = document.getElementById("modal-close");
+
+  // When any image in a slider is clicked
+  document.querySelectorAll(".slider-image img").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  // Close modal on click anywhere or on the X
+  modal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+  });
+});

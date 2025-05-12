@@ -252,3 +252,55 @@ figcaption {
     text-align: center;
   }
 }
+
+.slider-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease-in-out;
+  cursor: zoom-in;
+}
+
+.slider-image img:hover {
+  transform: scale(1.07);
+  z-index: 5;
+}
+
+/* Fullscreen Image Modal */
+#image-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.85);
+  transition: opacity 0.3s ease;
+}
+
+#image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+#modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+#image-modal.hidden {
+  display: none;
+}
