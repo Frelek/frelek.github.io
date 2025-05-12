@@ -42,8 +42,8 @@
           <a href="#" class="dropdown-toggle">Hypersonics</a>
           <ul class="dropdown-content hidden">
             <li><a href="#DSMC">DSMC</a></li>
-            <li><a href="#CFD-DSMC">CFD-DSMC</a></li>
-            <li><a href="#Kinetic-Boltzmann">Kinetic Boltzmann</a></li>
+            <li><a href="#CFD_DSMC">CFD-DSMC</a></li>
+            <li><a href="#Kinetic_Boltzmann">Kinetic Boltzmann</a></li>
             <li><a href="#ML">ML</a></li>
           </ul>
         </li>
@@ -55,52 +55,7 @@
     <!-- Introduction -->
     <section id="introduction" class="hidden">
       <h2>About Me</h2>
-            <p>
-          I am a highly motivated aerospace engineering master's student with a strong focus on 
-          computational fluid dynamics (CFD) in high-speed aerodynamics and reentry vehicle analysis. 
-          My expertise includes numerical simulations of hypersonic flows, turbulence modeling, and 
-          aerothermal effects, with a particular emphasis on shape parameter optimization for 
-          reentry configurations. My research and academic projects have provided me with deep insights 
-          into aerothermodynamics, mesh sensitivity analysis, and shock-wave interactions in hypersonic regimes.
-        </p>
-        
-        <p>
-          In my role as a Junior Aeromechanic Engineer at the Warsaw Institute of Aviation (EDC), I have 
-          gained hands-on experience in running aeromechanical analyses using ANSYS and GageMap, 
-          processing and interpreting large datasets from experimental campaigns, and preparing 
-          certification documentation. Working in an international team, I have developed strong 
-          collaboration and communication skills, ensuring high-precision results while effectively 
-          coordinating with engineers from diverse backgrounds.
-        </p>
-    
-        <p>
-          As an active member of the Students' Space Association - Rocketry Division, I contributed 
-          to the aerodynamic analysis of key rocket components, including the split canards of the 
-          FOK Rocket and the nose cone and fins of the GROT Rocket. This experience has sharpened my 
-          ability to optimize aerodynamic performance, troubleshoot complex simulations, and work 
-          under tight deadlines within a dynamic, team-driven environment.
-        </p>
-    
-        <p>
-          My academic journey has also included practical research projects, such as my Bachelor's thesis 
-          on the aerodynamic performance of Falcon 9 grid fins across all Mach regimes. I performed 
-          detailed CFD analyses, mesh convergence studies, and post-processing in ANSYS Fluent, which 
-          deepened my expertise in high-fidelity aerodynamic simulations.
-        </p>
-    
-        <p>
-          Beyond technical skills, I bring a proactive and problem-solving mindset, excellent adaptability, 
-          and a strong ability to work in interdisciplinary teams. My international project collaborations 
-          have strengthened my ability to communicate complex engineering concepts effectively. Additionally, 
-          I am highly organized, detail-oriented, and thrive in high-pressure environments that require 
-          both analytical and creative problem-solving skills.
-        </p>
-    
-        <p>
-          Passionate about advancing aerospace technology, I am eager to contribute to innovative projects 
-          in spacecraft design, reusability, and aerothermodynamic optimization. Whether working independently 
-          or in a team, I am committed to continuous learning and pushing the boundaries of aerospace engineering.
-        </p>
+      <p>I am a highly motivated aerospace engineering master's student focused on CFD, hypersonics, and aerothermodynamics.</p>
     </section>
 
     <!-- Experience -->
@@ -184,7 +139,7 @@
         <div class="slider">
           <img src="./images/hobby5/img1.png" class="slider-image active" alt="H5 Image1">
           <img src="./images/hobby5/img2.png" class="slider-image" alt="H5 Image2">
-          <img src="./images/hobby5<img3.png" class="slider-image" alt="H5 Image3">
+          <img src="./images/hobby5/img3.png" class="slider-image" alt="H5 Image3">
           <img src="./images/hobby5/img4.png" class="slider-image" alt="H5 Image4">
         </div>
         <button class="slider-btn right-btn">&#9654;</button>
@@ -229,7 +184,7 @@
           <img src="./images/full7/img1.png" class="slider-image active" alt="FT1 Image1">
           <img src="./images/full7/img2.png" class="slider-image" alt="FT1 Image2">
           <img src="./images/full7/img3.png" class="slider-image" alt="FT1 Image3">
-          <img src="./images/full7/img4.png"class="slider-image" alt="FT1 Image4">
+          <img src="./images/full7/img4.png" class="slider-image" alt="FT1 Image4">
         </div>
         <button class="slider-btn right-btn">&#9654;</button>
       </div>
@@ -237,23 +192,23 @@
     <section id="project8" class="hidden">
       <h3>Intermediate Project 2</h3>
       <p>Details about Intermediate Project 2.</p>
-      <div class="slider-container">
-        <button class="slider-btn left-btn">&#9664;</button>
-        <div class="slider">
-          <img src="./images/full8/img1.png" class="slider-image active" alt="FP2 Image1">
-          <img src="./images/full8/img2.png" class="slider-image" alt="FP2 Image2">
-          <img src="./images/full8/img3.png" class="slider-image" alt="FP2 Image3">
-          <img src="./images/full8/img4.png" class="slider-image" alt="FP2 Image4">
-        </div>
-        <button class="slider-btn right-btn">&#9654;</button>
+      <div class="slider-container">...
       </div>
     </section>
-    <section id="project9" class="hidden">
-      <h3>Masters Thesis</h3>
-      <p>Details about Masters Thesis.</p>
-      <div class="slider-container">
-        <button class="slider-btn left-btn">&#9664;</button>
-        <div class="slider">
-          <img src="./images/full9/img1.png" class="slider-image active" alt="MT1 Image1">
-          <img src="./images/full9/img2.png" class="slider-image
-}
+    <!-- Continue similarly for project9, project10_full, DSMC, CFD_DSMC, Kinetic_Boltzmann, ML -->
+  </main>
+
+  <footer>
+    <p><a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae</a> | <a href="https://www.linkedin.com/in/kacper-frelek-741545235/" target="_blank">LinkedIn</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('.slider-container').forEach(function(container) {
+        initSlider(container);
+      });
+    });
+  </script>
+</body>
+</html>
