@@ -119,22 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Initialize all sliders
-    document.querySelectorAll(".slider-image img").forEach(img => {
+    // Call initSlider for each slider container
+    document.querySelectorAll(".slider").forEach(initSlider);
 
     // ----- Fullscreen Modal Logic (Adjusted for img.slider-image) -----
     const modal = document.getElementById("image-modal");
     const modalImg = document.getElementById("modal-img");
     const closeBtn = document.getElementById("modal-close");
 
-    document.querySelectorAll(".slider-image").forEach(img => { // Directly target img.slider-image
-        img.style.cursor = 'zoom-in'; // Ensure cursor for non-hover zoom
-
+    document.querySelectorAll(".slider-image").forEach(img => {
+        img.style.cursor = 'zoom-in';
         img.addEventListener("click", () => {
             modal.classList.remove("hidden");
             modalImg.src = img.src;
             modalImg.alt = img.alt;
-            // Trap focus in modal (basic implementation)
             closeBtn?.focus();
         });
     });
@@ -142,15 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeModal() {
         modal.classList.add("hidden");
         modalImg.src = "";
-        // Restore focus to the image that opened the modal (more advanced)
         const activeImage = document.querySelector('.slider-image.active:focus') || document.querySelector('.slider-image.active');
-        if (activeImage) {
-            activeImage.focus();
-        }
+        if (activeImage) activeImage.focus();
     }
 
     modal.addEventListener("click", (event) => {
-        // Close only if the user clicks outside the image
         if (event.target === modal) {
             closeModal();
         }
@@ -161,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
         closeBtn.setAttribute("aria-label", "Close image modal");
     }
 
-    // Keyboard navigation for modal
     modal.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             closeModal();
