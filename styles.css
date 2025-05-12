@@ -267,40 +267,82 @@ figcaption {
   z-index: 5;
 }
 
-/* Fullscreen Image Modal */
+/* ===== Slider Images ===== */
+.slider-container {
+  position: relative;
+  width: 100%;
+  margin: 20px auto;
+}
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slider-image {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  text-align: center;
+  width: 100%;
+}
+.slider-image.active {
+  display: block;
+  opacity: 1;
+}
+.slider-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease-in-out;
+  cursor: zoom-in;
+}
+.slider-image img:hover {
+  transform: scale(1.07);
+}
+
+/* ===== Slider Buttons ===== */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+.left-btn { left: 10px; }
+.right-btn { right: 10px; }
+
+/* ===== Fullscreen Image Modal ===== */
 #image-modal {
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.85);
-  transition: opacity 0.3s ease;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.85);
 }
-
+#image-modal.hidden {
+  display: none;
+}
 #image-modal img {
   max-width: 90%;
   max-height: 90%;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
-
 #modal-close {
   position: absolute;
   top: 20px;
   right: 30px;
-  color: white;
   font-size: 36px;
-  font-weight: bold;
+  color: #fff;
   cursor: pointer;
   z-index: 10000;
-}
-
-#image-modal.hidden {
-  display: none;
 }
