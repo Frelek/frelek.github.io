@@ -226,23 +226,76 @@
 
     <!-- Full Projects -->
     <section id="project7" class="hidden">
-      <h3>Bachelor Thesis</h3>
-      <p>Details about Bachelor Thesis.</p>
-      <div class="slider-container">
-        <button class="slider-btn left-btn">&#9664;</button>
-        <div class="slider">
-          <img src="./images/full7/img1.png" class="slider-image active" alt="FT1 Image1">
-          <img src="./images/full7/img2.png" class="slider-image" alt="FT1 Image2">
-          <img src="./images/full7/img3.png" class="slider-image" alt="FT1 Image3">
-          <img src="./images/full7/img4.png" class="slider-image" alt="FT1 Image4">
-        </div>
-        <button class="slider-btn right-btn">&#9654;</button>
-      </div>
-    </section>
+  <h3>Bachelor Thesis: Falcon 9 Grid Fin Aerodynamics</h3>
+  <p>
+    My Bachelor thesis, titled <strong>"Aerodynamic Performance Analysis of Falcon 9 Grid Fins: A Computational Investigation"</strong>,
+    was a deep-dive CFD study into the aerodynamics of reusable rocket technology. I analyzed the flow behavior around SpaceX’s Falcon 9
+    titanium grid fins across subsonic, transonic, and supersonic regimes, using <strong>ANSYS Fluent</strong> and the <strong>SST k-ω turbulence model</strong>.
+    The aim? To evaluate how these structures perform in different flight conditions, from low-speed descent to near-hypersonic reentry scenarios.
+  </p>
+
+  <p>
+    I developed high-fidelity <strong>2D and 3D CFD models</strong> of the grid fin mounted on the booster stage, executed <strong>mesh sensitivity studies</strong>,
+    and extracted aerodynamic coefficients (drag, lift, moment) across multiple Mach numbers. Realistic conditions were modeled based on 
+    actual Falcon 9 reentry altitudes and speeds, and the simulations revealed valuable insights about <strong>shockwave interaction, flow
+    separation, and boundary layer behavior</strong>.
+  </p>
+
+  <p>
+    While the simulations were limited to Mach 1.91 due to hardware constraints, I ensured full convergence and physical accuracy
+    through optimized meshing, inflation layers, and adaptive solver control. The final results showed how the <strong>back-swept design of
+    SpaceX's titanium fins significantly improves supersonic performance</strong> and delays wave drag onset—a key factor for reentry control.
+  </p>
+
+  <div style="margin-top: 2em;">
+    <h4 style="margin-bottom: 0.5em;">🚀 Lessons Learned (and why they matter for ESA)</h4>
+    <ul>
+      <li><strong>Hypersonic readiness:</strong> Even with limited computing power, I optimized simulations to reflect real-world, high-speed flow physics—setting the stage for hypersonic analysis in my Master’s work.</li>
+      <li><strong>Solver mastery:</strong> Learned to push ANSYS Fluent to the edge—leveraging density-based solvers, boundary-layer control, and turbulence modeling for accurate force prediction.</li>
+      <li><strong>Engineering under constraints:</strong> I turned limited resources into an advantage—simplifying geometry, using periodic symmetry, and still achieving reliable 3D results.</li>
+      <li><strong>Grid fins ≠ flat plates:</strong> My analysis clarified why and how flow behavior around grid fins shifts at Mach transitions—knowledge that's essential for designing future reentry vehicles or even planetary landers.</li>
+    </ul>
+  </div>
+
+<div class="slider-container">
+  <button class="slider-btn left-btn">&#9664;</button>
+  <div class="slider">
+    <figure class="slider-image active">
+      <img src="./images/Full_Projects/01/01_IL.jpg" alt="FT1 Image1">
+      <figcaption>Image 1: Grid Fin Geometry (Side View)</figcaption>
+    </figure>
+    <figure class="slider-image">
+      <img src="./images/Full_Projects/01/02_3D_boi.jpg" alt="FT1 Image2">
+      <figcaption>Image 2: Mesh Detail Around Fin</figcaption>
+    </figure>
+    <figure class="slider-image">
+      <img src="./images/Full_Projects/01/03_3D_mesh_gridfin.jpg" alt="FT1 Image3">
+      <figcaption>Image 3: Mach Contours - M=0.99</figcaption>
+    </figure>
+    <figure class="slider-image">
+      <img src="./images/Full_Projects/01/04_26_new63.jpg" alt="FT1 Image4">
+      <figcaption>Image 4: Pressure Contours - M=1.91</figcaption>
+    </figure>
+        <figure class="slider-image">
+      <img src="./images/Full_Projects/01/05_closer_look_3c.png alt="FT1 Image4">
+      <figcaption>Image 4: Pressure Contours - M=1.91</figcaption>
+    </figure>
+  </div>
+  <button class="slider-btn right-btn">&#9654;</button>
+</div>
+    <button class="slider-btn right-btn">&#9654;</button>
+  </div>
+</section>
     <section id="project8" class="hidden">
       <h3>Intermediate Project 2</h3>
       <p>Details about Intermediate Project 2.</p>
-      <div class="slider-container">...
+     <div class="slider">
+      <img src="./images/full9/img1.png" class="slider-image active" alt="MT1 Image1">
+      <img src="./images/full9/img2.png" class="slider-image" alt="MT1 Image2">
+      <img src="./images/full9/img3.png" class="slider-image" alt="MT1 Image3">
+      <img src="./images/full9/img4.png" class="slider-image" alt="MT1 Image4">
+    </div>
+    <button class="slider-btn right-btn">&#9654;</button>
       </div>
     </section>
     <!-- Continue similarly for project9, project10_full, DSMC, CFD_DSMC, Kinetic_Boltzmann, ML -->
