@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ----- Dropdown Menu Logic (Improved Accessibility) -----
+    // ----- Dropdown Menu Logic (Improved Accessibility - should still work) -----
     document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
         const content = toggle.nextElementSibling;
         if (content && content.classList.contains("dropdown-content")) {
@@ -74,36 +74,97 @@ document.addEventListener("DOMContentLoaded", () => {
     const intro = document.getElementById("introduction");
     if (intro) intro.classList.remove("hidden");
 
-    // ----- Slider Logic (Improved Accessibility) -----
-    // ----- Slider Logic -----
-function initSlider(sliderContainer) {
-  const slides = sliderContainer.querySelectorAll('.slider > .slider-image');
-  if (!slides.length) return;
-  let currentIndex = 0;
+    // ----- Slider Logic (Adjusted for img.slider-image) -----
+    function initSlider(sliderContainer) {
+        const slides = sliderContainer.querySelectorAll('img.slider-image');
+        if (!slides.length) return;
+        let currentIndex = 0;
+        const leftBtn = sliderContainer.querySelector('.left-btn');
+        const rightBtn = sliderContainer.querySelector('.right-btn');
 
-  function show(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function updateButtons() {
+            if (leftBtn) leftBtn.disabled = currentIndex === 0;
+            if (rightBtn) rightBtn.disabled = currentIndex === slides.length - 1;
+        }
+
+        // Initialize
+        showSlide(0);
+        updateButtons();
+
+        // Button events
+        if (leftBtn) {
+            leftBtn.setAttribute("aria-label", "Previous image");
+            leftBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                showSlide(currentIndex);
+                updateButtons();
+            });
+        }
+
+        if (rightBtn) {
+            rightBtn.setAttribute("aria-label", "Next image");
+            rightBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex + 1) % slides.length;
+                showSlide(currentIndex);
+                updateButtons();
+            });
+        }
+    }
+
+    // Initialize all sliders
+    document.querySelectorAll('.slider-container').forEach(initSlider);
+
+    // ----- Fullscreen Modal Logic (Adjusted for img.slider-image) -----
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-img");
+    const closeBtn = document.getElementById("modal-close");
+
+    document.querySelectorAll(".slider-image").forEach(img => { // Directly target img.slider-image
+        img.style.cursor = 'zoom-in'; // Ensure cursor for non-hover zoom
+
+        img.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            // Trap focus in modal (basic implementation)
+            closeBtn?.focus();
+        });
     });
-  }
-  show(0);
 
-  const leftBtn = sliderContainer.querySelector('.left-btn');
-  const rightBtn = sliderContainer.querySelector('.right-btn');
+    function closeModal() {
+        modal.classList.add("hidden");
+        modalImg.src = "";
+        // Restore focus to the image that opened the modal (more advanced)
+        const activeImage = document.querySelector('.slider-image.active:focus') || document.querySelector('.slider-image.active');
+        if (activeImage) {
+            activeImage.focus();
+        }
+    }
 
-  leftBtn?.addEventListener('click', e => {
-    e.stopPropagation();
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    show(currentIndex);
-  });
-  rightBtn?.addEventListener('click', e => {
-    e.stopPropagation();
-    currentIndex = (currentIndex + 1) % slides.length;
-    show(currentIndex);
-  });
-}
+    modal.addEventListener("click", (event) => {
+        // Close only if the user clicks outside the image
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
 
-// initialize all sliders
-document.querySelectorAll('.slider-container').forEach(initSlider);
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+        closeBtn.setAttribute("aria-label", "Close image modal");
+    }
 
+    // Keyboard navigation for modal
+    modal.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
 });
