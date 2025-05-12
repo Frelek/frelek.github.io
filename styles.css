@@ -254,3 +254,12 @@ figcaption {
   font-size: 0.9rem;
   color: #444;
 }
+
+.slider-image {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.slider-image.active {
+  opacity: 1;
+}

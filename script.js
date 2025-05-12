@@ -76,36 +76,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Funkcja inicjująca slider
   function initSlider(sliderContainer) {
-    const slider = sliderContainer.querySelector('.slider');
-    const images = slider.querySelectorAll('.slider-image');
-    let currentIndex = 0;
+  const slider = sliderContainer.querySelector('.slider');
+  const figures = slider.querySelectorAll('.slider-image');
+  let currentIndex = 0;
 
-    const leftBtn = sliderContainer.querySelector('.left-btn');
-    const rightBtn = sliderContainer.querySelector('.right-btn');
+  const leftBtn = sliderContainer.querySelector('.left-btn');
+  const rightBtn = sliderContainer.querySelector('.right-btn');
 
-    function showImage(index) {
-      images.forEach((img, idx) => {
-        if (idx === index) {
-          img.classList.add('active');
-        } else {
-          img.classList.remove('active');
-        }
-      });
-    }
-
-    leftBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
+  function showImage(index) {
+    figures.forEach((fig, idx) => {
+      if (idx === index) {
+        fig.classList.add('active');
+        fig.style.display = 'block';
+      } else {
+        fig.classList.remove('active');
+        fig.style.display = 'none';
+      }
     });
-
-    rightBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
-    });
-
-    // Pokaż pierwszy obrazek
-    showImage(currentIndex);
   }
+
+  leftBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + figures.length) % figures.length;
+    showImage(currentIndex);
+  });
+
+  rightBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % figures.length;
+    showImage(currentIndex);
+  });
+
+  // Show first image
+  showImage(currentIndex);
+}
 });
