@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
   <header>
     <nav>
       <ul class="navbar">
@@ -51,135 +50,210 @@
       </ul>
     </nav>
   </header>
-  
+
   <main>
-    <section id="introduction" style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: auto;">
-      <div style="flex: 1;">
-        <img src="./other/zdjecie.jpg" alt="Kacper Frelek" style="max-width: 300px; border-radius: 10px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
-      </div>
-      <div style="flex: 2; padding-left: 20px; text-align: justify;">
-        <h2>About Me</h2>
-        <p>I'm a master's student...</p>
-      </div>
+    <!-- Introduction -->
+    <section id="introduction" class="hidden">
+      <h2>About Me</h2>
+            <p>
+          I am a highly motivated aerospace engineering master's student with a strong focus on 
+          computational fluid dynamics (CFD) in high-speed aerodynamics and reentry vehicle analysis. 
+          My expertise includes numerical simulations of hypersonic flows, turbulence modeling, and 
+          aerothermal effects, with a particular emphasis on shape parameter optimization for 
+          reentry configurations. My research and academic projects have provided me with deep insights 
+          into aerothermodynamics, mesh sensitivity analysis, and shock-wave interactions in hypersonic regimes.
+        </p>
+        
+        <p>
+          In my role as a Junior Aeromechanic Engineer at the Warsaw Institute of Aviation (EDC), I have 
+          gained hands-on experience in running aeromechanical analyses using ANSYS and GageMap, 
+          processing and interpreting large datasets from experimental campaigns, and preparing 
+          certification documentation. Working in an international team, I have developed strong 
+          collaboration and communication skills, ensuring high-precision results while effectively 
+          coordinating with engineers from diverse backgrounds.
+        </p>
+    
+        <p>
+          As an active member of the Students' Space Association - Rocketry Division, I contributed 
+          to the aerodynamic analysis of key rocket components, including the split canards of the 
+          FOK Rocket and the nose cone and fins of the GROT Rocket. This experience has sharpened my 
+          ability to optimize aerodynamic performance, troubleshoot complex simulations, and work 
+          under tight deadlines within a dynamic, team-driven environment.
+        </p>
+    
+        <p>
+          My academic journey has also included practical research projects, such as my Bachelor's thesis 
+          on the aerodynamic performance of Falcon 9 grid fins across all Mach regimes. I performed 
+          detailed CFD analyses, mesh convergence studies, and post-processing in ANSYS Fluent, which 
+          deepened my expertise in high-fidelity aerodynamic simulations.
+        </p>
+    
+        <p>
+          Beyond technical skills, I bring a proactive and problem-solving mindset, excellent adaptability, 
+          and a strong ability to work in interdisciplinary teams. My international project collaborations 
+          have strengthened my ability to communicate complex engineering concepts effectively. Additionally, 
+          I am highly organized, detail-oriented, and thrive in high-pressure environments that require 
+          both analytical and creative problem-solving skills.
+        </p>
+    
+        <p>
+          Passionate about advancing aerospace technology, I am eager to contribute to innovative projects 
+          in spacecraft design, reusability, and aerothermodynamic optimization. Whether working independently 
+          or in a team, I am committed to continuous learning and pushing the boundaries of aerospace engineering.
+        </p>
     </section>
 
-  <!-- PROJECTS SECTION -->
-    <section id="projects" style="max-width: 1200px; margin: 50px auto;">
-      <h2 style="text-align: center;">Projects</h2>
-      <div style="display: flex; justify-content: space-between;">
-        <!-- CFD Projects -->
-        <div style="flex: 1; padding: 20px;">
-          <h3 style="text-align: center;">CFD</h3>
-          <ul style="list-style-type: none; padding: 0;">
-            <li><strong>Hypersonic Aerothermodynamic Analysis of IXV</strong> – CFD simulations of reentry flow.</li>
-            <li><strong>Falcon 9 Grid Fin Analysis</strong> – Studied aerodynamic characteristics across Mach regimes.</li>
-            <li><strong>Hall Thruster CFD Analysis</strong> – Simulated plasma flow in ANSYS Fluent.</li>
-            <li><strong>Rocket Stability Simulations</strong> – Analyzed split canards and fins for optimal performance.</li>
-            <li><strong>Impinging Jet CFD Analysis</strong> – Focus on Turbulence model and mesh density on Nusselt number</li>
-          </ul>
-        </div>
-    
-        <!-- MATLAB Projects -->
-        <div style="flex: 1; padding: 20px;">
-          <h3 style="text-align: center;">Scripts</h3>
-          <ul style="list-style-type: none; padding: 0;">
-            <li><strong>UKF for reentry conditions (Matlab)</strong> – Developed of Unscented Kalman Filter for a reentry-like mission profile.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Experience Projects -->
+    <!-- Experience -->
     <section id="Test_tab" class="hidden">
       <h3>project 1</h3>
-      <!-- ... content unchanged ... -->
+      <p>Details about project 1.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/project1/img1.png" class="slider-image active" alt="P1 Image1">
+          <img src="./images/project1/img2.png" class="slider-image" alt="P1 Image2">
+          <img src="./images/project1/img3.png" class="slider-image" alt="P1 Image3">
+          <img src="./images/project1/img4.png" class="slider-image" alt="P1 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
     </section>
     <section id="project2" class="hidden">
       <h3>project 2</h3>
-      <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt...</p>
+      <p>Details about project 2.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/project2/img1.png" class="slider-image active" alt="P2 Image1">
+          <img src="./images/project2/img2.png" class="slider-image" alt="P2 Image2">
+          <img src="./images/project2/img3.png" class="slider-image" alt="P2 Image3">
+          <img src="./images/project2/img4.png" class="slider-image" alt="P2 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
     </section>
     <section id="project3" class="hidden">
       <h3>project 3</h3>
-      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+      <p>Details about project 3.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/project3/img1.png" class="slider-image active" alt="P3 Image1">
+          <img src="./images/project3/img2.png" class="slider-image" alt="P3 Image2">
+          <img src="./images/project3/img3.png" class="slider-image" alt="P3 Image3">
+          <img src="./images/project3/img4.png" class="slider-image" alt="P3 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
     </section>
-    <section id="project4" class="hidden">
+    <section id="project4_exp" class="hidden">
       <h3>project 4</h3>
-      <p>Ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet...</p>
-    </section>
-    <section id="project5" class="hidden">
-      <h3>project 5</h3>
-      <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...</p>
-    </section>
-    <section id="project6" class="hidden">
-      <h3>project 6</h3>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore...</p>
-    </section>
-    <section id="project7" class="hidden">
-      <h3>Bachelor Thesis</h3>
-      <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt...</p>
-    </section>
-    <section id="project8" class="hidden">
-      <h3>Intermediate Project 2</h3>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum...</p>
-    </section>
-    <section id="project9" class="hidden">
-      <h3>Masters Thesis</h3>
-      <p>Anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-    </section>
-    
-    <!-- Hypersonics Projects -->
-    <section id="project10" class="hidden">
-      <h3>Shock Control</h3>
-      <p>Placeholder text for Shock Control project.</p>
-    </section>
-    <section id="project11" class="hidden">
-      <h3>TPS Material Study</h3>
-      <p>Placeholder text for Thermal Protection System Material Study.</p>
-    </section>
-    <section id="project12" class="hidden">
-      <h3>Reentry Simulation</h3>
-      <p>Placeholder text for Reentry Simulation project.</p>
-    </section>
-  </main>
-
-    <!-- Gallery Slider -->
-    <section id="simulation-gallery">
-      <h2 style="text-align: center;">Simulation Gallery</h2>
-      <div class="project-container">
-        <div class="slider-container">
-          <button class="slider-btn left-btn">&#9664;</button>
-          <div class="slider">
-            <img src="./images/sim1.png" alt="Simulation 1" class="slider-image active">
-            <img src="./images/sim2.png" alt="Simulation 2" class="slider-image">
-            <img src="./images/sim3.png" alt="Simulation 3" class="slider-image">
-            <img src="./images/sim4.png" alt="Simulation 4" class="slider-image">
-          </div>
-          <button class="slider-btn right-btn">&#9654;</button>
+      <p>Details about project 4.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/project4/img1.png" class="slider-image active" alt="P4 Image1">
+          <img src="./images/project4/img2.png" class="slider-image" alt="P4 Image2">
+          <img src="./images/project4/img3.png" class="slider-image" alt="P4 Image3">
+          <img src="./images/project4/img4.png" class="slider-image" alt="P4 Image4">
         </div>
-        <div class="project-description">
-          <p>Explore key simulation outputs: pressure contours, Mach number fields, and temperature maps from my latest CFD and DSMC runs.</p>
-        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
       </div>
     </section>
 
-    <!-- Individual Project Sections -->
-    <!-- ... other sections remain unchanged ... -->
-  </main>
-  
-  <footer>
-    <p><a href="#">Curriculum Vitae</a> | <a href="#">LinkedIn</a></p>
-  </footer>
-  
-  <script src="script.js"></script>
-<script>
-  // Initialize sliders for all slider-containers on page
-  document.addEventListener("DOMContentLoaded", function() {
-    if (typeof initSlider !== 'undefined') {
-      document.querySelectorAll('.slider-container').forEach(function(container) {
-        initSlider(container);
-      });
-    }
-  });
-</script>
-</body>
-</html>
+    <!-- Hobby -->
+    <section id="project4" class="hidden">
+      <h3>project 4 (Hobby)</h3>
+      <p>Details about hobby project 4.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/hobby4/img1.png" class="slider-image active" alt="H4 Image1">
+          <img src="./images/hobby4/img2.png" class="slider-image" alt="H4 Image2">
+          <img src="./images/hobby4/img3.png" class="slider-image" alt="H4 Image3">
+          <img src="./images/hobby4/img4.png" class="slider-image" alt="H4 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+    <section id="project5" class="hidden">
+      <h3>project 5</h3>
+      <p>Details about hobby project 5.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/hobby5/img1.png" class="slider-image active" alt="H5 Image1">
+          <img src="./images/hobby5/img2.png" class="slider-image" alt="H5 Image2">
+          <img src="./images/hobby5<img3.png" class="slider-image" alt="H5 Image3">
+          <img src="./images/hobby5/img4.png" class="slider-image" alt="H5 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+    <section id="project6" class="hidden">
+      <h3>project 6</h3>
+      <p>Details about hobby project 6.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/hobby6/img1.png" class="slider-image active" alt="H6 Image1">
+          <img src="./images/hobby6/img2.png" class="slider-image" alt="H6 Image2">
+          <img src="./images/hobby6/img3.png" class="slider-image" alt="H6 Image3">
+          <img src="./images/hobby6/img4.png" class="slider-image" alt="H6 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+    <section id="project7_hobby" class="hidden">
+      <h3>project 7</h3>
+      <p>Details about hobby project 7.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/hobby7/img1.png" class="slider-image active" alt="H7 Image1">
+          <img src="./images/hobby7/img2.png" class="slider-image" alt="H7 Image2">
+          <img src="./images/hobby7/img3.png" class="slider-image" alt="H7 Image3">
+          <img src="./images/hobby7/img4.png" class="slider-image" alt="H7 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+
+    <!-- Full Projects -->
+    <section id="project7" class="hidden">
+      <h3>Bachelor Thesis</h3>
+      <p>Details about Bachelor Thesis.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/full7/img1.png" class="slider-image active" alt="FT1 Image1">
+          <img src="./images/full7/img2.png" class="slider-image" alt="FT1 Image2">
+          <img src="./images/full7/img3.png" class="slider-image" alt="FT1 Image3">
+          <img src="./images/full7/img4.png"class="slider-image" alt="FT1 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+    <section id="project8" class="hidden">
+      <h3>Intermediate Project 2</h3>
+      <p>Details about Intermediate Project 2.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/full8/img1.png" class="slider-image active" alt="FP2 Image1">
+          <img src="./images/full8/img2.png" class="slider-image" alt="FP2 Image2">
+          <img src="./images/full8/img3.png" class="slider-image" alt="FP2 Image3">
+          <img src="./images/full8/img4.png" class="slider-image" alt="FP2 Image4">
+        </div>
+        <button class="slider-btn right-btn">&#9654;</button>
+      </div>
+    </section>
+    <section id="project9" class="hidden">
+      <h3>Masters Thesis</h3>
+      <p>Details about Masters Thesis.</p>
+      <div class="slider-container">
+        <button class="slider-btn left-btn">&#9664;</button>
+        <div class="slider">
+          <img src="./images/full9/img1.png" class="slider-image active" alt="MT1 Image1">
+          <img src="./images/full9/img2.png" class="slider-image
+}
