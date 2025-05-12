@@ -33,9 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Show target
       const targetId = link.getAttribute("href").slice(1);
       const targetSec = document.getElementById(targetId);
-      if (targetSec) {
-        targetSec.classList.remove("hidden");
-      }
+      if (targetSec) targetSec.classList.remove("hidden");
     });
   });
 
@@ -46,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----- Slider Logic -----
   function initSlider(sliderContainer) {
     const slides = sliderContainer.querySelectorAll('figure.slider-image');
+    if (!slides.length) return;
     let currentIndex = 0;
 
     function show(index) {
@@ -54,26 +53,28 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    show(currentIndex);
+    // Show first
+    show(0);
 
+    // Button events
     const leftBtn = sliderContainer.querySelector('.left-btn');
     const rightBtn = sliderContainer.querySelector('.right-btn');
 
-    if (leftBtn) {
-      leftBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        show(currentIndex);
-      });
-    }
-    if (rightBtn) {
-      rightBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        currentIndex = (currentIndex + 1) % slides.length;
-        show(currentIndex);
-      });
-    }
+    leftBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      show(currentIndex);
+    });
+
+    rightBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % slides.length;
+      show(currentIndex);
+    });
   }
+
+  // Initialize all sliders
+  document.querySelectorAll('.slider-container').forEach(initSlider);
 
   // ----- Fullscreen Modal Logic -----
   const modal = document.getElementById("image-modal");
@@ -87,10 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
       modalImg.alt = img.alt;
     });
   });
+
   function closeModal() {
     modal.classList.add("hidden");
     modalImg.src = "";
   }
+
   modal.addEventListener("click", closeModal);
-  closeBtn.addEventListener("click", closeModal);
+  closeBtn?.addEventListener("click", closeModal);
 });
