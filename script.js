@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- Slider Logic (Adjusted for img.slider-image) -----
     function initSlider(sliderContainer) {
-        const slides = sliderContainer.querySelectorAll('img.slider-image');
+        const slides = sliderContainer.querySelectorAll('.slider-image');
         if (!slides.length) return;
         let currentIndex = 0;
         const leftBtn = sliderContainer.querySelector('.left-btn');
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Initialize all sliders
-    document.querySelectorAll('.slider-container').forEach(initSlider);
+    document.querySelectorAll(".slider-image img").forEach(img => {
 
     // ----- Fullscreen Modal Logic (Adjusted for img.slider-image) -----
     const modal = document.getElementById("image-modal");
