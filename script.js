@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Call initSlider for each slider container
-    document.querySelectorAll(".slider").forEach(initSlider);
+ document.querySelectorAll(".slider-container").forEach(initSlider);
 
     // ----- Fullscreen Modal Logic (Adjusted for img.slider-image) -----
     const modal = document.getElementById("image-modal");
@@ -160,29 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
             closeModal();
         }
     });
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll('.slider-container').forEach(container => {
-    const slides = container.querySelectorAll('.slider-image');
-    if (!slides.length) return;
-
-    let index = 0;
-    const show = i => {
-      slides.forEach((img, j) => img.classList.toggle('active', j === i));
-    };
-    show(index);
-
-    container.querySelector('.left-btn')?.addEventListener('click', e => {
-      e.stopPropagation();
-      index = (index - 1 + slides.length) % slides.length;
-      show(index);
-    });
-
-    container.querySelector('.right-btn')?.addEventListener('click', e => {
-      e.stopPropagation();
-      index = (index + 1) % slides.length;
-      show(index);
-    });
-  });
 });
