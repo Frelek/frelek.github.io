@@ -1,174 +1,126 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ----- Dropdown Menu Logic (Improved Accessibility - should still work) -----
-    document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
-        const content = toggle.nextElementSibling;
-        if (content && content.classList.contains("dropdown-content")) {
-            toggle.setAttribute("aria-expanded", "false");
-            toggle.setAttribute("aria-controls", content.id);
-            content.setAttribute("aria-hidden", "true");
+  // ----- Dropdown Menu Logic -----
+  function closeAllDropdowns() {
+    document.querySelectorAll(".dropdown-content").forEach(dc => {
+      dc.classList.add("hidden");
+      dc.setAttribute("aria-hidden", "true");
 
-            toggle.addEventListener("click", event => {
-                event.preventDefault();
-                event.stopPropagation();
-
-                // Close other dropdowns
-                document.querySelectorAll(".dropdown-content").forEach(dc => {
-                    if (dc !== content) {
-                        dc.classList.add("hidden");
-                        const relatedToggle = dc.previousElementSibling;
-                        if (relatedToggle && relatedToggle.classList.contains("dropdown-toggle")) {
-                            relatedToggle.setAttribute("aria-expanded", "false");
-                        }
-                        dc.setAttribute("aria-hidden", "true");
-                    }
-                });
-
-                // Toggle this one
-                content.classList.toggle("hidden");
-                const isHidden = content.classList.contains("hidden");
-                toggle.setAttribute("aria-expanded", (!isHidden).toString());
-                content.setAttribute("aria-hidden", isHidden.toString());
-            });
-        }
+      const toggle = dc.previousElementSibling;
+      if (toggle?.classList.contains("dropdown-toggle")) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
     });
+  }
 
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", event => {
-        document.querySelectorAll(".dropdown-content:not(.hidden)").forEach(dc => {
-            dc.classList.add("hidden");
-            const relatedToggle = dc.previousElementSibling;
-            if (relatedToggle && relatedToggle.classList.contains("dropdown-toggle")) {
-                relatedToggle.setAttribute("aria-expanded", "false");
-            }
-            dc.setAttribute("aria-hidden", "true");
-        });
-    });
+  document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
+    const content = toggle.nextElementSibling;
+    if (content && content.classList.contains("dropdown-content")) {
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-controls", content.id);
+      content.setAttribute("aria-hidden", "true");
 
-    // Navigation between sections
-    // Navigation between sections
-document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
-    link.addEventListener("click", event => {
+      toggle.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
 
-        // Close all dropdowns
+        // Close other dropdowns
         closeAllDropdowns();
 
-        // Hide ALL sections, including #introduction
-        document.querySelectorAll("main section").forEach(sec => {
-            sec.classList.add("hidden");
-        });
+        // Toggle this one
+        content.classList.toggle("hidden");
+        const isHidden = content.classList.contains("hidden");
+        toggle.setAttribute("aria-expanded", (!isHidden).toString());
+        content.setAttribute("aria-hidden", isHidden.toString());
+      });
+    }
+  });
 
-        // Show target section
-        const targetId = link.getAttribute("href").slice(1);
-        const targetSec = document.getElementById(targetId);
-        if (targetSec) {
-            targetSec.classList.remove("hidden");
-        }
+  document.addEventListener("click", () => {
+    closeAllDropdowns();
+  });
+
+  // ----- Section Navigation Logic -----
+  document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Close dropdowns and hide all sections
+      closeAllDropdowns();
+      document.querySelectorAll("main section").forEach(sec => {
+        sec.classList.add("hidden");
+      });
+
+      // Show clicked section
+      const targetId = link.getAttribute("href").slice(1);
+      const targetSec = document.getElementById(targetId);
+      if (targetSec) {
+        targetSec.classList.remove("hidden");
+      }
     });
+  });
+
+  // ----- Init: Show Only Introduction -----
+  document.querySelectorAll("main section").forEach(sec => {
+    sec.classList.toggle("hidden", sec.id !== "introduction");
+  });
+
+  // ----- Slider Logic -----
+  document.querySelectorAll('.slider-container').forEach(container => {
+    const slides = container.querySelectorAll('.slider-image');
+    if (!slides.length) return;
+
+    let index = 0;
+    const show = i => {
+      slides.forEach((img, j) => img.classList.toggle('active', j === i));
+    };
+    show(index);
+
+    container.querySelector('.left-btn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      index = (index - 1 + slides.length) % slides.length;
+      show(index);
+    });
+
+    container.querySelector('.right-btn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      index = (index + 1) % slides.length;
+      show(index);
+    });
+  });
+
+  // ----- Modal Logic -----
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+  const closeBtn = document.getElementById("modal-close");
+
+  document.querySelectorAll(".slider-image").forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      closeBtn?.focus();
+    });
+  });
+
+  const closeModal = () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+    const activeImage = document.querySelector('.slider-image.active:focus') || document.querySelector('.slider-image.active');
+    if (activeImage) activeImage.focus();
+  };
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal) closeModal();
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+    closeBtn.setAttribute("aria-label", "Close image modal");
+  }
+
+  modal.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeModal();
+  });
 });
-
-
-    // Always show introduction initially
-    const intro = document.getElementById("introduction");
-    if (intro) intro.classList.remove("hidden");
-
-    // ----- Slider Logic (Adjusted for img.slider-image) -----
-    function initSlider(sliderContainer) {
-        const slides = sliderContainer.querySelectorAll('.slider-image');
-        if (!slides.length) return;
-        let currentIndex = 0;
-        const leftBtn = sliderContainer.querySelector('.left-btn');
-        const rightBtn = sliderContainer.querySelector('.right-btn');
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-        }
-
-        function updateButtons() {
-            if (leftBtn) leftBtn.disabled = currentIndex === 0;
-            if (rightBtn) rightBtn.disabled = currentIndex === slides.length - 1;
-        }
-
-        // Initialize
-        showSlide(0);
-        updateButtons();
-
-        // Button events
-        if (leftBtn) {
-            leftBtn.setAttribute("aria-label", "Previous image");
-            leftBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                showSlide(currentIndex);
-                updateButtons();
-            });
-        }
-
-        if (rightBtn) {
-            rightBtn.setAttribute("aria-label", "Next image");
-            rightBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-                updateButtons();
-            });
-        }
-    }
-
-    // Call initSlider for each slider container
- document.querySelectorAll(".slider-container").forEach(initSlider);
-
-    // ----- Fullscreen Modal Logic (Adjusted for img.slider-image) -----
-    const modal = document.getElementById("image-modal");
-    const modalImg = document.getElementById("modal-img");
-    const closeBtn = document.getElementById("modal-close");
-
-    document.querySelectorAll(".slider-image").forEach(img => {
-        img.style.cursor = 'zoom-in';
-        img.addEventListener("click", () => {
-            modal.classList.remove("hidden");
-            modalImg.src = img.src;
-            modalImg.alt = img.alt;
-            closeBtn?.focus();
-        });
-    });
-
-    function closeModal() {
-        modal.classList.add("hidden");
-        modalImg.src = "";
-        const activeImage = document.querySelector('.slider-image.active:focus') || document.querySelector('.slider-image.active');
-        if (activeImage) activeImage.focus();
-    }
-
-    modal.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeModal);
-        closeBtn.setAttribute("aria-label", "Close image modal");
-    }
-
-    modal.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            closeModal();
-        }
-    });
-});
-
-function closeAllDropdowns() {
-    document.querySelectorAll(".dropdown-content").forEach(dc => {
-        dc.classList.add("hidden");
-        dc.setAttribute("aria-hidden", "true");
-
-        const toggle = dc.previousElementSibling;
-        if (toggle?.classList.contains("dropdown-toggle")) {
-            toggle.setAttribute("aria-expanded", "false");
-        }
-    });
-}
