@@ -39,26 +39,31 @@ document.addEventListener("DOMContentLoaded", () => {
     closeAllDropdowns();
   });
 
-  // ----- Section Navigation Logic -----
-  document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
+    // ----- Section Navigation Logic -----
+  const navLinks = document.querySelectorAll(".dropdown-content a, #home-link");
+  const allSections = document.querySelectorAll("section[id]");
+
+  navLinks.forEach(link => {
     link.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
 
-      // Close dropdowns and hide all sections
+      // Close dropdowns
       closeAllDropdowns();
-      document.querySelectorAll("main section").forEach(sec => {
-        sec.classList.add("hidden");
-      });
 
-      // Show clicked section
-      const targetId = link.getAttribute("href").slice(1);
-      const targetSec = document.getElementById(targetId);
-      if (targetSec) {
-        targetSec.classList.remove("hidden");
+      // Hide all sections
+      allSections.forEach(sec => sec.classList.add("hidden"));
+
+      // Show target section
+      const targetId = link.getAttribute("href")?.slice(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.remove("hidden");
+        targetSection.scrollIntoView({ behavior: "smooth" });
       }
     });
   });
+
 
   // ----- Init: Show Only Introduction -----
   document.querySelectorAll("main section").forEach(sec => {
