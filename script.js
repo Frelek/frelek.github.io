@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ----- Dropdown Menu Logic -----
+  // ===== Dropdown Menu Logic =====
   function closeAllDropdowns() {
     document.querySelectorAll(".dropdown-content").forEach(dc => {
       dc.classList.add("hidden");
@@ -30,31 +30,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", closeAllDropdowns);
 
-  // ----- Section Navigation Logic -----
+  // ===== Section Navigation Logic =====
+  const allSections = document.querySelectorAll("main section");
+
+  function showSectionById(id) {
+    allSections.forEach(sec => sec.classList.add("hidden"));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.remove("hidden");
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  // Obsługa linków z dropdownów i linka Home
   document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       e.stopPropagation();
       closeAllDropdowns();
-
-      // Ukryj wszystkie sekcje
-      document.querySelectorAll("main section").forEach(sec =>
-        sec.classList.add("hidden")
-      );
-
-      // Pokaż tylko klikniętą
       const targetId = link.getAttribute("href").slice(1);
-      const targetSec = document.getElementById(targetId);
-      if (targetSec) targetSec.classList.remove("hidden");
+      showSectionById(targetId);
     });
   });
 
-  // ----- Init: pokaz tylko #introduction na start -----
-  document.querySelectorAll("main section").forEach(sec =>
-    sec.classList.toggle("hidden", sec.id !== "introduction")
-  );
+  // ===== Init: pokaż tylko #introduction na start =====
+  allSections.forEach(sec => {
+    sec.classList.toggle("hidden", sec.id !== "introduction");
+  });
 
-  // ----- Slider Logic (bez zmian) -----
+  // ===== Slider Logic =====
   document.querySelectorAll('.slider-container').forEach(container => {
     const slides = container.querySelectorAll('.slider-image');
     if (!slides.length) return;
@@ -73,10 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ----- Modal Logic (bez zmian) -----
+  // ===== Modal Logic =====
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.getElementById("modal-close");
+
   document.querySelectorAll(".slider-image").forEach(img => {
     img.style.cursor = 'zoom-in';
     img.addEventListener("click", () => {
@@ -86,12 +91,20 @@ document.addEventListener("DOMContentLoaded", () => {
       closeBtn?.focus();
     });
   });
+
   const closeModal = () => {
     modal.classList.add("hidden");
     modalImg.src = "";
     (document.querySelector('.slider-image.active') || {}).focus?.();
   };
-  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+
+  modal.addEventListener("click", e => {
+    if (e.target === modal) closeModal();
+  });
+
   closeBtn?.addEventListener("click", closeModal);
-  modal.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+  modal.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
 });
