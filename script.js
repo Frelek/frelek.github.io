@@ -61,7 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             // Hide all sections
-            document.querySelectorAll("main section:not(#introduction)").forEach(sec => sec.classList.add("hidden"));
+            document.querySelectorAll("main section").forEach(sec => sec.classList.add("hidden"));
+
 
             // Show target
             const targetId = link.getAttribute("href").slice(1);
