@@ -262,7 +262,7 @@ figcaption {
 }
 
 #image-modal.hidden {
-    display: none;
+    display: none !important;
 }
 
 #image-modal img {
@@ -388,4 +388,12 @@ figcaption {
 
 .right-btn {
   right: 10px;
+}
+
+#introduction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
 }

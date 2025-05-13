@@ -124,3 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key === "Escape") closeModal();
   });
 });
+
+// … on nav-link click …
+document.querySelectorAll("main section").forEach(sec => {
+  sec.classList.add("hidden");    // now *really* hides everything
+});
+document.getElementById(targetId).classList.remove("hidden");
