@@ -45,31 +45,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Navigation between sections
-    document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
-        link.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopPropagation();
+    // Navigation between sections
+document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
 
-            // Hide all dropdowns
-            document.querySelectorAll(".dropdown-content").forEach(dc => {
-                dc.classList.add("hidden");
-                const relatedToggle = dc.previousElementSibling;
-                if (relatedToggle && relatedToggle.classList.contains("dropdown-toggle")) {
-                    relatedToggle.setAttribute("aria-expanded", "false");
-                }
-                dc.setAttribute("aria-hidden", "true");
-            });
+        // Close all dropdowns
+        closeAllDropdowns();
 
-            // Hide all sections
-            document.querySelectorAll("main section").forEach(sec => sec.classList.add("hidden"));
-
-
-            // Show target
-            const targetId = link.getAttribute("href").slice(1);
-            const targetSec = document.getElementById(targetId);
-            if (targetSec) targetSec.classList.remove("hidden");
+        // Hide ALL sections, including #introduction
+        document.querySelectorAll("main section").forEach(sec => {
+            sec.classList.add("hidden");
         });
+
+        // Show target section
+        const targetId = link.getAttribute("href").slice(1);
+        const targetSec = document.getElementById(targetId);
+        if (targetSec) {
+            targetSec.classList.remove("hidden");
+        }
     });
+});
+
 
     // Always show introduction initially
     const intro = document.getElementById("introduction");
@@ -162,3 +160,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function closeAllDropdowns() {
+    document.querySelectorAll(".dropdown-content").forEach(dc => {
+        dc.classList.add("hidden");
+        dc.setAttribute("aria-hidden", "true");
+
+        const toggle = dc.previousElementSibling;
+        if (toggle?.classList.contains("dropdown-toggle")) {
+            toggle.setAttribute("aria-expanded", "false");
+        }
+    });
+}
