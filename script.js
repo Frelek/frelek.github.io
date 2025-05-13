@@ -39,29 +39,33 @@ document.addEventListener("DOMContentLoaded", () => {
     closeAllDropdowns();
   });
 
-  // ----- Section Navigation Logic -----
+   // ----- Section Navigation Logic -----
   document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
     link.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
 
-// Hide all sections
-document.querySelectorAll("main section").forEach(sec => {
-  sec.style.display = 'none';
-});
+      closeAllDropdowns();
 
-// Show clicked section
-const targetId = link.getAttribute("href").slice(1);
-const targetSec = document.getElementById(targetId);
-if (targetSec) {
-  // overwrite any inline style
-  targetSec.style.display = '';
-}
+      // Hide all sections
+      document.querySelectorAll("main section").forEach(sec => {
+        sec.classList.add("hidden");
+      });
+
+      // Show the one you clicked
+      const targetId = link.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.remove("hidden");
+      }
+    });
+  });
 
   // ----- Init: Show Only Introduction -----
   document.querySelectorAll("main section").forEach(sec => {
     sec.classList.toggle("hidden", sec.id !== "introduction");
   });
+
 
   // ----- Slider Logic -----
   document.querySelectorAll('.slider-container').forEach(container => {
