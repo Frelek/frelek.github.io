@@ -129,3 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key === "Escape") closeModal();
   });
 });
+
+// your “Hide all” logic
+document.querySelectorAll("main section").forEach(sec => {
+  sec.classList.add("hidden");
+});

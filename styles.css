@@ -261,8 +261,8 @@ figcaption {
     cursor: pointer; /* To allow clicking outside image to close */
 }
 
-#image-modal.hidden {
-    display: none;
+.hidden {
+  display: none !important;
 }
 
 #image-modal img {
@@ -388,4 +388,12 @@ figcaption {
 
 .right-btn {
   right: 10px;
+}
+
+#introduction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
 }
