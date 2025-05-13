@@ -45,20 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       event.stopPropagation();
 
-      // Close dropdowns and hide all sections
-      closeAllDropdowns();
-      document.querySelectorAll("main section").forEach(sec => {
-        sec.classList.add("hidden");
-      });
+// Hide all sections
+document.querySelectorAll("main section").forEach(sec => {
+  sec.style.display = 'none';
+});
 
-      // Show clicked section
-      const targetId = link.getAttribute("href").slice(1);
-      const targetSec = document.getElementById(targetId);
-      if (targetSec) {
-        targetSec.classList.remove("hidden");
-      }
-    });
-  });
+// Show clicked section
+const targetId = link.getAttribute("href").slice(1);
+const targetSec = document.getElementById(targetId);
+if (targetSec) {
+  // overwrite any inline style
+  targetSec.style.display = '';
+}
 
   // ----- Init: Show Only Introduction -----
   document.querySelectorAll("main section").forEach(sec => {
