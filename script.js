@@ -98,15 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.getElementById("modal-close");
 
-  document.querySelectorAll(".slider-image").forEach(img => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-      modalImg.src = img.src;
-      modalImg.alt = img.alt;
-      closeBtn?.focus();
-    });
+// new, correct binding on the <img> tag
+document.querySelectorAll(".slider-image img").forEach(image => {
+  image.style.cursor = 'zoom-in';
+  image.addEventListener("click", () => {
+    modalImg.src = image.src;
+    modalImg.alt = image.alt;
+    modal.classList.remove("hidden");       // show it
+    modal.style.display = 'flex';           // ensure flex centering
+    closeBtn.focus();                       // focus the × button
   });
+});
+
 
   // ===== CLOSE MODAL ON OVERLAY OR “×” CLICK =====
   modal.addEventListener('click', e => {
