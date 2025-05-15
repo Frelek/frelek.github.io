@@ -249,7 +249,8 @@ html {
 
 /* Fullscreen Image Modal */
 #image-modal {
-    display: none; /* Initially hidden */
+    display: none; 
+    display: flex;      /* Initially hidden */
     align-items: center;
     justify-content: center;
     position: fixed;

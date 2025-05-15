@@ -77,6 +77,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ===== CLICK‑TO‑ZOOM IMAGE MODAL =====
+  document.querySelectorAll('.slider-image img').forEach(img => {
+    img.addEventListener('click', () => {
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-img');
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      modal.classList.remove('hidden');          // show the overlay
+      modal.style.display = 'flex';             // ensure flex centering
+      document.getElementById('modal-close').focus();
+    });
+  });
+
+
+
+  
   // ===== Modal Logic =====
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
@@ -91,6 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
       closeBtn?.focus();
     });
   });
+
+  // ===== CLOSE MODAL ON OVERLAY OR “×” CLICK =====
+  modal.addEventListener('click', e => {
+    if (e.target === modal || e.target === closeBtn) {
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+      modalImg.src = '';
+    }
+  });
+
+
+
 
   const closeModal = () => {
     modal.classList.add("hidden");
