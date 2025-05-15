@@ -314,16 +314,18 @@ html {
   cursor: zoom-out;
 }
 
-/* make any image “zoomable” */
+/* default thumbnail state */
 img.zoomable {
   cursor: zoom-in;
   transition: width 0.25s ease;
-  width: 200px;      /* default thumbnail width—you can override per‑img inline if you like */
+  /* you can inline width="200" or set it here */
+  width: 200px;
   height: auto;
 }
 
-/* when we add `.zoomed`, force it to 800px wide */
+/* zoomed state */
 img.zoomable.zoomed {
-  width: 800px !important;
+  width: 800px !important;  /* override inline or other widths */
+  height: auto !important;
   cursor: zoom-out;
 }
