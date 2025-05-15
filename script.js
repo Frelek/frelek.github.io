@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Section Navigation Logic =====
   const allSections = document.querySelectorAll("main section");
+
   function showSectionById(id) {
     allSections.forEach(sec => sec.classList.add("hidden"));
     const target = document.getElementById(id);
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Obsługa linków z dropdownów i linka Home
   document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Initially show only #introduction
+  // ===== Init: pokaż tylko #introduction na start =====
   allSections.forEach(sec => {
     sec.classList.toggle("hidden", sec.id !== "introduction");
   });
@@ -75,45 +77,82 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ===== CLICK‑TO‑ZOOM IMAGE MODAL =====
+  document.querySelectorAll('.slider-image img').forEach(img => {
+    img.addEventListener('click', () => {
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-img');
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      modal.classList.remove('hidden');          // show the overlay
+      modal.style.display = 'flex';             // ensure flex centering
+      document.getElementById('modal-close').focus();
+    });
+  });
+
+
+
+  
   // ===== Modal Logic =====
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.getElementById("modal-close");
 
-  document.querySelectorAll(".slider-image img").forEach(image => {
-    image.style.cursor = 'zoom-in';
-    image.addEventListener("click", () => {
-      modalImg.src = image.src;
-      modalImg.alt = image.alt;
-      modal.classList.remove("hidden");
-      modal.style.display = 'flex';
-      closeBtn.focus();
-    });
+// new, correct binding on the <img> tag
+document.querySelectorAll(".slider-image img").forEach(image => {
+  image.style.cursor = 'zoom-in';
+  image.addEventListener("click", () => {
+    modalImg.src = image.src;
+    modalImg.alt = image.alt;
+    modal.classList.remove("hidden");       // show it
+    modal.style.display = 'flex';           // ensure flex centering
+    closeBtn.focus();                       // focus the × button
+  });
+});
+
+
+  // ===== CLOSE MODAL ON OVERLAY OR “×” CLICK =====
+  modal.addEventListener('click', e => {
+    if (e.target === modal || e.target === closeBtn) {
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+      modalImg.src = '';
+    }
   });
 
-  function closeModal() {
+
+
+
+  const closeModal = () => {
     modal.classList.add("hidden");
-    modal.style.display = 'none';
     modalImg.src = "";
-  }
+    (document.querySelector('.slider-image.active') || {}).focus?.();
+  };
 
   modal.addEventListener("click", e => {
-    if (e.target === modal || e.target === closeBtn) closeModal();
+    if (e.target === modal) closeModal();
   });
 
-  closeBtn.addEventListener("click", closeModal);
+  closeBtn?.addEventListener("click", closeModal);
 
   modal.addEventListener("keydown", e => {
     if (e.key === "Escape") closeModal();
   });
+});
 
-  // ===== GLOBAL CLICK‑TO‑ZOOM (for any <img class="zoomable">) =====
+// GLOBAL click‑to‑zoom handler for any <img class="zoomable">
+document.querySelectorAll('img.zoomable').forEach(img => {
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    img.classList.toggle('zoomed');
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('img.zoomable').forEach(img => {
-    img.style.cursor = 'zoom-in';
     img.addEventListener('click', e => {
-      e.stopPropagation();          // don’t bubble into slider/modal
+      e.stopPropagation();               // don’t bubble into slider
       img.classList.toggle('zoomed');
     });
   });
-
-}); // end DOMContentLoaded
+});
