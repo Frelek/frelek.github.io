@@ -139,3 +139,11 @@ document.querySelectorAll(".slider-image img").forEach(image => {
     if (e.key === "Escape") closeModal();
   });
 });
+
+// GLOBAL click‑to‑zoom handler for any <img class="zoomable">
+document.querySelectorAll('img.zoomable').forEach(img => {
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    img.classList.toggle('zoomed');
+  });
+});

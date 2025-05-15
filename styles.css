@@ -313,3 +313,17 @@ html {
   height: auto;      /* keep aspect ratio */
   cursor: zoom-out;
 }
+
+/* make any image “zoomable” */
+img.zoomable {
+  cursor: zoom-in;
+  transition: width 0.25s ease;
+  width: 200px;      /* default thumbnail width—you can override per‑img inline if you like */
+  height: auto;
+}
+
+/* when we add `.zoomed`, force it to 800px wide */
+img.zoomable.zoomed {
+  width: 800px !important;
+  cursor: zoom-out;
+}
