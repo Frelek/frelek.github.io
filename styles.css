@@ -170,13 +170,17 @@ html {
     margin: 20px auto;
 }
 
-/* Slider */
 .slider {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Important for containing images */
+    overflow: hidden;           /* ukrywa fragmenty poza ramką */
+    width: 600px;               /* ustalona szerokość okna slidera */
+    height: 400px;              /* ustalona wysokość okna slidera */
+    margin: 0 auto;             /* wycentrowanie */
 }
+
 
 .slider-image {
     flex-shrink: 0; /* Prevent images from shrinking */
@@ -193,13 +197,16 @@ html {
 }
 
 .slider-image img {
-    display: block; /* Prevent extra space below image */
+    display: block;
     width: 100%;
-    height: auto;
+    height: 100%;           /* wypełnia całe okno w pionie */
+    object-fit: cover;      /* przycina, zachowując proporcje */ :contentReference[oaicite:1]{index=1}
+    object-position: center;/* centrowanie przyciętego obrazu */ :contentReference[oaicite:2]{index=2}
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     transition: transform 0.3s ease-in-out;
 }
+
 
 .slider-image img:hover {
     transform: scale(1.05); /* Subtle zoom on hover */
