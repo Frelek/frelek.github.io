@@ -306,3 +306,10 @@ html {
         height: auto;
     }
 }
+
+.click-zoom input[type=checkbox]:checked ~ img {
+  /* instead of transform: scale(2); */
+  width: 800px;
+  height: auto;      /* keep aspect ratio */
+  cursor: zoom-out;
+}
