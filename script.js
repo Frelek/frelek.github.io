@@ -156,3 +156,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+  const zoomImages = document.querySelectorAll('#project7 .zoomable');
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const modalClose = document.getElementById('modalClose');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
+
+  let currentZoomIndex = 0;
+  const imageArray = Array.from(zoomImages);
+
+  const openModal = (index) => {
+    currentZoomIndex = index;
+    modalImg.src = imageArray[index].src;
+    modal.classList.add('active');
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+  };
+
+  const showPrev = () => {
+    currentZoomIndex = (currentZoomIndex - 1 + imageArray.length) % imageArray.length;
+    modalImg.src = imageArray[currentZoomIndex].src;
+  };
+
+  const showNext = () => {
+    currentZoomIndex = (currentZoomIndex + 1) % imageArray.length;
+    modalImg.src = imageArray[currentZoomIndex].src;
+  };
+
+  zoomImages.forEach((img, index) => {
+    img.addEventListener('click', () => openModal(index));
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modalPrev.addEventListener('click', showPrev);
+  modalNext.addEventListener('click', showNext);
+
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') showPrev();
+    if (e.key === 'ArrowRight') showNext();
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+

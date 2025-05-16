@@ -329,3 +329,44 @@ img.zoomable.zoomed {
   height: auto !important;
   cursor: zoom-out;
 }
+
+/* Modal Viewer Styles */
+#imageModal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#imageModal.active {
+  display: flex;
+}
+#imageModal img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 10px;
+  box-shadow: 0 0 30px #000;
+}
+.modal-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 20px;
+}
+#modalPrev { left: 0; }
+#modalNext { right: 0; }
+#modalClose {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
