@@ -119,22 +119,22 @@
   </div>
 
   <p>
-    This project wasn’t just about flow over a wing—it was a full-blown turbulence battle at 30° angle of attack.
-    I simulated the iconic <strong>NACA 2412 airfoil</strong> at <strong>Re = 6.85×10⁶</strong> using three turbulence strategies—<strong>uRANS</strong>,
+    This project wasn’t just about flow over a wing—it was an appraoch to understand deeply what stands behind models.
+    I simulated the iconic NACA 2412 airfoil at Re = 6.85×10⁶ using three turbulence strategies—<strong>uRANS</strong>,
     <strong>DES</strong>, and <strong>LES</strong>—and analyzed their performance under deep separation conditions. The goal?
     Pinpoint how each model handles vortex shedding, boundary layer behavior, and wake formation under intense aerodynamic stress.
   </p>
 
   <p>
-    I tailored each mesh from the ground up, tuning y⁺ levels (~1 for uRANS/DES, <5 for LES), scaling inflation layers, and ensuring
+    I tailored each mesh from the ground up, tuning y⁺ levels (~1 for uRANS/DES, less than 5 for LES), scaling inflation layers, and ensuring
     wake regions aligned with <strong>Taylor microscales</strong>. Solver stability was maintained using a density-based scheme, with
-    <strong>CFL-guided timestep refinement</strong>. Even with LES pushing GPU limits, I captured the raw turbulence truth
+    <strong>CFL-guided timestep refinement</strong>. Even with LES pushing computer power limits, I captured the raw turbulence truth
     for 1 full second of physical time—enough to see structures form, evolve, and stabilize.
   </p>
 
   <p>
-    The takeaway? <strong>uRANS is efficient but blind to dynamics. DES is a sweet middle-ground. LES is king—if your hardware survives</strong>.
-    This study taught me exactly when and where to deploy each model for high-fidelity CFD. A perfect analog for
+    The takeaway? <strong>uRANS is efficient but blind to dynamics. DES is a sweet middle-ground. LES is king—if your hardware survives </strong>.
+    This study taught me when and where to deploy each model for high-fidelity CFD. A perfect analog for
     <strong>reentry vehicle flows, rocket separation dynamics</strong>, or any system where vortex truth matters more than just convergence.
   </p>
 
@@ -145,13 +145,13 @@
         <strong>Hybrid turbulence strategy mastery:</strong> I now know how to pick, tune, and justify RANS/DES/LES depending on flow physics, separation behavior, and CPU/GPU availability.
       </li>
       <li>
-        <strong>Mesh art for turbulence:</strong> Creating LES-grade meshes meant resolving down to Kolmogorov scales in separation zones—an essential skill for hypersonic CFD.
+        <strong>Mesh art for turbulence:</strong> Creating LES-grade meshes meant resolving down to Kolmogorov scales in separation zones—an essential skill for complex simulations.
       </li>
       <li>
         <strong>Boundary layer resolution obsession:</strong> Achieving y⁺ ≈ 1 and watching separation points shift gave me intuitive control over wall modeling and transition detection.
       </li>
       <li>
-        <strong>Real-world turbulence intuition:</strong> I developed an eye for what turbulence "should" look like—beyond residuals—based on vorticity patterns and dynamic energy transfer.
+        <strong>Real-world turbulence intuition:</strong> I developed an eye for what turbulence "should" look like—beyond residuals—based on vorticity patterns.
       </li>
       <li>
         <strong>Hardware balancing act:</strong> Managing LES simulations on a limited setup taught me how to optimize solver settings, post-process on-the-fly, and schedule smart saves.
@@ -162,18 +162,45 @@
     </ul>
   </div>
 
+<div style="margin-top: 1.5rem;">
+  <a href="./images/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf" 
+     download 
+     style="display: inline-block; padding: 10px 18px; background-color: #e7f3ff; border: 2px solid #0077cc; color: #0077cc; font-weight: bold; border-radius: 8px; text-decoration: none;">
+    ⬇️ Download Full PDF Report
+  </a>
+</div>
+
+<div style="text-align: center; font-size: 1.5rem; font-weight: bold; color: #0077cc; margin: 2rem 0;">
+  [ Mesh created ]
+</div>
+
   <div class="slider-container">
     <button class="slider-btn left-btn">&#9664;</button>
     <div class="slider">
-      <img src="./images/Full_Projects/02/uRANS_mesh.jpg" class="slider-image active zoomable" alt="uRANS Mesh Closeup">
-      <img src="./images/Full_Projects/02/DES_vorticity.jpg" class="slider-image zoomable" alt="DES Vorticity Snapshot">
-      <img src="./images/Full_Projects/02/LES_vortices.jpg" class="slider-image zoomable" alt="LES Vortex Contours">
-      <img src="./images/Full_Projects/02/AoA30_pressure.jpg" class="slider-image zoomable" alt="Pressure Field at 30° AoA">
-      <img src="./images/Full_Projects/02/compare_table.png" class="slider-image zoomable" alt="Model Comparison Table">
+      <img src="./images/Project_01/Control_Volume.png" class="slider-image active zoomable" alt="Control Volume">
+
+      <img src="./images/Project_01/RANS_BL.png" class="slider-image zoomable" alt="RANS mesh Boundary Layer Modeling">
+      <img src="./images/Project_01/DES_BL.png" class="slider-image zoomable" alt="DES mesh Boundary Layer Modeling">
+      <img src="./images/Project_01/LES_BL.png" class="slider-image zoomable" alt="LES mesh Boundary Layer Modeling">
+
+      <img src="./images/Project_01/RANS_overview.png" class="slider-image zoomable" alt="RANS mesh">
+      <img src="./images/Project_01/DES_overview.png" class="slider-image zoomable" alt="DES mesh">
+      <img src="./images/Project_01/LES_overview.png" class="slider-image zoomable" alt="LES mesh">
+
+      <img src="./images/Project_01/RANS_Close.png" class="slider-image zoomable" alt="RANS mesh closeup">
+      <img src="./images/Project_01/DES_close.png" class="slider-image zoomable" alt="DES mesh closeup" >
+      <img src="./images/Project_01/LES_close.png" class="slider-image zoomable" alt="LES mesh closeup">
     </div>
-    <button class="slider-btn right-btn">&#9654;</button>
+    <button cl
+    ass="slider-btn right-btn">&#9654;</button>
   </div>
+
+<div style="text-align: center; font-size: 1.5rem; font-weight: bold; color: #0077cc; margin: 2rem 0;">
+  [ Results ]
+</div>
+
 </section>
+
         <section id="project2" class="hidden">
             <h3>project 2</h3>
             <p>Details about project 2.</p>
