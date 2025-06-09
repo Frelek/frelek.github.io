@@ -57,28 +57,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== SLIDER LOGIC =====
-  document.querySelectorAll('.slider-container').forEach(container => {
-    const slides = Array.from(container.querySelectorAll('.slider-image'));
-    let index = 0;
+document.querySelectorAll('.slider-container').forEach(container => {
+  const slides = Array.from(container.querySelectorAll('.slider-image'));
+  let index = 0;
 
-    const show = i => {
-      slides.forEach((s, j) => s.classList.toggle('active', j === i));
-    };
+  const show = i => {
+    slides.forEach((s, j) => s.classList.toggle('active', j === i));
+  };
 
+  show(index);
+
+  container.querySelector('.left-btn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    index = (index - 1 + slides.length) % slides.length;
     show(index);
-
-    container.querySelector('.left-btn')?.addEventListener('click', e => {
-      e.stopPropagation();
-      index = (index - 1 + slides.length) % slides.length;
-      show(index);
-    });
-
-    container.querySelector('.right-btn')?.addEventListener('click', e => {
-      e.stopPropagation();
-      index = (index + 1) % slides.length;
-      show(index);
-    });
   });
+
+  container.querySelector('.right-btn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    index = (index + 1) % slides.length;
+    show(index);
+  });
+});
+
 
   // ===== MODAL ZOOM PREVIEW (Image Modal for .slider-image img) =====
   const modal = document.getElementById("image-modal");
