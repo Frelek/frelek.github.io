@@ -302,7 +302,7 @@ img.zoomable {
   cursor: zoom-in;
   transition: width 0.25s ease;
   /* you can inline width="200" or set it here */
-  width: 200px;
+  width: 400px;
   height: auto;
 }
 
@@ -356,16 +356,18 @@ img.zoomable.zoomed {
 
 .slider-image {
   display: none;
-  width: 100%;
-  height: 100%;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
+/* Make active image container flex-centered */
 .slider-image.active {
-  display: flex; /* center image in container */
+  display: flex;
 }
 
+/* Ensure image scales responsively */
 .slider-image img {
   max-width: 100%;
   height: auto;

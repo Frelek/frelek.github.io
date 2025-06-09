@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", closeAllDropdowns);
 
-  // ===== Section Navigation Logic =====
+  // ===== Section Navigation =====
   const allSections = document.querySelectorAll("main section");
 
   function showSectionById(id) {
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Obsługa linków z dropdownów i linka Home
   document.querySelectorAll(".dropdown-content a, #home-link").forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
@@ -53,23 +52,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===== Init: pokaż tylko #introduction na start =====
   allSections.forEach(sec => {
     sec.classList.toggle("hidden", sec.id !== "introduction");
   });
 
-  // ===== Slider Logic =====
+  // ===== SLIDER LOGIC =====
   document.querySelectorAll('.slider-container').forEach(container => {
-    const slides = container.querySelectorAll('.slider-image');
-    if (!slides.length) return;
+    const slides = Array.from(container.querySelectorAll('.slider-image'));
     let index = 0;
-    const show = i => slides.forEach((s, j) => s.classList.toggle('active', j === i));
-    show(0);
+
+    const show = i => {
+      slides.forEach((s, j) => s.classList.toggle('active', j === i));
+    };
+
+    show(index);
+
     container.querySelector('.left-btn')?.addEventListener('click', e => {
       e.stopPropagation();
       index = (index - 1 + slides.length) % slides.length;
       show(index);
     });
+
     container.querySelector('.right-btn')?.addEventListener('click', e => {
       e.stopPropagation();
       index = (index + 1) % slides.length;
@@ -77,90 +80,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===== CLICK‑TO‑ZOOM IMAGE MODAL =====
-  document.querySelectorAll('.slider-image img').forEach(img => {
-    img.addEventListener('click', () => {
-      const modal = document.getElementById('image-modal');
-      const modalImg = document.getElementById('modal-img');
-      modalImg.src = img.src;
-      modalImg.alt = img.alt;
-      modal.classList.remove('hidden');          // show the overlay
-      modal.style.display = 'flex';             // ensure flex centering
-      document.getElementById('modal-close').focus();
-    });
-  });
-
-
-
-  
-  // ===== Modal Logic =====
+  // ===== MODAL ZOOM PREVIEW (Image Modal for .slider-image img) =====
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.getElementById("modal-close");
 
-// new, correct binding on the <img> tag
-document.querySelectorAll(".slider-image img").forEach(image => {
-  image.style.cursor = 'zoom-in';
-  image.addEventListener("click", () => {
-    modalImg.src = image.src;
-    modalImg.alt = image.alt;
-    modal.classList.remove("hidden");       // show it
-    modal.style.display = 'flex';           // ensure flex centering
-    closeBtn.focus();                       // focus the × button
-  });
-});
-
-
-  // ===== CLOSE MODAL ON OVERLAY OR “×” CLICK =====
-  modal.addEventListener('click', e => {
-    if (e.target === modal || e.target === closeBtn) {
-      modal.classList.add('hidden');
-      modal.style.display = 'none';
-      modalImg.src = '';
-    }
+  document.querySelectorAll(".slider-image img").forEach(image => {
+    image.style.cursor = 'zoom-in';
+    image.addEventListener("click", () => {
+      modalImg.src = image.src;
+      modalImg.alt = image.alt;
+      modal.classList.remove("hidden");
+      modal.style.display = 'flex';
+      closeBtn.focus();
+    });
   });
 
-
-
-
-  const closeModal = () => {
+  const closeMainModal = () => {
     modal.classList.add("hidden");
+    modal.style.display = "none";
     modalImg.src = "";
     (document.querySelector('.slider-image.active') || {}).focus?.();
   };
 
   modal.addEventListener("click", e => {
-    if (e.target === modal) closeModal();
+    if (e.target === modal || e.target === closeBtn) {
+      closeMainModal();
+    }
   });
 
-  closeBtn?.addEventListener("click", closeModal);
+  closeBtn?.addEventListener("click", closeMainModal);
 
   modal.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeModal();
+    if (e.key === "Escape") closeMainModal();
   });
-});
 
-// GLOBAL click‑to‑zoom handler for any <img class="zoomable">
-document.querySelectorAll('img.zoomable').forEach(img => {
-  img.addEventListener('click', e => {
-    e.stopPropagation();
-    img.classList.toggle('zoomed');
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+  // ===== SIMPLE CLICK-TO-ZOOM (toggle zoomed class) =====
   document.querySelectorAll('img.zoomable').forEach(img => {
     img.addEventListener('click', e => {
-      e.stopPropagation();               // don’t bubble into slider
+      e.stopPropagation();
       img.classList.toggle('zoomed');
     });
   });
-});
 
-
+  // ===== ADVANCED MODAL VIEWER FOR #project7 IMAGES =====
   const zoomImages = document.querySelectorAll('#project7 .zoomable');
-  const modal = document.getElementById('imageModal');
-  const modalImg = document.getElementById('modalImage');
+  const advancedModal = document.getElementById('imageModal');
+  const advancedImg = document.getElementById('modalImage');
   const modalClose = document.getElementById('modalClose');
   const modalPrev = document.getElementById('modalPrev');
   const modalNext = document.getElementById('modalNext');
@@ -168,42 +134,42 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentZoomIndex = 0;
   const imageArray = Array.from(zoomImages);
 
-  const openModal = (index) => {
+  const openAdvancedModal = (index) => {
     currentZoomIndex = index;
-    modalImg.src = imageArray[index].src;
-    modal.classList.add('active');
+    advancedImg.src = imageArray[index].src;
+    advancedModal.classList.add('active');
   };
 
-  const closeModal = () => {
-    modal.classList.remove('active');
+  const closeAdvancedModal = () => {
+    advancedModal.classList.remove('active');
   };
 
   const showPrev = () => {
     currentZoomIndex = (currentZoomIndex - 1 + imageArray.length) % imageArray.length;
-    modalImg.src = imageArray[currentZoomIndex].src;
+    advancedImg.src = imageArray[currentZoomIndex].src;
   };
 
   const showNext = () => {
     currentZoomIndex = (currentZoomIndex + 1) % imageArray.length;
-    modalImg.src = imageArray[currentZoomIndex].src;
+    advancedImg.src = imageArray[currentZoomIndex].src;
   };
 
   zoomImages.forEach((img, index) => {
-    img.addEventListener('click', () => openModal(index));
+    img.addEventListener('click', () => openAdvancedModal(index));
   });
 
-  modalClose.addEventListener('click', closeModal);
-  modalPrev.addEventListener('click', showPrev);
-  modalNext.addEventListener('click', showNext);
+  modalClose?.addEventListener('click', closeAdvancedModal);
+  modalPrev?.addEventListener('click', showPrev);
+  modalNext?.addEventListener('click', showNext);
 
   document.addEventListener('keydown', (e) => {
-    if (!modal.classList.contains('active')) return;
-    if (e.key === 'Escape') closeModal();
+    if (!advancedModal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeAdvancedModal();
     if (e.key === 'ArrowLeft') showPrev();
     if (e.key === 'ArrowRight') showNext();
   });
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+  advancedModal.addEventListener('click', (e) => {
+    if (e.target === advancedModal) closeAdvancedModal();
   });
-
+});
