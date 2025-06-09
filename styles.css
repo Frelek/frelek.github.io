@@ -355,3 +355,10 @@ img.zoomable.zoomed {
   color: white;
   cursor: pointer;
 }
+
+.slider-image img,
+img.zoomable {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
