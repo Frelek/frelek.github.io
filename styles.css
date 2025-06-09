@@ -366,3 +366,33 @@ img.zoomable.zoomed {
 .slider-image.active {
   display: flex;
 }
+
+
+.image-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.image-showcase img {
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.image-showcase img:hover {
+  transform: scale(1.03);
+}
+
+.image-caption {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: -20px;
+}
