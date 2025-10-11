@@ -315,4 +315,54 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   })();
+
+  // Append extra images for Project 03 from images/Experience/project_03/manifest.json
+  (() => {
+    const extra = document.getElementById('project3-gallery-extra');
+    if (!extra) return;
+
+    const topPdf = document.getElementById('project3-pdf-btn');
+    const base = './images/Experience/project_03/';
+    const manifestUrl = base + 'manifest.json';
+
+    const toCaption = (name) => name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ');
+
+    fetch(manifestUrl)
+      .then(r => (r.ok ? r.json() : Promise.reject()))
+      .then(m => {
+        if (m.pdf) {
+          const pdfPath = base + encodeURIComponent(m.pdf);
+          if (topPdf) topPdf.href = pdfPath;
+        }
+        const imgs = Array.isArray(m.images) ? m.images : [];
+        if (!imgs.length) return;
+
+        const frag = document.createDocumentFragment();
+        imgs.forEach(file => {
+          const fig = document.createElement('figure');
+          const img = document.createElement('img');
+          img.src = base + encodeURIComponent(file);
+          img.alt = toCaption(file);
+          const cap = document.createElement('figcaption');
+          cap.textContent = toCaption(file);
+          fig.appendChild(img);
+          fig.appendChild(cap);
+          frag.appendChild(fig);
+        });
+        extra.appendChild(frag);
+
+        // Try to resolve placeholders
+        const mapByBase = new Map();
+        imgs.forEach(f => {
+          const baseName = f.toLowerCase().replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/g, '');
+          mapByBase.set(baseName, f);
+        });
+        document.querySelectorAll('#project3 .image-gallery img[data-file]').forEach(img => {
+          const key = img.getAttribute('data-file').toLowerCase().replace(/[^a-z0-9]+/g, '');
+          const match = mapByBase.get(key);
+          if (match) img.src = base + encodeURIComponent(match);
+        });
+      })
+      .catch(() => { /* silently ignore if no manifest */ });
+  })();
 });
