@@ -58,7 +58,6 @@
     </header>
 
     <main>
-        <!-- Updated to include external text files for better organization -->
         <section id="introduction" class="hidden" style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: auto;">
 
             <div style="flex: 1;">
@@ -66,27 +65,247 @@
             </div>
             <div style="flex: 2; padding-left: 20px; text-align: justify;">
                 <h2>About Me</h2>
-                <!-- Include About Me text -->
-                <div>
-                    <!--#include file="text_content/about_me.txt" -->
-                </div>
+                <p>
+                    I am a highly motivated aerospace engineering master's student with a strong focus on
+                    computational fluid dynamics (CFD) in high-speed aerodynamics and reentry vehicle analysis.
+                    My expertise includes numerical simulations of hypersonic flows, turbulence modeling, and
+                    aerothermal effects, with a particular emphasis on shape parameter optimization for
+                    reentry configurations. My research and academic projects have provided me with deep insights
+                    into aerothermodynamics, mesh sensitivity analysis, and shock-wave interactions in hypersonic regimes.
+                </p>
+
+                <p>
+                    In my role as a Junior Aeromechanic Engineer at the <strong>Warsaw Institute of Aviation (EDC)</strong>, I have
+                    gained hands-on experience in running aeromechanical analyses using ANSYS and GageMap,
+                    processing and interpreting large datasets from experimental campaigns, and preparing
+                    certification documentation. Working in an international team, I have developed strong
+                    collaboration and communication skills, ensuring high-precision results while effectively
+                    coordinating with engineers from diverse backgrounds.
+                </p>
+
+                <p>
+                    I have participated in an internship at <strong>Rocket Factory Augsburg (RFA)</strong>, where I had the opportunity to further develop my skills in aerodynamics, teamwork, and working in a rapid, research-driven environment. During my time there, I contributed to solving real-world problems in rocketry, gaining hands-on experience in research and development (R&D) processes. This experience not only enhanced my technical expertise but also strengthened my ability to collaborate effectively in high-pressure situations, delivering innovative solutions to complex challenges.
+                </p>
+
+                <p>
+                    As a member of the <strong>Students' Space Association - Rocketry Division</strong>, I contributed
+                    to the aerodynamic analysis of key rocket components, including the split canards of the
+                    FOK Rocket and the nose cone and fins of the GROT Rocket. This experience has sharpened my
+                    ability to optimize aerodynamic performance, troubleshoot complex simulations, and work
+                    under tight deadlines within a dynamic, team-driven environment.
+                </p>
+
+                <p>
+                    My academic journey has also included practical research projects, such as my Bachelor's thesis
+                    on the aerodynamic performance of Falcon 9 grid fins across all Mach regimes. I performed
+                    detailed CFD analyses, mesh convergence studies, and post-processing in ANSYS Fluent, which
+                    deepened my expertise in high-fidelity aerodynamic simulations.
+                </p>
+
+                <p>
+                    Beyond technical skills, I bring a proactive and problem-solving mindset, excellent adaptability,
+                    and a strong ability to work in interdisciplinary teams. My international project collaborations
+                    have strengthened my ability to communicate complex engineering concepts effectively. Additionally,
+                    I am highly organized, detail-oriented, and thrive in high-pressure environments that require
+                    both analytical and creative problem-solving skills.
+                </p>
+
+                <p>
+                    Passionate about advancing aerospace technology, I am eager to contribute to innovative projects
+                    in spacecraft design, reusability, and aerothermodynamic optimization. Whether working independently
+                    or in a team, I am committed to continuous learning and pushing the boundaries of aerospace engineering.
+                </p>
+
+                <p>
+                    Besides that, in my private time I enjoy travelling, whether it is in my close neighbourhood, Poland, or abroad.
+                    Lately I have visited Japan and South Korea, where I could observe differences between culture of western Asia and Eastern Europe. 
+                    As my next trip I am planning to visit the USA and have the oportunity to watch a rocket launch in real life instead of YouTube 😅.
+                    
+                </p>
+
             </div>
         </section>
 
         <section id="project1_exp" class="hidden">
             <h3>uRANS/LES/DES</h3>
-            <!-- Include uRANS/LES/DES text -->
-            <div>
-                <!--#include file="text_content/urans_les_des.txt" -->
+            <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #444;">
+                <strong>Tags:</strong>
+                <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#uRANS</span>
+                <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#DES</span>
+                <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#LES</span>
+                <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#ANSYS Fluent</span>
+                <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#30° AoA</span>
             </div>
-        </section>
 
-        <section id="rocket-factory-augsburg">
-            <h2>Rocket Factory Augsburg Internship</h2>
-            <!-- Include Rocket Factory Augsburg text -->
-            <div>
-                <!--#include file="text_content/rocket_factory_augsburg.txt" -->
-            </div>
+            <p>
+                This project wasn’t just another CFD run over a wing. I went deep—real deep—into the aerodynamic chaos zone to see what really happens when air decides to flip the script. My mission: take the classic NACA 2412 airfoil at <strong>Re=6.85×10⁶</strong>, pump three turbulence strategies (<strong>uRANS</strong>, <strong>DES</strong>, <strong>LES</strong>), and let them battle it out under full-on separation conditions. Why? To figure out who really understands vortex drama, boundary layer plot twists, and wake formation during airflow stress tests.
+            </p>
+
+            <h4>Here’s how I rolled:</h4>
+
+            <h5>CFD Turbulence Showdown:</h5>
+            <ul>
+                <li><strong>uRANS:</strong> Fast, efficient, but misses out on the wild turbulence party.</li>
+                <li><strong>DES:</strong> Middle ground, grabs some of the action.</li>
+                <li><strong>LES:</strong> The truth teller—shows every detail if your hardware can handle the heat.</li>
+            </ul>
+
+            <h5>Mesh Crafting:</h5>
+            <p>
+                I built every mesh from scratch. Tuned y⁺ to about 1 (for uRANS/DES), dialed it below 5 for LES. Stretched those inflation layers so wake regions hit the Taylor micro/kolmogorov scales—basically, zoomed in on the tiniest energy transfers happening in turbulent zones.
+            </p>
+
+            <h5>Solver Moves:</h5>
+            <p>
+                Ran a density-based scheme with CFL-driven timesteps—never let solver stability drop the beat.
+            </p>
+
+            <h4>Epic Aerodynamic Phenomena Observed:</h4>
+            <ul>
+                <li><strong>Vortex shedding:</strong> Watched air break up into swirling madness behind the airfoil.</li>
+                <li><strong>Boundary layer detachment/reattachment:</strong> Pinpointed exactly where the flow decided to chill or bounce back—classic aerodynamic "plot twists."</li>
+                <li><strong>Wake formation:</strong> Saw the birth and evolution of those wake regions, different for every model.</li>
+                <li><strong>Kolmogorov scale resolution:</strong> LES ran close enough to see energy cascading down to the tiniest scales—actual turbulence, not just numbers.</li>
+                <li><strong>Kelvin-Helmholtz instabilities:</strong> Spotted those shear layer roll-ups—major vibe in aeroacoustics and real-world drag.</li>
+                <li><strong>Hardware performance juggling:</strong> Ran full-second, high-fidelity LES on a classic setup; learned when to push, pause, and post-process to avoid burnout.</li>
+            </ul>
+
+            <h4>What I Learned:</h4>
+            <ul>
+                <li><strong>Turbulence strategy mastery:</strong> Know when and why each model shines (or flops)—critical for reentry vehicles, rocket separation, or any high-stakes aerodynamic drama.</li>
+                <li><strong>Mesh artistry:</strong> If you want to see real turbulence, you build the mesh with love and grind for those Kolmogorov vibes in separation zones.</li>
+                <li><strong>Boundary layer attitude:</strong> Achieving y⁺ ≈ 1 and tracking transitions gave me pro instincts for wall modeling.</li>
+                <li><strong>Turbulence intuition:</strong> Now, I can look at vorticity patterns and tell you when things get real—way better than trusting residuals alone.</li>
+                <li><strong>Smart engineering communication:</strong> Turning millions of cells and mega turbulence data into visuals and stories people actually get.</li>
+            </ul>
+
+            <p>
+                This CFD journey taught me how to own complexity, wrangle hardware, and translate raw aerodynamic data into decision-worthy insights. Ready to tackle any flow challenge, from high-speed reentry to next-gen rocket dynamics—because, in the end, it’s all about catching the real turbulence, not just the math.
+            </p>
+
+            <!-- Updated content for the uRANS/LES/DES section with table explicitly added -->
+            <section id="turbulence-models">
+    <h2>uRANS, DES, and LES: Which One Tells the Truth?</h2>
+    <p>This project started because I was genuinely curious about something: when airflow gets messy around an airfoil, which CFD approach actually tells you the truth? So I grabbed the classic NACA 2412, cranked the Reynolds number to 6.85 × 10<sup>6</sup>, and put three different turbulence models through their paces—uRANS, DES, and LES.</p>
+
+    <p>The whole point wasn't just to run simulations. I wanted to see what happens when air decides to separate, swirl, and cause problems. You know, the stuff that makes engineers lose sleep when designing real aircraft.</p>
+
+    <h3>The Real Talk Comparison:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Mesh Requirements</th>
+                <th>What You Actually See</th>
+                <th>Reality Check</th>
+                <th>When to Use It</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>uRANS</td>
+                <td>y⁺ ≈ 1</td>
+                <td>Basic separation, averaged flow</td>
+                <td>Fast but misses details</td>
+                <td>Quick checks, early design</td>
+            </tr>
+            <tr>
+                <td>DES</td>
+                <td>y⁺ ≈ 1</td>
+                <td>Big separation features, some dynamics</td>
+                <td>Good middle ground</td>
+                <td>When you need some detail</td>
+            </tr>
+            <tr>
+                <td>LES</td>
+                <td>y⁺ &lt; 5</td>
+                <td>Everything—full vortex chaos, energy cascades</td>
+                <td>The whole truth (RIP your computer)</td>
+                <td>Critical flows, research</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Building the Setup:</h3>
+    <p>I spent weeks crafting meshes for each model. Got y⁺ down to about 1 for the wall-resolved stuff, pushed it under 5 for LES. Those inflation layers? Hand-tuned so I could catch the tiny energy transfers happening in the chaotic zones—we're talking Kolmogorov scale territory here. Then I fired up a density-based solver with time steps that actually made sense for the physics.</p>
+
+    <h3>What I Actually Saw:</h3>
+    <ul>
+        <li><strong>Vortex madness:</strong> Real vortex streets peeling off the airfoil—not just pretty pictures, but the actual mechanisms that create drag and noise on every plane you've ever flown.</li>
+        <li><strong>Flow breakups:</strong> Watched exactly where the boundary layer said "nope" and detached, then tracked if and when it decided to stick back on. This stuff determines when wings stall.</li>
+        <li><strong>Wake chaos:</strong> Each model showed me different wake structures. LES was wild—I could literally see energy cascading from big swirls down to tiny eddies.</li>
+        <li><strong>Shear layer drama:</strong> Caught those Kelvin-Helmholtz roll-ups that textbooks love to mention but you rarely see in action.</li>
+        <li><strong>Computer battles:</strong> LES pushed my setup so hard I had to get creative with memory management and file saves. Nothing like watching your CPU temperature while chasing turbulence truth.</li>
+    </ul>
+
+    <h3>What Stuck With Me:</h3>
+    <ul>
+        <li>Now I can look at a flow problem and know which turbulence model will actually work—not just pick the fanciest one.</li>
+        <li>Developed a weird intuition for reading vorticity plots. I can spot when a simulation is lying versus when it's showing real physics.</li>
+        <li>Got obsessed with mesh quality. If you want honest results, you build honest meshes.</li>
+        <li>Learned that the best CFD work means nothing if you can't explain what you found to other people.</li>
+    </ul>
+
+    <p>This whole experience taught me that turbulence modeling isn't just about picking settings—it's about understanding what's really happening in the flow. Whether it's a reentry vehicle hitting atmosphere or a rocket separating stages, I now know how to dig into the physics and figure out what's actually going on.</p>
+</section>
+
+<!-- Updated Project 01 content in the uRANS/LES/DES section -->
+<section id="project01" class="hidden">
+    <h3>Project 01: uRANS/LES/DES Analysis</h3>
+    <p>Below are the images and videos from Project 01, showcasing the uRANS, LES, and DES analysis.</p>
+
+    <div class="image-gallery">
+        <figure>
+            <img src="./images/Experience/Project_01/Control_Volume.png" alt="Control Volume">
+            <figcaption>Control Volume</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/DES_BL.png" alt="DES Boundary Layer">
+            <figcaption>DES Boundary Layer</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/DES_close.png" alt="DES Close-Up">
+            <figcaption>DES Close-Up</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/DES_overview.png" alt="DES Overview">
+            <figcaption>DES Overview</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/LES_BL.png" alt="LES Boundary Layer">
+            <figcaption>LES Boundary Layer</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/LES_close.png" alt="LES Close-Up">
+            <figcaption>LES Close-Up</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/LES_overview.png" alt="LES Overview">
+            <figcaption>LES Overview</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/RANS_BL.png" alt="RANS Boundary Layer">
+            <figcaption>RANS Boundary Layer</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/RANS_Close.png" alt="RANS Close-Up">
+            <figcaption>RANS Close-Up</figcaption>
+        </figure>
+        <figure>
+            <img src="./images/Experience/Project_01/RANS_overview.png" alt="RANS Overview">
+            <figcaption>RANS Overview</figcaption>
+        </figure>
+    </div>
+
+    <h4>Videos</h4>
+    <video controls>
+        <source src="./images/Experience/Project_01/all_models_compared.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <h4>Download PDF</h4>
+    <a href="./images/Experience/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf" download class="download-btn">Download Project 01 PDF</a>
+</section>
         </section>
 
         <section id="project2" class="hidden">
