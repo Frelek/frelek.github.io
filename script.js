@@ -250,8 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const pdfPath = base + encodeURIComponent(m.pdf);
           if (topPdf) topPdf.href = pdfPath;
 				}
-        // Append images listed in manifest
-				const imgs = Array.isArray(m.images) ? m.images : [];
+        // Append images listed in manifest (PNG only)
+        const imgs = Array.isArray(m.images) ? m.images.filter(f => /\.png$/i.test(f)) : [];
 				if (!imgs.length) return;
 
 				const frag = document.createDocumentFragment();
@@ -290,7 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Resolve proper photos for Project 02 by trying common extensions
   (() => {
   const base = './images/Experience/project_02/';
-    const exts = ['.png', '.jpg', '.jpeg', '.webp'];
+    // Only allow PNGs for Impinging Jet section
+    const exts = ['.png'];
 
     const resolveSrc = (basename) => new Promise((resolve, reject) => {
       let i = 0;
@@ -400,6 +401,25 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(url => { img.src = url; })
             .catch(() => { const fig = img.closest('figure'); if (fig) fig.style.display = 'none'; });
         });
+      });
+  })();
+
+  // Bind PDF for Project 08 (Intermediate Project 2) from images/Full_Projects/02/manifest.json
+  (() => {
+    const topPdf = document.getElementById('project8-pdf-btn');
+    if (!topPdf) return;
+    const base = './images/Full_Projects/02/';
+    const manifestUrl = base + 'manifest.json';
+
+    fetch(manifestUrl)
+      .then(r => (r.ok ? r.json() : Promise.reject()))
+      .then(m => {
+        if (m && m.pdf) {
+          topPdf.href = base + encodeURIComponent(m.pdf);
+        }
+      })
+      .catch(() => {
+        // Leave the static href in place if manifest missing or invalid
       });
   })();
 });

@@ -13,6 +13,8 @@
         #project1_exp { position: relative; }
         /* Added: position container for Project 02 top-right button */
         #project2 { position: relative; }
+        /* Added: position container for Project 08 top-right button */
+        #project8 { position: relative; }
     .pdf-top-right { position: absolute; top: 10px; right: 12px; z-index: 2; backdrop-filter: saturate(120%) blur(0px); }
         /* Added: make videos conform to gallery width */
         .image-gallery figure video { width: 100%; height: auto; display: block; }
@@ -41,6 +43,20 @@
         @media (max-width: 640px) {
             .image-gallery { grid-template-columns: 1fr; }
         }
+        /* Simple side-by-side media rows for text with images */
+        .media-row { display: flex; gap: 16px; align-items: flex-start; margin: 12px 0 16px; }
+    .media-row img { max-width: 320px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .media-img { display: flex; flex-direction: column; align-items: center; }
+    .img-sub { font-size: 0.8rem; color: #666; margin-top: 6px; text-align: center; }
+        .media-row .text { flex: 1; }
+        .media-row.right-image { flex-direction: row-reverse; }
+        @media (max-width: 768px) {
+            .media-row, .media-row.right-image { flex-direction: column; }
+            .media-row img { width: 100%; max-width: 100%; }
+        }
+        /* Chip bar styles */
+        .chip-bar { margin: 8px 0 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { background-color:#e7f3ff; color:#183153; border:1px solid #c6ddff; padding:3px 10px; border-radius:999px; font-size:0.85rem; }
     </style>
 </head>
 <body>
@@ -60,10 +76,6 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Hobby</a>
                     <ul class="dropdown-content hidden">
-                        <li><a href="#project4_hobby">project 4</a></li>
-                        <li><a href="#project5">project 5</a></li>
-                        <li><a href="#project6">project 6</a></li>
-                        <li><a href="#project7_hobby">project 7</a></li>
                         <li><a href="#travelling">Travelling</a></li>
                     </ul>
                 </li>
@@ -583,41 +595,85 @@
                 <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#High fidelity</span>
                 <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#Python</span>
             </div>
-            <p>Details about project 4.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/project4/img1.png" alt="P4 Image1">
-                        <figcaption>P4 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/project4/img2.png" alt="P4 Image2">
-                        <figcaption>P4 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/project4/img3.png" alt="P4 Image3">
-                        <figcaption>P4 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/project4/img4.png" alt="P4 Image4">
-                        <figcaption>P4 Image4</figcaption>
-                    </figure>
+            <div class="project-intro">
+                <div class="media-row">
+                    <div class="media-img">
+                        <img src="./images/Experience/project_04/RFA.png" alt="Rocket Factory Augsburg (RFA)">
+                        <div class="img-sub"><sub>Rocket Factory Augsburg (RFA)</sub></div>
+                    </div>
+                    <div class="text">
+                        <h4>Aerodynamic Engineering Internship at Rocket Factory Augsburg</h4>
+                        <p>During my internship at Rocket Factory Augsburg (RFA) in Augsburg, I handled aerodynamic design and analysis for the RFA ONE launch vehicle across the core flight regimes, using ANSYS Fluent and Python automation to streamline workflows.</p>
+                    </div>
                 </div>
-                <button class="slider-btn right-btn">&#9654;</button>
+
+                <h4>Full-Flight Mach Regime Analysis</h4>
+                <p>I ran CFD simulations in ANSYS Fluent for:</p>
+                <ul>
+                    <li><strong>Subsonic (M &lt; 0.8):</strong> Mapped pressure distributions during liftoff roll and early ascent.</li>
+                    <li><strong>Transonic (0.8 &lt; M &lt; 1.2):</strong> Investigated shock–boundary layer interactions over the nose cone and interstage fairings, optimizing shapes to delay separation peaks.</li>
+                    <li><strong>Supersonic (1.2 &lt; M &lt; 5):</strong> Studied shock patterns and expansion fans on the stainless-steel airframe, ensuring stability through Mach-dependent center-of-pressure shifts.</li>
+                </ul>
+                <p>These studies highlighted transonic separation hotspots and aftward shifts in aerodynamic center at supersonic speeds.</p>
+
+                <div class="media-row right-image">
+                    <div class="media-img">
+                        <img src="./images/Experience/project_04/rfa%20one%20.png" alt="RFA ONE launch vehicle">
+                        <div class="img-sub"><sub>RFA ONE Launch Vehicle</sub></div>
+                    </div>
+                    <div class="text">
+                        <h4>Plume-On vs. Plume-Off Analysis</h4>
+                        <p>I compared engine-on and engine-off cases in Fluent to capture plume–body interactions:</p>
+                        <ul>
+                            <li><strong>Plume-On:</strong> Modeled exhaust impingement and thermal effects on the aft section, revealing recirculation zones that impact base drag and local heating.</li>
+                            <li><strong>Plume-Off:</strong> Established clean-air baselines for aerodynamic coefficients, crucial for control-law development during engine coast phases.</li>
+                        </ul>
+                        <p>Results led to minor aft-body contour tweaks to minimize plume-induced recirculation and thermal stress.</p>
+                    </div>
+                </div>
+
+                <h4>Python Automation for Post-Processing</h4>
+                <p>I built Python scripts to parse Fluent output, automatically extracting:</p>
+                <ul>
+                    <li>Surface pressure (Cp) distributions</li>
+                    <li>Aerodynamic force and moment coefficients</li>
+                    <li>Shock location metrics</li>
+                </ul>
+                <p>Automated plotting and report generation accelerated result analysis and design feedback.</p>
+
+                <h4>Key Aerodynamic Insights</h4>
+                <ul>
+                    <li><strong>Shock-Boundary Layer Interaction:</strong> Improved fairing transitions to reduce drag spikes in transonic flight.</li>
+                    <li><strong>Center-of-Pressure Migration:</strong> Adjusted fin sizing and mass distribution to maintain stability at varying Mach.</li>
+                    <li><strong>Plume-Induced Flow Fields:</strong> Refined nozzle-aft contours to smooth recirculation zones, enhancing separation reliability.</li>
+                </ul>
+
+                <p>This internship sharpened my expertise in ANSYS Fluent simulations, Python-driven post-processing, and comprehensive Mach-regime aerodynamics—skills that directly support cutting-edge launch vehicle development.</p>
             </div>
+            
         </section>
 
         <!-- Updated Travelling Section with All Photos -->
         <section id="travelling" class="hidden">
             <h3>Travelling</h3>
+            <div class="chip-bar">
+                <span class="chip">#Japan</span>
+                <span class="chip">#SouthKorea</span>
+                <span class="chip">#Greece</span>
+                <span class="chip">#Netherlands</span>
+                <span class="chip">#Croatia</span>
+                <span class="chip">#Poland</span>
+            </div>
             <p>
-                Over the years, I have had the opportunity to explore various countries, immersing myself in their unique cultures and landscapes. Travelling has not only broadened my horizons but also deepened my appreciation for the diversity of our world.
+                I love getting out and experiencing new places—it’s like a real-world crash course in culture and creativity. In Japan, I bounced from Tokyo’s buzzing streets and hidden ramen spots to the serene temples of Kyoto, the friendly deer of Nara, and Fukuoka’s cozy yatai stalls. Seoul was a tech-savvy playground: exploring street-food alleys in Myeongdong, catching K-pop vibes in Gangnam, and soaking in history at Gyeongbokgung Palace. Europe’s been just as inspiring—cycling along Amsterdam’s canals, island-hopping Croatia’s Adriatic gems, and tracing Greece’s ancient ruins. Living in Poland means weekend escapes are never boring: sampling pierogi in Kraków, wandering Warsaw’s Old Town, or hitting the slopes in the Tatra Mountains. Each trip shows me new ways people solve everyday challenges and celebrate life—ideas I bring back to my engineering projects. I’m already plotting my next journey deeper into Asia, excited to dive into more local cultures, foods, and stories.
             </p>
 
             <div class="country-section">
                 <h4>Greece</h4>
-                <p class="country-description">Greece is known for its ancient history, stunning islands, and delicious cuisine.</p>
+                <p class="country-description">Greece was basically me mastering the art of sunbathing and eating gyros like it’s a competitive sport. hehe I also want to visit continental Greece.</p>
+                <div class="chip-bar">
+                    <span class="chip">#Crete</span>
+                </div>
                 <div class="photo-gallery">
                     <img src="./images/travel/Greece/000406510003.jpg" class="expandable" alt="Greece Photo 1">
                     <img src="./images/travel/Greece/000406510005.jpg" class="expandable" alt="Greece Photo 2">
@@ -628,6 +684,24 @@
             <div class="country-section">
                 <h4>South Korea</h4>
                 <p class="country-description">South Korea offers a mix of modern cities and traditional culture, with beautiful landscapes.</p>
+                <div class="chip-bar">
+                    <span class="chip">#Seoul</span>
+                    <span class="chip">#Busan</span>
+                    <span class="chip">#Jeju</span>
+                </div>
+                <h5>Seoul</h5>
+                <p>
+                    Seoul felt like stepping into tomorrow with a nod to the past. I dove into Myeongdong’s street-food scene—slurping tteokbokki and biting into hotteok while weaving through crowds hunting the latest Korean skincare deals.
+                </p>
+                <p>
+                    In Gangnam, the skyline shimmered with glass towers and trendy cafés. I grabbed Korean barbecue with friends I met on the subway, grilling tender galbi and samgyeopsal tableside and washing it down with soju. The neighborhood’s energy was contagious, with K-pop beats spilling out of every storefront.
+                </p>
+                <p>
+                    For a quieter side of the city, I rented a hanbok and wandered Gyeongbokgung Palace at golden hour. Watching the changing-of-the-guard ceremony against ancient stone walls felt like a scene from a period drama—and made for epic photos.
+                </p>
+                <p>
+                    I wrapped up my Seoul stop in Bukchon Hanok Village, ducking into a cozy teahouse where I sipped roasted barley tea and nibbled on sweet patbingsu under wooden beams. Chatting with the café owner about life in Seoul gave me a glimpse into how tradition and modern hustle coexist here—one of the best parts of the city’s charm.
+                </p>
                 <div class="photo-gallery">
                     <img src="./images/travel/SouthKorea/000499970004.jpg" class="expandable" alt="South Korea Photo 1">
                     <img src="./images/travel/SouthKorea/000499970017.jpg" class="expandable" alt="South Korea Photo 2">
@@ -641,6 +715,33 @@
             <div class="country-section">
                 <h4>Japan</h4>
                 <p class="country-description">Japan is a land of contrasts, blending ancient traditions with cutting-edge technology.</p>
+                <div class="chip-bar">
+                    <span class="chip">#Tokyo</span>
+                    <span class="chip">#Osaka</span>
+                    <span class="chip">#Kyoto</span>
+                    <span class="chip">#Nara</span>
+                    <span class="chip">#Fukuoka</span>
+                </div>
+                <h5>Tokyo</h5>
+                <p>
+                    At the heart of Tokyo, the Hachikō statue by Shibuya Station stole my heart—this loyal dog waited every day for his owner years after his passing, and seeing people still leave flowers there was so moving. I couldn’t get enough of Japan’s food scene: matcha lattes so rich they tasted like dessert, nutty hojicha that warmed me up on chilly mornings, and sushi so fresh it practically melted in my mouth. Everywhere I went, locals were unfailingly polite—bowing with a smile, helping me navigate menus in broken English, and sharing their favorite hidden eateries. It felt like the entire city was rooting for me to fall in love with Japan as much as they did—mission accomplished!
+                </p>
+                <h5>Osaka</h5>
+                <p>
+                    Osaka was pure energy from the moment I stepped into Dotonbori—neon signs, sizzling takoyaki carts, and the irresistible smell of okonomiyaki grilling hot off the teppan. I tried every street-food stall I could find, from kushikatsu (fried skewers) to kushikatsu cheese bombs, and chatted with friendly vendors who laughed when I butchered their Kansai accents. Catching sunset views from Osaka Castle’s ramparts reminded me that there’s history behind all that buzz, and a stroll through Amerikamura showed off the city’s quirky, creative youth culture.
+                </p>
+                <h5>Kyoto</h5>
+                <p>
+                    Kyoto felt like stepping into a living painting. I woke up at dawn to hike through the thousands of vermilion torii gates at Fushimi Inari, the air cool and the pathways almost silent. In Arashiyama, I wandered the bamboo grove as sunlight filtered through the stalks, then hopped on a rickshaw for a riverside ride. Matcha wasn’t just a drink here—it was a ritual. I sat on tatami mats in a centuries-old teahouse, learning the tea ceremony’s mindful pace while savoring the grassy bitterness balanced with sweet wagashi.
+                </p>
+                <h5>Nara</h5>
+                <p>
+                    Nara Park was surprisingly chill—deer wandered freely, nudging me gently if I held out a snack, and I spent hours snapping photos of their antlered silhouettes against temple backdrops. Todai-ji’s giant bronze Buddha left me in awe, and the surrounding gardens made for easy afternoon wandering. Even the deer bowed back when they wanted treats—it was like hanging out with polite, four-legged locals who always knew exactly when it was snack time.
+                </p>
+                <h5>Fukuoka</h5>
+                <p>
+                    Fukuoka felt like a cozy hometown BBQ under paper lanterns. I hunted down the best Hakata ramen yatai, slurping rich, pork-broth noodles while leaning over crowded street stalls. Between bowls, I biked along the riverside under twinkling lantern lights and sampled mentaiko (spicy cod roe) on just-baked buns from late-night bakeries. The city’s laid-back vibe and tasty late-night eats made it the perfect spot to wind down after the whirlwind of big-city touring.
+                </p>
                 <div class="photo-gallery">
                     <img src="./images/travel/Japan/000499950009.jpg" class="expandable" alt="Japan Photo 1">
                     <img src="./images/travel/Japan/000499960004.jpg" class="expandable" alt="Japan Photo 2">
@@ -652,84 +753,7 @@
             </div>
         </section>
 
-        <section id="project5" class="hidden">
-            <h3>project 5</h3>
-            <p>Details about hobby project 5.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/hobby5/img1.png" alt="H5 Image1">
-                        <figcaption>H5 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby5/img2.png" alt="H5 Image2">
-                        <figcaption>H5 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby5/img3.png" alt="H5 Image3">
-                        <figcaption>H5 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby5/img4.png" alt="H5 Image4">
-                        <figcaption>H5 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
-            </div>
-        </section>
-        <section id="project6" class="hidden">
-            <h3>project 6</h3>
-            <p>Details about hobby project 6.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/hobby6/img1.png" alt="H6 Image1">
-                        <figcaption>H6 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby6/img2.png" alt="H6 Image2">
-                        <figcaption>H6 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby6/img3.png" alt="H6 Image3">
-                        <figcaption>H6 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby6/img4.png" alt="H6 Image4">
-                        <figcaption>H6 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
-            </div>
-        </section>
-        <section id="project7_hobby" class="hidden">
-            <h3>project 7</h3>
-            <p>Details about hobby project 7.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/hobby7/img1.png" alt="H7 Image1">
-                        <figcaption>H7 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby7/img2.png" alt="H7 Image2">
-                        <figcaption>H7 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby7/img3.png" alt="H7 Image3">
-                        <figcaption>H7 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/hobby7/img4.png" alt="H7 Image4">
-                        <figcaption>H7 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
-            </div>
-        </section>
+        
 
 <section id="project7" class="hidden">
   <h3>Bachelor Thesis: Falcon 9 Grid Fin Aerodynamics</h3>
@@ -771,13 +795,11 @@
     <li>
       <strong>Modeling high‑speed air:</strong> Setting up correct boundary conditions and gas properties for Mach >1 taught me the nuances of real‑gas effects and how to predict bow‑shock angles with confidence.
     </li>
-    <li></li>
       <strong>Bow‑shock familiarity:</strong> Watching shock waves wrap around grid fins showed me the practical side of oblique‐shock theory—and inspired me to explore control‑surface interactions in highly sonic conditions. 
     </li>
     <li>
       <strong>Deepening CFD theory:</strong> Building everything solo—from geometry cleanup to solver setup—gave me a solid grasp of turbulence models (SST k‑ω), convergence criteria, and when to trust residuals versus physical trends.
     </li>
-    <li></li>
       <strong>Independent problem‑solving:</strong> Tackling mesh refinement, solver crashes, and post‑processing challenges alone honed my resilience—and taught me to document each step so future peers (or employers) can pick up where I left off.
     </li>
     <li>
@@ -786,24 +808,106 @@
   </ul>
 </div>
 
-  <div class="slider-container">
-    <button class="slider-btn left-btn">&#9664;</button>
-    <div class="slider">
-      <img src="./images/Full_Projects/01/01_IL.jpg" class="slider-image active zoomable" alt="Grid Fin Geometry (Side View)">
-      <img src="./images/Full_Projects/01/02_3D_boi.jpg" class="slider-image zoomable" alt="Mesh Detail Around Fin">
-      <img src="./images/Full_Projects/01/03_3D_mesh_gridfin.jpg" class="slider-image zoomable" alt="Mach Contours - M=0.99">
-      <img src="./images/Full_Projects/01/04_26_new63.jpg" class="slider-image zoomable" alt="Pressure Contours - M=1.91">
-      <img src="./images/Full_Projects/01/05_closer_look_3c.png" class="slider-image zoomable" alt="Closer Shock-Bow View">
+    <div class="image-gallery">
+            <figure>
+                <img src="./images/Full_Projects/01/01_IL.jpg" class="expandable" alt="Grid Fin Geometry (Side View)">
+                <figcaption>Grid Fin Geometry (Side View)</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/Full_Projects/01/02_3D_boi.jpg" class="expandable" alt="Mesh Detail Around Fin">
+                <figcaption>Mesh Detail Around Fin</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/Full_Projects/01/03_3D_mesh_gridfin.jpg" class="expandable" alt="Mach Contours - M=0.99">
+                <figcaption>Mach Contours - M=0.99</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/Full_Projects/01/04_26_new63.jpg" class="expandable" alt="Pressure Contours - M=1.91">
+                <figcaption>Pressure Contours - M=1.91</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/Full_Projects/01/05_closer_look_3c.png" class="expandable" alt="Closer Shock-Bow View">
+                <figcaption>Closer Shock-Bow View</figcaption>
+            </figure>
     </div>
-    <button class="slider-btn right-btn">&#9654;</button>
-  </div>
 
   
 </section>
 
         <section id="project8" class="hidden">
             <h3>Intermediate Project 2</h3>
-            <p>Details about Intermediate Project 2.</p>
+            <a href="./images/Full_Projects/02/Intermediate_Project_2.pdf"
+               id="project8-pdf-btn"
+               download
+               class="download-btn pdf-top-right"
+               aria-label="Download Intermediate Project 2 PDF">
+                Download PDF
+            </a>
+
+            <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #444;">
+                <strong>Tags:</strong>
+                <span class="chip">#Starship</span>
+                <span class="chip">#Reentry</span>
+                <span class="chip">#CFD</span>
+                <span class="chip">#ANSYSFluent</span>
+                <span class="chip">#Hypersonic</span>
+                <span class="chip">#ControlSurfaces</span>
+                <span class="chip">#Guidance</span>
+                <span class="chip">#Aerodynamics</span>
+                <span class="chip">#WUT</span>
+            </div>
+
+            <div class="project-intro">
+                <h4>🚀 Aerodynamic Performance Analysis of Starship Reentry</h4>
+                <p><strong>Warsaw University of Technology (WUT)</strong></p>
+
+                <p>I conducted an extensive computational study on Starship's aerodynamic performance during atmospheric reentry, focusing on how its body shape, forward canards, and aft flaps interact to control descent stability, lift, and drag under extreme conditions. The work combined high‑fidelity <strong>CFD</strong> simulations (with a <strong>15.5‑million‑cell mesh</strong> validated through sensitivity studies) using <strong>ANSYS Fluent</strong> to accurately resolve <strong>shock‑wave structures</strong> and <strong>boundary‑layer dynamics</strong> throughout subsonic, transonic, and hypersonic flow regimes.</p>
+
+                <h4>🧪 Study Objective & Method</h4>
+                <ul>
+                    <li>Mapped how <strong>angle of attack</strong> and <strong>control‑surface deflections</strong> affect forces and moments across reentry regimes where loads and heating are critical.</li>
+                    <li>Simulated a matrix of canard/flap settings—both independently and in <strong>counterposition</strong>.</li>
+                    <li>Confirmed that a <strong>superposition principle</strong> reliably predicts combined effects, <strong>reducing compute cost</strong> while maintaining accuracy.</li>
+                    <li>Executed <strong>mesh‑independence</strong> and <strong>solution‑convergence</strong> checks.</li>
+                </ul>
+
+                <h4>📊 CFD Setup Highlights</h4>
+                <ul>
+                    <li><strong>Mesh:</strong> 15.5M cells, refined shock/BL resolution; prism layers tuned for y+ targets.</li>
+                    <li><strong>Regimes:</strong> Subsonic → Transonic → Hypersonic; density‑based solver with regime‑appropriate <strong>CFL</strong> control.</li>
+                    <li><strong>Physics:</strong> Shock capturing, separation/reattachment behavior, control‑surface hinge‑line effects.</li>
+                    <li><strong>Post‑processing:</strong> Automated <strong>force/moment</strong> extraction, <strong>Cp</strong> lines, <strong>L/D</strong> maps, <strong>trim</strong> analysis.</li>
+                </ul>
+
+                <h4>🔧 Control‑Surface Matrix & Trim</h4>
+                <ul>
+                    <li>Quantified <strong>lift surges</strong>, <strong>transonic drag rise</strong>, and <strong>trim requirements</strong> (Cm trends, center‑of‑pressure migration).</li>
+                    <li>Identified <strong>optimal canard/flap strategies</strong> for controllability, heat load management, and reduced post‑flight wear.</li>
+                    <li>Established <strong>trim tables</strong> for guidance and entry corridor targeting.</li>
+                </ul>
+
+                <h4>✅ Validation & Deliverables</h4>
+                <ul>
+                    <li>Compared trends against <strong>available flight‑test data</strong> and literature benchmarks.</li>
+                    <li>Delivered a reusable <strong>aerodynamic database</strong> (AoA × deflections × Mach) and <strong>Python</strong> tools for interpolation and envelope checks.</li>
+                    <li>Provided <strong>guidance‑law inputs</strong> and control‑surface schedules for closed‑loop reentry concepts.</li>
+                </ul>
+
+                <h4>📈 Impact for Rocket Employers</h4>
+                <ul>
+                    <li><strong>Cost & schedule:</strong> Superposition‑based prediction cut compute time while preserving fidelity.</li>
+                    <li><strong>Risk reduction:</strong> Early detection of transonic drag spikes and trim gaps informs heat‑load margins and actuator sizing.</li>
+                    <li><strong>Ops readiness:</strong> Clean handoff artifacts (ADB + scripts) for <strong>GNC</strong>, testing, and flight readiness reviews.</li>
+                </ul>
+
+                <h4>🔭 What’s Next</h4>
+                <ul>
+                    <li>Expand flap/canard matrices; incorporate <strong>wind‑tunnel</strong> and <strong>flight‑test</strong> cross‑validation.</li>
+                    <li>Integrate ADB into <strong>trajectory optimization</strong> and entry guidance algorithms.</li>
+                </ul>
+
+                <p>🏷️ <em>#Starship #CFD #Reentry #ANSYSFluent #Hypersonics #ControlSurfaces #Guidance #GNC #WUT</em></p>
+            </div>
             <div class="slider-container">
                 <button class="slider-btn left-btn">&#9664;</button>
                 <div class="slider">
