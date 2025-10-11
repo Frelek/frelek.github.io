@@ -1,0 +1,31 @@
+This project wasn’t just another CFD run over a wing. I went deep—real deep—into the aerodynamic chaos zone to see what really happens when air decides to flip the script. My mission: take the classic NACA 2412 airfoil at Re=6.85×10⁶, pump three turbulence strategies (uRANS, DES, LES), and let them battle it out under full-on separation conditions. Why? To figure out who really understands vortex drama, boundary layer plot twists, and wake formation during airflow stress tests.
+
+Here’s how I rolled:
+
+CFD Turbulence Showdown:
+- uRANS: Fast, efficient, but misses out on the wild turbulence party.
+- DES: Middle ground, grabs some of the action.
+- LES: The truth teller—shows every detail if your hardware can handle the heat.
+
+Mesh Crafting:
+I built every mesh from scratch. Tuned y⁺ to about 1 (for uRANS/DES), dialed it below 5 for LES. Stretched those inflation layers so wake regions hit the Taylor micro/kolmogorov scales—basically, zoomed in on the tiniest energy transfers happening in turbulent zones.
+
+Solver Moves:
+Ran a density-based scheme with CFL-driven timesteps—never let solver stability drop the beat.
+
+Epic Aerodynamic Phenomena Observed:
+- Vortex shedding: Watched air break up into swirling madness behind the airfoil.
+- Boundary layer detachment/reattachment: Pinpointed exactly where the flow decided to chill or bounce back—classic aerodynamic "plot twists."
+- Wake formation: Saw the birth and evolution of those wake regions, different for every model.
+- Kolmogorov scale resolution: LES ran close enough to see energy cascading down to the tiniest scales—actual turbulence, not just numbers.
+- Kelvin-Helmholtz instabilities: Spotted those shear layer roll-ups—major vibe in aeroacoustics and real-world drag.
+- Hardware performance juggling: Ran full-second, high-fidelity LES on a classic setup; learned when to push, pause, and post-process to avoid burnout.
+
+What I Learned:
+- Turbulence strategy mastery: Know when and why each model shines (or flops)—critical for reentry vehicles, rocket separation, or any high-stakes aerodynamic drama.
+- Mesh artistry: If you want to see real turbulence, you build the mesh with love and grind for those Kolmogorov vibes in separation zones.
+- Boundary layer attitude: Achieving y⁺ ≈ 1 and tracking transitions gave me pro instincts for wall modeling.
+- Turbulence intuition: Now, I can look at vorticity patterns and tell you when things get real—way better than trusting residuals alone.
+- Smart engineering communication: Turning millions of cells and mega turbulence data into visuals and stories people actually get.
+
+This CFD journey taught me how to own complexity, wrangle hardware, and translate raw aerodynamic data into decision-worthy insights. Ready to tackle any flow challenge, from high-speed reentry to next-gen rocket dynamics—because, in the end, it’s all about catching the real turbulence, not just the math.

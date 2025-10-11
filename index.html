@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Kacper Frelek</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        main {
+            padding-bottom: 60px; /* Added extra padding to create space above the footer */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,7 +19,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Experience</a>
                     <ul class="dropdown-content hidden">
-                        <li><a href="#project1_exp">project 1</a></li>
+                        <li><a href="#project1_exp">uRANS/LES/DES</a></li>
                         <li><a href="#project2">project 2</a></li>
                         <li><a href="#project3">project 3</a></li>
                         <li><a href="#project4_exp">project 4</a></li>
@@ -53,6 +58,7 @@
     </header>
 
     <main>
+        <!-- Updated to include external text files for better organization -->
         <section id="introduction" class="hidden" style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: auto;">
 
             <div style="flex: 1;">
@@ -60,194 +66,28 @@
             </div>
             <div style="flex: 2; padding-left: 20px; text-align: justify;">
                 <h2>About Me</h2>
-                <p>
-                    I am a highly motivated aerospace engineering master's student with a strong focus on
-                    computational fluid dynamics (CFD) in high-speed aerodynamics and reentry vehicle analysis.
-                    My expertise includes numerical simulations of hypersonic flows, turbulence modeling, and
-                    aerothermal effects, with a particular emphasis on shape parameter optimization for
-                    reentry configurations. My research and academic projects have provided me with deep insights
-                    into aerothermodynamics, mesh sensitivity analysis, and shock-wave interactions in hypersonic regimes.
-                </p>
-
-                <p>
-                    In my role as a Junior Aeromechanic Engineer at the Warsaw Institute of Aviation (EDC), I have
-                    gained hands-on experience in running aeromechanical analyses using ANSYS and GageMap,
-                    processing and interpreting large datasets from experimental campaigns, and preparing
-                    certification documentation. Working in an international team, I have developed strong
-                    collaboration and communication skills, ensuring high-precision results while effectively
-                    coordinating with engineers from diverse backgrounds.
-                </p>
-
-                <p>
-                    As a member of the Students' Space Association - Rocketry Division, I contributed
-                    to the aerodynamic analysis of key rocket components, including the split canards of the
-                    FOK Rocket and the nose cone and fins of the GROT Rocket. This experience has sharpened my
-                    ability to optimize aerodynamic performance, troubleshoot complex simulations, and work
-                    under tight deadlines within a dynamic, team-driven environment.
-                </p>
-
-                <p>
-                    My academic journey has also included practical research projects, such as my Bachelor's thesis
-                    on the aerodynamic performance of Falcon 9 grid fins across all Mach regimes. I performed
-                    detailed CFD analyses, mesh convergence studies, and post-processing in ANSYS Fluent, which
-                    deepened my expertise in high-fidelity aerodynamic simulations.
-                </p>
-
-                <p>
-                    Beyond technical skills, I bring a proactive and problem-solving mindset, excellent adaptability,
-                    and a strong ability to work in interdisciplinary teams. My international project collaborations
-                    have strengthened my ability to communicate complex engineering concepts effectively. Additionally,
-                    I am highly organized, detail-oriented, and thrive in high-pressure environments that require
-                    both analytical and creative problem-solving skills.
-                </p>
-
-                <p>
-                    Passionate about advancing aerospace technology, I am eager to contribute to innovative projects
-                    in spacecraft design, reusability, and aerothermodynamic optimization. Whether working independently
-                    or in a team, I am committed to continuous learning and pushing the boundaries of aerospace engineering.
-                </p>
-
-                <p>
-                    Besides that, in my private time I enjoy travelling, whether it is in my close neighbourhood, Poland, or abroad.
-                    Lately I have visited Japan and South Korea, where I could observe differences between culture of western Asia and Eastern Europe. 
-                    As my next trip I am planning to visit the USA and have the oportunity to watch a rocket launch in real life instead of YouTube 😅.
-                    
-                </p>
-
+                <!-- Include About Me text -->
+                <div>
+                    <!--#include file="text_content/about_me.txt" -->
+                </div>
             </div>
         </section>
 
         <section id="project1_exp" class="hidden">
-            <<div style="margin-bottom: 1rem; font-size: 0.95rem; color: #444;">
-    <strong>Tags:</strong>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#uRANS</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#DES</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#LES</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#ANSYS Fluent</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#30° AoA</span>
-  </div>
+            <h3>uRANS/LES/DES</h3>
+            <!-- Include uRANS/LES/DES text -->
+            <div>
+                <!--#include file="text_content/urans_les_des.txt" -->
+            </div>
+        </section>
 
-  <p>
-    This project wasn’t just about flow over a wing—it was an appraoch to understand deeply what stands behind differemt CFD approaches.
-    I simulated the iconic NACA 2412 airfoil at Re = 6.85×10⁶ using three turbulence strategies—<strong>uRANS</strong>,
-    <strong>DES</strong>, and <strong>LES</strong>—and analyzed their performance under deep separation conditions. The goal?
-    Pinpoint how each model handles vortex shedding, boundary layer behavior, and wake formation under intense aerodynamic stress.
-  </p>
-
-  <p>
-    I tailored each mesh from the ground up, tuning y⁺ levels (~1 for uRANS/DES, less than 5 for LES), scaling inflation layers, and ensuring
-    wake regions aligned with <strong>Taylor microscales</strong>. Solver stability was maintained using a density-based scheme, with
-    <strong>CFL-guided timestep refinement</strong>. Even with LES pushing computer power limits, I captured the raw turbulence truth
-    for 1 full second of physical time—enough to see structures form, evolve, and stabilize.
-  </p>
-
-  <p>
-    The takeaway? <strong>uRANS is efficient but blind to dynamics. DES is a  middle-ground. LES is king—if my hardware survives 🙃 </strong>.
-    This study taught me when and where to deploy each model for high-fidelity CFD. A perfect analog for
-    <strong>reentry vehicle flows, rocket separation dynamics</strong>, or any system where vortex truth matters more than just convergence.
-  </p>
-
-  <div style="margin-top: 2em;">
-    <h4 style="margin-bottom: 0.5em;">🔥 Lessons Learned</h4>
-    <ul>
-      <li>
-        <strong>Hybrid turbulence strategy mastery:</strong> I now know how to pick, tune, and justify RANS/DES/LES depending on flow physics, separation behavior, and CPU/GPU availability.
-      </li>
-      <li>
-        <strong>Mesh art for turbulence:</strong> Creating LES-grade meshes meant resolving down to Kolmogorov scales in separation zones—an essential skill for complex simulations.
-      </li>
-      <li>
-        <strong>Boundary layer resolution obsession:</strong> Achieving y⁺ ≈ 1 and watching separation points shift gave me intuitive control over wall modeling and transition detection.
-      </li>
-      <li>
-        <strong>Real-world turbulence intuition:</strong> I developed an eye for what turbulence "should" look like—beyond residuals—based on vorticity patterns.
-      </li>
-      <li>
-        <strong>Hardware balancing act:</strong> Managing LES simulations on a limited setup taught me how to optimize solver settings, post-process on-the-fly, and schedule smart saves.
-      </li>
-      <li>
-        <strong>Communication under chaos:</strong> Turning 6 million cells and 3 turbulence models into one clear comparison table made me better at telling engineering stories.
-      </li>
-    </ul>
-  </div>
-
-<div style="margin-top: 1.5rem;">
-  <a href="./images/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf" 
-     download 
-     style="display: inline-block; padding: 10px 18px; background-color: #e7f3ff; border: 2px solid #0077cc; color: #0077cc; font-weight: bold; border-radius: 8px; text-decoration: none;">
-    ⬇️ Download Full PDF Report
-  </a>
-</div>
-
-<div style="text-align: center; font-size: 1.5rem; font-weight: bold; color: #0077cc; margin: 2rem 0;">
-  [ Mesh created ]
-</div>
-
-<div class="image-showcase">
-  <img src="./images/Project_01/Control_Volume.png" class="zoomable" alt="Control Volume">
-  <p class="image-caption">Control Volume</p>
-
-  <img src="./images/Project_01/RANS_BL.png" class="zoomable" alt="RANS mesh Boundary Layer Modeling">
-  <p class="image-caption">RANS mesh Boundary Layer Modeling</p>
-
-  <img src="./images/Project_01/DES_BL.png" class="zoomable" alt="DES mesh Boundary Layer Modeling">
-  <p class="image-caption">DES mesh Boundary Layer Modeling</p>
-
-  <img src="./images/Project_01/LES_BL.png" class="zoomable" alt="LES mesh Boundary Layer Modeling">
-  <p class="image-caption">LES mesh Boundary Layer Modeling</p>
-
-  <img src="./images/Project_01/RANS_overview.png" class="zoomable" alt="RANS mesh">
-  <p class="image-caption">RANS mesh</p>
-
-  <img src="./images/Project_01/DES_overview.png" class="zoomable" alt="DES mesh">
-  <p class="image-caption">DES mesh</p>
-
-  <img src="./images/Project_01/LES_overview.png" class="zoomable" alt="LES mesh">
-  <p class="image-caption">LES mesh</p>
-
-  <img src="./images/Project_01/RANS_Close.png" class="zoomable" alt="RANS mesh closeup">
-  <p class="image-caption">RANS mesh closeup</p>
-
-  <img src="./images/Project_01/DES_close.png" class="zoomable" alt="DES mesh closeup">
-  <p class="image-caption">DES mesh closeup</p>
-
-  <img src="./images/Project_01/LES_close.png" class="zoomable" alt="LES mesh closeup">
-  <p class="image-caption">LES mesh closeup</p>
-</div>
-
-
-<div style="text-align: center; font-size: 1.5rem; font-weight: bold; color: #0077cc; margin: 2rem 0;">
-  [ Unsteady Results ]
-</div>
-
-<div class="slider-container">
-  <button class="slider-btn left-btn">&#9664;</button>
-  <div class="slider">
-
-    <!-- Video 1 -->
-    <video class="slider-item active" controls>
-      <source src="./images/Project_01/all_models_compared.mp4" type="video/mp4">
-      All models vorticity contours compared.
-    </video>
-
-    <!-- Video 2 -->
-    <video class="slider-item" controls>
-      <source src="./images/Project_01/DES_vs_LES_vort.mp4" type="video/mp4">
-      DES vs LES vorticity contours compared.
-    </video>
-
-    <!-- Video 3 -->
-    <video class="slider-item" controls>
-      <source src="./images/Project_01/des_vs_urans_vel_and_pres.mp4" type="video/mp4">
-    uRANS vs DES Velocity and pressure contours compared.
-    </video>
-
-  </div>
-  <button class="slider-btn right-btn">&#9654;</button>
-</div>
-
-
-</section>
+        <section id="rocket-factory-augsburg">
+            <h2>Rocket Factory Augsburg Internship</h2>
+            <!-- Include Rocket Factory Augsburg text -->
+            <div>
+                <!--#include file="text_content/rocket_factory_augsburg.txt" -->
+            </div>
+        </section>
 
         <section id="project2" class="hidden">
             <h3>project 2</h3>
@@ -372,24 +212,6 @@
             </div>
         </section>
 
-        <div class="slider-container">
-            <button class="slider-btn left-btn">&#9664;</button>
-            <div class="slider">
-                <figure class="slider-image active">
-                    <img src="./images/travel/sample1.jpg" class="expandable" alt="Travel Slide 1">
-                </figure>
-                <figure class="slider-image">
-                    <img src="./images/travel/sample2.jpg" class="expandable" alt="Travel Slide 2">
-                </figure>
-                <figure class="slider-image">
-                    <img src="./images/travel/sample3.jpg" class="expandable" alt="Travel Slide 3">
-                </figure>
-                <figure class="slider-image">
-                    <img src="./images/travel/sample4.jpg" class="expandable" alt="Travel Slide 4">
-                </figure>
-            </div>
-            <button class="slider-btn right-btn">&#9654;</button>
-        </div>
         <section id="project5" class="hidden">
             <h3>project 5</h3>
             <p>Details about hobby project 5.</p>
@@ -730,7 +552,7 @@
     </main>
 
     <footer>
-        <p><a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae</a> | <a href="https://www.linkedin.com/in/kacper-frelek-741545235/" target="_blank">LinkedIn</a></p>
+        <p><a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae</a> | <a href="https://www.linkedin.com/in/kacper-frelek-741545235/" target="_blank">LinkedIn</a> | <a href="https://www.instagram.com/luisfreefrelas/" target="_blank">Instagram</a></p>
     </footer>
 
     <div id="image-modal" class="hidden">
