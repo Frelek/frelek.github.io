@@ -57,31 +57,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== SLIDER LOGIC =====
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('.slider-container').forEach(container => {
-    const slides = Array.from(container.querySelectorAll('.slider-image'));
-    let index = slides.findIndex(s => s.classList.contains('active'));
-    if (index === -1) index = 0;
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.slider-container').forEach(container => {
+      const slides = Array.from(container.querySelectorAll('.slider-image'));
+      let index = slides.findIndex(s => s.classList.contains('active'));
+      if (index === -1) index = 0;
 
-    const show = i => {
-      slides.forEach((s, j) => s.classList.toggle('active', j === i));
-    };
+      const show = i => {
+        slides.forEach((s, j) => s.classList.toggle('active', j === i));
+      };
 
-    show(index);
-
-    container.querySelector('.left-btn')?.addEventListener('click', e => {
-      e.preventDefault();
-      index = (index - 1 + slides.length) % slides.length;
       show(index);
-    });
 
-    container.querySelector('.right-btn')?.addEventListener('click', e => {
-      e.preventDefault();
-      index = (index + 1) % slides.length;
-      show(index);
+      container.querySelector('.left-btn')?.addEventListener('click', e => {
+        e.preventDefault();
+        index = (index - 1 + slides.length) % slides.length;
+        show(index);
+      });
+
+      container.querySelector('.right-btn')?.addEventListener('click', e => {
+        e.preventDefault();
+        index = (index + 1) % slides.length;
+        show(index);
+      });
     });
   });
-});
 
   // ===== MODAL ZOOM PREVIEW (Image Modal for .slider-image img) =====
   const modal = document.getElementById("image-modal");
@@ -174,5 +174,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   advancedModal.addEventListener('click', (e) => {
     if (e.target === advancedModal) closeAdvancedModal();
+  });
+
+  // Slider logic for the Travelling section
+  document.querySelectorAll('.slider-container').forEach(container => {
+    const slides = Array.from(container.querySelectorAll('.slider-image'));
+    let index = slides.findIndex(s => s.classList.contains('active'));
+    if (index === -1) index = 0;
+
+    const showSlide = i => {
+      slides.forEach((slide, j) => slide.classList.toggle('active', j === i));
+    };
+
+    container.querySelector('.left-btn')?.addEventListener('click', () => {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    });
+
+    container.querySelector('.right-btn')?.addEventListener('click', () => {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    });
+  });
+
+  // Expandable image logic for Travelling section
+  const travellingModal = document.getElementById('image-modal');
+  const travellingModalImg = document.getElementById('modal-img');
+  const travellingCloseBtn = document.getElementById('modal-close');
+
+  document.querySelectorAll('.slider-image img.expandable').forEach(image => {
+    image.style.cursor = 'zoom-in';
+    image.addEventListener('click', () => {
+      travellingModalImg.src = image.src;
+      travellingModalImg.alt = image.alt;
+      travellingModal.classList.remove('hidden');
+      travellingModal.style.display = 'flex';
+      travellingCloseBtn.focus();
+    });
+  });
+
+  travellingCloseBtn.addEventListener('click', () => {
+    travellingModal.classList.add('hidden');
+    travellingModal.style.display = 'none';
+    travellingModalImg.src = '';
+  });
+
+  // Add functionality to make photos clickable and expandable
+  const expandableImages = document.querySelectorAll('.expandable');
+
+  expandableImages.forEach(image => {
+      image.addEventListener('click', () => {
+          modalImg.src = image.src;
+          modalImg.alt = image.alt;
+          modal.classList.remove('hidden');
+          modal.style.display = 'flex';
+      });
   });
 });
