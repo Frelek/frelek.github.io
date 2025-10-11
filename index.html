@@ -13,7 +13,7 @@
         #project1_exp { position: relative; }
         /* Added: position container for Project 02 top-right button */
         #project2 { position: relative; }
-        .pdf-top-right { position: absolute; top: 8px; right: 12px; z-index: 1; }
+    .pdf-top-right { position: absolute; top: 10px; right: 12px; z-index: 2; backdrop-filter: saturate(120%) blur(0px); }
         /* Added: make videos conform to gallery width */
         .image-gallery figure video { width: 100%; height: auto; display: block; }
 
@@ -52,7 +52,7 @@
                     <a href="#" class="dropdown-toggle">Experience</a>
                     <ul class="dropdown-content hidden">
                         <li><a href="#project1_exp">uRANS/LES/DES</a></li>
-                        <li><a href="#project2">project 2</a></li>
+                        <li><a href="#project2">Impinging Jet</a></li>
                         <li><a href="#project3">project 3</a></li>
                         <li><a href="#project4_exp">project 4</a></li>
                     </ul>
@@ -401,50 +401,81 @@
         </section>
 
         <section id="project2" class="hidden">
-            <h3>Impinging Jet</h3>
-            <!-- Added: Top-right PDF download button for Project 02 -->
-            <a href="./images/experience/project_02/Impinging_Jet.pdf"
-               download
-               class="download-btn pdf-top-right"
-               aria-label="Download Impinging Jet PDF">
-                Download PDF
-            </a>
+	<h3>Impinging Jet</h3>
+    <a href="./images/Experience/project_02/Frelek_Impinging_Jet.pdf"
+	   id="project2-pdf-btn"
+	   download
+	   class="download-btn pdf-top-right"
+	   aria-label="Download Impinging Jet PDF">
+		Download PDF
+	</a>
 
-            <p>Key visuals from project_02.</p>
-            <div class="image-gallery">
-                <figure>
-                    <img src="./images/experience/project_02/setup.png" alt="Domain and boundary conditions">
-                    <figcaption>Domain and BCs</figcaption>
-                </figure>
-                <figure>
-                    <img src="./images/experience/project_02/mesh.png" alt="Mesh overview">
-                    <figcaption>Mesh Overview</figcaption>
-                </figure>
-                <figure>
-                    <img src="./images/experience/project_02/velocity_core.png" alt="Jet core velocity profile">
-                    <figcaption>Jet Core Velocity</figcaption>
-                </figure>
-                <figure>
-                    <img src="./images/experience/project_02/temperature_field.png" alt="Temperature distribution">
-                    <figcaption>Temperature Field</figcaption>
-                </figure>
-                <figure>
-                    <img src="./images/experience/project_02/vorticity.png" alt="Vorticity magnitude">
-                    <figcaption>Vorticity Magnitude</figcaption>
-                </figure>
-                <figure>
-                    <img src="./images/experience/project_02/q_criterion.png" alt="Q-criterion structures">
-                    <figcaption>Q‑Criterion</figcaption>
-                </figure>
-                <!-- Add more figures here if there are additional images in project_02 -->
-            </div>
+    <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #444;">
+        <strong>Tags:</strong>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#ImpingingJet</span>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#CFX</span>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#UDF</span>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#Pseudo2D</span>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#TurbulenceModels</span>
+        <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#Validation</span>
+    </div>
 
-            <!-- Added: Bottom PDF link -->
-            <h4>Download PDF</h4>
-            <a href="./images/experience/project_02/Impinging_Jet.pdf" download class="download-btn">
-                Download Impinging Jet PDF
-            </a>
-        </section>
+    <div class="project-intro">
+        <p>🧪 I took on an impinging jet CFD project where I customized the velocity inlet using my own User-Defined Function (UDF). I tried out different turbulence models—each with their own oddities—and compared the outcomes with published data and other CFD tools to see who really had the best predictions.</p>
+
+        <p>🧩 Since ANSYS CFX doesn't really handle pure 2D simulations, I got around that by squeezing my grid to just one cell wide—basically faking a 2D setup so I could still compare my results to what’s out there in the literature and experiments.</p>
+
+        <p>🧵 A big takeaway for me: the mesh matters—a lot. Depending on how fine or coarse the grid was, I’d see huge changes in my results, and the turbulence models could tell very different stories about the jet’s behavior. It was a real eye-opener for how critical it is to choose the right setup, and I also bumped into a few quirks and limits with CFX along the way.</p>
+
+        <h4>What came out of it?</h4>
+        <ul>
+            <li>🔍 First, I saw firsthand how mesh quality can make or break your results.</li>
+            <li>🌪️ I got a clearer sense of how turbulence models behave and why it’s worth trying more than one—sometimes they disagree a lot.</li>
+            <li>🛠️ I now know how to set up and run custom UDFs, making simulations much more flexible.</li>
+            <li>📏 It was also a real exercise in checking and benchmarking results—comparing with published data taught me a lot about what to trust (and what not to).</li>
+        </ul>
+
+        <h4>Lessons learned</h4>
+        <ul>
+            <li>✍️ Writing my own velocity-inlet UDF let me really control the inflow and keep things repeatable.</li>
+            <li>📐 Going “pseudo-2D” in CFX is a neat trick if you want to run 2D-style cases in a software that’s not built for it.</li>
+            <li>🧵 The turbulence model you pick seriously changes your results—SST, for example, gave different predictions for heat transfer and flow details near the wall compared to some others.</li>
+            <li>🧱 Mesh around the jet core and stagnation point needs to be tight if you want stable and accurate results.</li>
+            <li>🧪 Double-checking everything with published work and other CFD packages made it clear where CFX shines—and where it doesn’t.</li>
+        </ul>
+
+        <p>🚀 In the end, the project was a deep dive into practical CFD, code tweaks, and getting creative with software. I learned a lot by trying, failing, adapting, and then testing everything against real-world data—not just trusting what the computer spits out.</p>
+    </div>
+	<div class="image-gallery">
+		<figure>
+			<img data-file="setup" alt="Domain and boundary conditions">
+			<figcaption>Domain and BCs</figcaption>
+		</figure>
+		<figure>
+			<img data-file="mesh" alt="Mesh overview">
+			<figcaption>Mesh Overview</figcaption>
+		</figure>
+		<figure>
+			<img data-file="velocity_core" alt="Jet core velocity profile">
+			<figcaption>Jet Core Velocity</figcaption>
+		</figure>
+		<figure>
+			<img data-file="temperature_field" alt="Temperature distribution">
+			<figcaption>Temperature Field</figcaption>
+		</figure>
+		<figure>
+			<img data-file="vorticity" alt="Vorticity magnitude">
+			<figcaption>Vorticity Magnitude</figcaption>
+		</figure>
+		<figure>
+			<img data-file="q_criterion" alt="Q-criterion structures">
+			<figcaption>Q‑Criterion</figcaption>
+		</figure>
+	</div>
+
+    <!-- Extra images from manifest (optional) -->
+    <div id="project2-gallery-extra" class="image-gallery"></div>
+</section>
         <section id="project3" class="hidden">
             <h3>project 3</h3>
             <p>Details about project 3.</p>
@@ -628,7 +659,7 @@
     <strong>Tags:</strong>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#SST k-w</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#2D</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px, margin-right:5px;">#3D</span>
+    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#3D</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#symmetry</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#Density based</span>
   </div>

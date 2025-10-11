@@ -108,6 +108,46 @@ footer {
     box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
 }
 
+/* Download button styling */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #2c5364, #203a43);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px; /* pill */
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.2px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease, opacity 0.2s ease;
+}
+
+.download-btn::before {
+    content: "⬇";
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.download-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    background: linear-gradient(135deg, #2e5d71, #23424c);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+.download-btn:focus-visible {
+    outline: 2px solid #03e9f4;
+    outline-offset: 2px;
+}
+
 footer a {
     text-decoration: none;
     color: #00bcd4;
@@ -512,4 +552,60 @@ img.zoomable.zoomed {
 /* Add zoom-in cursor for expandable images */
 .expandable {
     cursor: zoom-in;
+}
+
+/* Impinging Jet intro as normal flow (no box) */
+.project-intro { color: inherit; margin: 0 0 16px 0; }
+.project-intro h4 { margin: 10px 0 6px 0; }
+.project-intro p { margin: 0 0 10px 0; }
+.project-intro ul { margin: 0 0 8px 18px; }
+.project-intro li { margin-bottom: 6px; }
+
+/* Gentle subtitles for galleries and sliders */
+figure { margin: 0; }
+figcaption {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #4a5568;            /* soft slate */
+    text-align: center;
+    font-weight: 500;           /* medium for readability */
+    letter-spacing: 0.2px;      /* subtle tracking */
+}
+
+/* Subtle divider and max width for multi-line captions */
+.image-gallery figcaption,
+.slider .slider-image + figcaption,
+.photo-gallery + figcaption {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Optional soft top border to separate from image */
+.image-gallery figure figcaption {
+    padding-top: 6px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Lighter style for secondary captions (if any <sub> used) */
+figcaption sub {
+    font-size: 0.85em;
+    color: #6b7280;            /* muted gray */
+}
+
+/* Hover polish: gently lift images, keep caption steady */
+.image-gallery figure img,
+.slider .slider-image img {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.image-gallery figure:hover img,
+.slider .slider-image:hover img {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+/* Responsive caption adjustments */
+@media (max-width: 640px) {
+    figcaption { font-size: 0.9rem; }
 }

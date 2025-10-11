@@ -230,4 +230,89 @@ document.addEventListener("DOMContentLoaded", () => {
           modal.style.display = 'flex';
       });
   });
+
+  // Append extra images for Project 02 from images/experience/project_02/manifest.json
+  (() => {
+		const extra = document.getElementById('project2-gallery-extra');
+		if (!extra) return;
+
+    const topPdf = document.getElementById('project2-pdf-btn');
+    const base = './images/Experience/project_02/';
+		const manifestUrl = base + 'manifest.json';
+
+		const toCaption = (name) => name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ');
+
+    fetch(manifestUrl)
+			.then(r => (r.ok ? r.json() : Promise.reject()))
+			.then(m => {
+				// Bind PDF from folder if provided
+				if (m.pdf) {
+          const pdfPath = base + encodeURIComponent(m.pdf);
+          if (topPdf) topPdf.href = pdfPath;
+				}
+        // Append images listed in manifest
+				const imgs = Array.isArray(m.images) ? m.images : [];
+				if (!imgs.length) return;
+
+				const frag = document.createDocumentFragment();
+				imgs.forEach(file => {
+					const fig = document.createElement('figure');
+					const img = document.createElement('img');
+          img.src = base + encodeURIComponent(file);
+					img.alt = toCaption(file);
+					const cap = document.createElement('figcaption');
+					cap.textContent = toCaption(file);
+					fig.appendChild(img);
+					fig.appendChild(cap);
+					frag.appendChild(fig);
+				});
+        extra.appendChild(frag);
+
+        // Also try to resolve the six primary placeholders by matching names loosely
+        const mapByBase = new Map();
+        imgs.forEach(f => {
+          const baseName = f.toLowerCase().replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/g, '');
+          mapByBase.set(baseName, f);
+        });
+        document.querySelectorAll('#project2 .image-gallery img[data-file]').forEach(img => {
+          const key = img.getAttribute('data-file').toLowerCase().replace(/[^a-z0-9]+/g, '');
+          const match = mapByBase.get(key);
+          if (match) {
+            img.src = base + encodeURIComponent(match);
+          }
+        });
+			})
+			.catch(() => {
+				// No manifest; leave static gallery as-is
+			});
+	})();
+
+  // Resolve proper photos for Project 02 by trying common extensions
+  (() => {
+  const base = './images/Experience/project_02/';
+    const exts = ['.png', '.jpg', '.jpeg', '.webp'];
+
+    const resolveSrc = (basename) => new Promise((resolve, reject) => {
+      let i = 0;
+      const tryNext = () => {
+        if (i >= exts.length) return reject();
+        const url = base + basename + exts[i++];
+        const probe = new Image();
+        probe.onload = () => resolve(url);
+        probe.onerror = tryNext;
+        probe.src = url;
+      };
+      tryNext();
+    });
+
+    document.querySelectorAll('#project2 .image-gallery img[data-file]').forEach(img => {
+      const basename = img.getAttribute('data-file');
+      resolveSrc(basename)
+        .then(url => { img.src = url; })
+        .catch(() => {
+          const fig = img.closest('figure');
+          if (fig) fig.style.display = 'none';
+        });
+    });
+  })();
 });
