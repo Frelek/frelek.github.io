@@ -9,6 +9,36 @@
         main {
             padding-bottom: 60px; /* Added extra padding to create space above the footer */
         }
+        /* Added: position the top-right PDF button in the uRANS/LES/DES section */
+        #project1_exp { position: relative; }
+        .pdf-top-right { position: absolute; top: 8px; right: 12px; z-index: 1; }
+        /* Added: make videos conform to gallery width */
+        .image-gallery figure video { width: 100%; height: auto; display: block; }
+
+        /* New: two-column responsive gallery for images/videos */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            align-items: stretch; /* ensure items fill row height */
+        }
+        .image-gallery figure {
+            margin: 0;
+            display: flex;              /* center media vertically */
+            flex-direction: column;     /* keep caption below */
+            justify-content: center;    /* vertical centering within equal-height row */
+        }
+        .image-gallery img,
+        .image-gallery video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* Added: center captions below media */
+        .image-gallery figcaption { text-align: center; }
+        @media (max-width: 640px) {
+            .image-gallery { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -128,6 +158,14 @@
 
         <section id="project1_exp" class="hidden">
             <h3>uRANS/LES/DES</h3>
+            <!-- Added: Top-right PDF download button (from Experience - Project 01 PDF) -->
+            <a href="./images/Experience/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf"
+               download
+               class="download-btn pdf-top-right"
+               aria-label="Download Project 01 PDF">
+                Download PDF
+            </a>
+
             <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #444;">
                 <strong>Tags:</strong>
                 <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#uRANS</span>
@@ -306,6 +344,58 @@
     <h4>Download PDF</h4>
     <a href="./images/Experience/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf" download class="download-btn">Download Project 01 PDF</a>
 </section>
+
+            <!-- Added: Bottom gallery with all photos and video from Project_01 (with subscripts as filenames) -->
+            <h4 style="margin-top:2rem;">Project 01 folder: all photos and video</h4>
+            <div class="image-gallery">
+                <figure>
+                    <img src="./images/Experience/Project_01/Control_Volume.png" alt="Control_Volume.png">
+                    <figcaption><sub>Control_Volume</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/DES_BL.png" alt="DES_BL.png">
+                    <figcaption><sub>DES_BL</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/DES_close.png" alt="DES_close.png">
+                    <figcaption><sub>DES_close</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/DES_overview.png" alt="DES_overview.png">
+                    <figcaption><sub>DES_overview</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/LES_BL.png" alt="LES_BL.png">
+                    <figcaption><sub>LES_BL</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/LES_close.png" alt="LES_close.png">
+                    <figcaption><sub>LES_close</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/LES_overview.png" alt="LES_overview.png">
+                    <figcaption><sub>LES_overview</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/RANS_BL.png" alt="RANS_BL.png">
+                    <figcaption><sub>RANS_BL</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/RANS_Close.png" alt="RANS_Close.png">
+                    <figcaption><sub>RANS_Close</sub></figcaption>
+                </figure>
+                <figure>
+                    <img src="./images/Experience/Project_01/RANS_overview.png" alt="RANS_overview.png">
+                    <figcaption><sub>RANS_overview</sub></figcaption>
+                </figure>
+                <figure>
+                    <video controls preload="metadata">
+                        <source src="./images/Experience/Project_01/all_models_compared.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <figcaption><sub>all_models_compared</sub></figcaption>
+                </figure>
+            </div>
         </section>
 
         <section id="project2" class="hidden">
@@ -517,7 +607,7 @@
     <strong>Tags:</strong>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#SST k-w</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#2D</span>
-    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#3D</span>
+    <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px, margin-right:5px;">#3D</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px; margin-right:5px;">#symmetry</span>
     <span style="background-color:#e7f3ff; padding:3px 8px; border-radius:10px;">#Density based</span>
   </div>
