@@ -1,5 +1,9 @@
 {
   "pdf": "Aeromechanics.pdf",
   "images": [
+    "Campbell Diagram.png",
+    "Airfoil Modes.png",
+    "Goodman diagram.png",
+    "LCF and HCF.png"
   ]
 }

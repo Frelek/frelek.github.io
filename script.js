@@ -319,13 +319,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // Append extra images for Project 03 from images/Experience/project_03/manifest.json
   (() => {
     const extra = document.getElementById('project3-gallery-extra');
-    if (!extra) return;
-
     const topPdf = document.getElementById('project3-pdf-btn');
     const base = './images/Experience/project_03/';
     const manifestUrl = base + 'manifest.json';
 
     const toCaption = (name) => name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ');
+    const tryExts = ['.svg', '.png', '.jpg', '.jpeg', '.webp'];
+    const resolveSrc = (basename) => new Promise((resolve, reject) => {
+      let i = 0;
+      const tryNext = () => {
+        if (i >= tryExts.length) return reject();
+        const url = base + basename + tryExts[i++];
+        const probe = new Image();
+        probe.onload = () => resolve(url);
+        probe.onerror = tryNext;
+        probe.src = url;
+      };
+      tryNext();
+    });
 
     fetch(manifestUrl)
       .then(r => (r.ok ? r.json() : Promise.reject()))
@@ -335,21 +346,32 @@ document.addEventListener("DOMContentLoaded", () => {
           if (topPdf) topPdf.href = pdfPath;
         }
         const imgs = Array.isArray(m.images) ? m.images : [];
-        if (!imgs.length) return;
+        if (!imgs.length) {
+          // No manifest images: still try to resolve placeholders via extension probing
+          document.querySelectorAll('#project3 .image-gallery img[data-file]').forEach(img => {
+            const key = img.getAttribute('data-file');
+            resolveSrc(key)
+              .then(url => { img.src = url; })
+              .catch(() => { const fig = img.closest('figure'); if (fig) fig.style.display = 'none'; });
+          });
+          return;
+        }
 
-        const frag = document.createDocumentFragment();
-        imgs.forEach(file => {
-          const fig = document.createElement('figure');
-          const img = document.createElement('img');
-          img.src = base + encodeURIComponent(file);
-          img.alt = toCaption(file);
-          const cap = document.createElement('figcaption');
-          cap.textContent = toCaption(file);
-          fig.appendChild(img);
-          fig.appendChild(cap);
-          frag.appendChild(fig);
-        });
-        extra.appendChild(frag);
+        if (extra) {
+          const frag = document.createDocumentFragment();
+          imgs.forEach(file => {
+            const fig = document.createElement('figure');
+            const img = document.createElement('img');
+            img.src = base + encodeURIComponent(file);
+            img.alt = toCaption(file);
+            const cap = document.createElement('figcaption');
+            cap.textContent = toCaption(file);
+            fig.appendChild(img);
+            fig.appendChild(cap);
+            frag.appendChild(fig);
+          });
+          extra.appendChild(frag);
+        }
 
         // Try to resolve placeholders
         const mapByBase = new Map();
@@ -358,11 +380,26 @@ document.addEventListener("DOMContentLoaded", () => {
           mapByBase.set(baseName, f);
         });
         document.querySelectorAll('#project3 .image-gallery img[data-file]').forEach(img => {
-          const key = img.getAttribute('data-file').toLowerCase().replace(/[^a-z0-9]+/g, '');
-          const match = mapByBase.get(key);
-          if (match) img.src = base + encodeURIComponent(match);
+          const key = img.getAttribute('data-file');
+          const fuzzy = key.toLowerCase().replace(/[^a-z0-9]+/g, '');
+          const match = mapByBase.get(fuzzy);
+          if (match) {
+            img.src = base + encodeURIComponent(match);
+          } else {
+            resolveSrc(key)
+              .then(url => { img.src = url; })
+              .catch(() => { const fig = img.closest('figure'); if (fig) fig.style.display = 'none'; });
+          }
         });
       })
-      .catch(() => { /* silently ignore if no manifest */ });
+      .catch(() => {
+        // Manifest missing: resolve placeholders via extension probing
+        document.querySelectorAll('#project3 .image-gallery img[data-file]').forEach(img => {
+          const key = img.getAttribute('data-file');
+          resolveSrc(key)
+            .then(url => { img.src = url; })
+            .catch(() => { const fig = img.closest('figure'); if (fig) fig.style.display = 'none'; });
+        });
+      });
   })();
 });
