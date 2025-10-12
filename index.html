@@ -57,6 +57,8 @@
         /* Chip bar styles */
         .chip-bar { margin: 8px 0 14px; display: flex; flex-wrap: wrap; gap: 6px; }
         .chip { background-color:#e7f3ff; color:#183153; border:1px solid #c6ddff; padding:3px 10px; border-radius:999px; font-size:0.85rem; }
+        /* Disabled submenu links under Future projects */
+        .disabled-link { color: #999 !important; pointer-events: none; text-decoration: line-through; cursor: default; }
     </style>
 </head>
 <body>
@@ -85,16 +87,16 @@
                         <li><a href="#project7">Bachelor Thesis</a></li>
                         <li><a href="#project8">Intermediate Project 2</a></li>
                         <li><a href="#project9">Masters Thesis</a></li>
-                        <li><a href="#project10_full">Additional Project</a></li>
+                        <li><a href="#project10_full">Intermediate Project 1</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Hypersonics</a>
+                    <a href="#" class="dropdown-toggle" style="text-decoration: line-through;">Future projects</a>
                     <ul class="dropdown-content hidden">
-                        <li><a href="#DSMC">DSMC</a></li>
-                        <li><a href="#CFD_DSMC">CFD-DSMC</a></li>
-                        <li><a href="#Kinetic_Boltzmann">Kinetic Boltzmann</a></li>
-                        <li><a href="#ML">ML</a></li>
+                        <li><a href="#" class="disabled-link" aria-disabled="true" tabindex="-1">DSMC</a></li>
+                        <li><a href="#" class="disabled-link" aria-disabled="true" tabindex="-1">CFD-DSMC</a></li>
+                        <li><a href="#" class="disabled-link" aria-disabled="true" tabindex="-1">Kinetic Boltzmann</a></li>
+                        <li><a href="#" class="disabled-link" aria-disabled="true" tabindex="-1">ML</a></li>
                     </ul>
                 </li>
             </ul>
@@ -402,8 +404,8 @@
                     <img src="./images/Experience/Project_01/RANS_overview.png" alt="RANS_overview.png">
                     <figcaption><sub>RANS_overview</sub></figcaption>
                 </figure>
-                <figure>
-                    <video controls preload="metadata">
+                <figure style="grid-column: 1 / -1;">
+                    <video controls preload="metadata" style="width: 100%; height: auto; display: block;">
                         <source src="./images/Experience/Project_01/all_models_compared.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -908,81 +910,97 @@
 
                 <p>🏷️ <em>#Starship #CFD #Reentry #ANSYSFluent #Hypersonics #ControlSurfaces #Guidance #GNC #WUT</em></p>
             </div>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/full9/img1.png" alt="MT1 Image1">
-                        <figcaption>MT1 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img2.png" alt="MT1 Image2">
-                        <figcaption>MT1 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img3.png" alt="MT1 Image3">
-                        <figcaption>MT1 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img4.png" alt="MT1 Image4">
-                        <figcaption>MT1 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
-            </div>
+            <h4 style="margin-top: 1rem;">Gallery</h4>
+            <div id="project8-gallery" class="image-gallery"></div>
         </section>
-        <section id="project9" class="hidden">
+        <section id="project9" class="hidden" style="position: relative;">
             <h3>Masters Thesis</h3>
-            <p>Details about Masters Thesis.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/full9/img1.png" alt="MT1 Image1">
-                        <figcaption>MT1 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img2.png" alt="MT1 Image2">
-                        <figcaption>MT1 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img3.png" alt="MT1 Image3">
-                        <figcaption>MT1 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full9/img4.png" alt="MT1 Image4">
-                        <figcaption>MT1 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
-            </div>
+            <!-- Disabled download button (no file yet) -->
+            <a href="#" id="project9-pdf-btn" class="download-btn pdf-top-right" aria-disabled="true" tabindex="-1" style="pointer-events: none; opacity: 0.6;">
+                Download PDF ✖
+            </a>
+            <h4>Hypersonic CO₂ Flow Analysis and Turbulence–Model Comparison</h4>
+            <p>
+                Spearheaded a multi-phase CFD research project to benchmark hypersonic CO₂ flow simulations against Wright et al.’s 2006 shock-tunnel aeroheating data, with the ultimate goal of establishing reliable modeling workflows for planetary entry applications. The study was structured into three key phases:
+            </p>
+
+            <h4>Methodology Development</h4>
+            <ul>
+                <li>Implemented a five-species Park air–CO₂ mixture model coupled with the Redlich–Kwong equation of state to capture real-gas effects and key dissociation reactions up to 8,000 K.</li>
+                <li>Integrated multiple turbulence closures—algebraic <strong>Baldwin–Lomax</strong>, <strong>Spalart–Allmaras</strong>, <strong>Menter SST k–ω</strong> with compressibility corrections, and a <strong>Reynolds Stress Model</strong>—to evaluate their capability in resolving high-enthalpy boundary layers and shock interactions.</li>
+                <li>Employed finite-rate chemistry solvers and varied turbulent Schmidt numbers (0.5–1.0) to assess sensitivity of species transport and heat-flux predictions.</li>
+            </ul>
+
+            <h4>Grid and Boundary-Condition Validation</h4>
+            <ul>
+                <li>Generated structured and unstructured meshes ranging from 4.8 M to 8.9 M cells, enforcing y⁺ ≈ 1 for accurate near-wall treatment, and performed rigorous grid-independence studies to ensure solution robustness.</li>
+                <li>Applied catalytic and non-catalytic wall boundary conditions to bracket surface reaction behaviors and quantify their impact on predicted heat loads.</li>
+            </ul>
+
+            <h4>Radiative and Experimental Benchmarking</h4>
+            <ul>
+                <li>Implemented the <strong>Discrete Ordinates</strong> radiative transfer model with three spectral bands (UV–visible, near/mid-IR, far-IR) to resolve radiative heating contributions within the shock layer.</li>
+                <li>Validated CFD results against Wright’s shock-tunnel measurements for a 70° half-angle CO₂ cone, performing systematic error analysis to quantify uncertainties associated with turbulence, chemistry, and radiation modeling.</li>
+            </ul>
+
+            <h4>Expected Outcomes and Future Work</h4>
+            <ul>
+                <li>Identification of the most accurate turbulence–chemistry–radiation modeling combinations for hypersonic CO₂ flows, reducing heat-flux prediction errors below 10%.</li>
+                <li>Development of best-practice guidelines for mesh generation, solver settings, and wall-boundary treatments applicable to Mars entry vehicle design.</li>
+                <li>Creation of a validated aerodynamic and thermal database to support thermal protection system (TPS) sizing and trajectory optimization.</li>
+                <li>Extension of the framework to include gas–surface interaction models for catalytic coatings and to integrate transition prediction methods for improved TPS risk assessment.</li>
+            </ul>
+
+            <p>
+                This work establishes a comprehensive baseline for high-fidelity hypersonic CO₂ CFD simulations, enabling more reliable prediction of aerothermal loads and fostering advances in planetary entry vehicle development.
+            </p>
         </section>
 
-        <section id="project10_full" class="hidden">
-            <h3>Additional Project</h3>
-            <p>Details about Additional Project.</p>
-            <div class="slider-container">
-                <button class="slider-btn left-btn">&#9664;</button>
-                <div class="slider">
-                    <figure class="slider-image active">
-                        <img src="./images/full10/img1.png" alt="AP1 Image1">
-                        <figcaption>AP1 Image1</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full10/img2.png" alt="AP1 Image2">
-                        <figcaption>AP1 Image2</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full10/img3.png" alt="AP1 Image3">
-                        <figcaption>AP1 Image3</figcaption>
-                    </figure>
-                    <figure class="slider-image">
-                        <img src="./images/full10/img4.png" alt="AP1 Image4">
-                        <figcaption>AP1 Image4</figcaption>
-                    </figure>
-                </div>
-                <button class="slider-btn right-btn">&#9654;</button>
+        <section id="project10_full" class="hidden" style="position: relative;">
+            <h3>Intermediate Project 1</h3>
+            <!-- Top-right PDF download (disabled until manifest provides a PDF) -->
+            <a href="#" id="project10-pdf-btn" class="download-btn pdf-top-right" aria-disabled="true" tabindex="-1" style="pointer-events: none; opacity: 0.6;">Download PDF ✖</a>
+
+            <div class="project-intro">
+                <h4>🏙️ Aerodynamics of Urban Structures</h4>
+                <p><strong>Warsaw University of Technology (WUT)</strong></p>
+
+                <p>Led a comprehensive CFD study to evaluate how introducing a high-rise building affects pedestrian-level wind conditions within an existing urban block. This work combined numerical simulation with experimental validation to ensure accurate representation of real-world airflow and to refine best-practice guidelines for urban planning.</p>
+
+                <h4>🎯 Project Scope and Objectives</h4>
+                <ul>
+                    <li>Develop a scaled <strong>1:1500</strong> model of an urban district featuring two main building clusters to match wind-tunnel test conditions.</li>
+                    <li>Simulate wind flow at pedestrian height (1–2 m) for three wind directions (<strong>0°</strong>, <strong>45°</strong>, <strong>90°</strong>) using <strong>ANSYS Fluent</strong>.</li>
+                    <li>Compare CFD velocity contours against wind-tunnel measurements to assess model fidelity and identify divergent regions.</li>
+                    <li>Optimize mesh design and boundary conditions to achieve robust, grid-independent results.</li>
+                </ul>
+
+                <h4>🛠️ Methodology</h4>
+                <p><strong>Geometry and Scaling:</strong> Converted real-size building layouts into a <strong>0.6 m</strong>-tall scaled model based on a maximum building height of <strong>90 m</strong>.</p>
+                <p><strong>Mesh Generation:</strong> Created both coarse (~<strong>23k</strong> cells) and fine (~<strong>1.26M</strong> cells) unstructured meshes, enforcing <strong>y⁺ ≈ 30–300</strong> for <strong>SST k–ω</strong> modeling. Mesh quality metrics met skewness (<strong>< 0.7</strong>) and orthogonality (<strong>> 0.3</strong>) targets.</p>
+                <p><strong>UDF Implementation:</strong> Developed <strong>User-Defined Functions</strong> to impose logarithmic velocity-inlet profiles and altitude-dependent turbulence intensity, matching <strong>terrain categories III and IV</strong>. Additional UDFs recorded time-averaged velocity probes and pressure coefficients for automated data extraction.</p>
+                <p><strong>Solver Settings:</strong> Employed the <strong>RANS SST k–ω</strong> “realizable” model with second-order discretization and SIMPLE pressure-velocity coupling under incompressible, steady-state assumptions. Side and top walls used specified-shear conditions, while building walls applied no-slip boundaries.</p>
+
+                <h4>📊 Key Findings and Validation</h4>
+                <ul>
+                    <li>Fine-mesh simulations reproduced wind-tunnel velocity distributions within <strong>±10%</strong> in most pedestrian zones, confirming CFD’s capability to predict critical acceleration hotspots.</li>
+                    <li>Notable discrepancies arose behind tall building edges for <strong>90°</strong> flow, prompting further mesh refinement and turbulence-intensity sensitivity checks.</li>
+                    <li>Wind directions of <strong>0°</strong> and <strong>45°</strong> showed strong alignment between CFD and experimental data, validating the inlet profile and turbulence modeling approach.</li>
+                </ul>
+
+                <h4>🧠 Challenges and Lessons Learned</h4>
+                <ul>
+                    <li><strong>Mesh Sensitivity:</strong> Coarse meshes failed to capture fine-scale vortices between closely spaced buildings. Targeted local refinement proved more efficient than global densification.</li>
+                    <li><strong>UDF Performance:</strong> Initial UDFs introduced solver instability due to heavy in-loop computations. Refactoring to minimize hook frequency and using efficient array operations stabilized convergence.</li>
+                    <li><strong>Turbulence Intensity Calibration:</strong> Accurate pedestrian-level predictions required iterative tuning of turbulence intensity (optimal <strong>TI ≈ 25%</strong>) to match wind-tunnel inlet conditions.</li>
+                    <li><strong>Automated Data Extraction:</strong> Embedding probe data logging within UDFs significantly streamlined post-processing and improved repeatability of validation procedures.</li>
+                </ul>
+
+                <p>✅ This project delivered validated CFD workflows for urban wind-comfort assessment and provided actionable insights for architects and planners on mitigating adverse wind effects through building placement and design.</p>
             </div>
+
+            <h4 style="margin-top: 1rem;">Gallery</h4>
+            <div id="project10-gallery" class="image-gallery"></div>
         </section>
 
         <section id="DSMC" class="hidden">

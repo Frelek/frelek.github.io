@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", closeAllDropdowns);
 
+  // Make disabled submenu links inert (no navigation)
+  document.querySelectorAll('a.disabled-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    });
+  });
+
   // ===== Section Navigation =====
   const allSections = document.querySelectorAll("main section");
 
@@ -407,19 +416,122 @@ document.addEventListener("DOMContentLoaded", () => {
   // Bind PDF for Project 08 (Intermediate Project 2) from images/Full_Projects/02/manifest.json
   (() => {
     const topPdf = document.getElementById('project8-pdf-btn');
-    if (!topPdf) return;
+    const gallery = document.getElementById('project8-gallery');
+    if (!topPdf && !gallery) return;
     const base = './images/Full_Projects/02/';
     const manifestUrl = base + 'manifest.json';
+
+    const toCaption = (name) => name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ');
 
     fetch(manifestUrl)
       .then(r => (r.ok ? r.json() : Promise.reject()))
       .then(m => {
-        if (m && m.pdf) {
+        if (topPdf && m && m.pdf) {
           topPdf.href = base + encodeURIComponent(m.pdf);
+        }
+        if (gallery && m && Array.isArray(m.images) && m.images.length) {
+          const frag = document.createDocumentFragment();
+          m.images.forEach(item => {
+            const file = typeof item === 'string' ? item : item.file;
+            const caption = typeof item === 'string' ? toCaption(item) : (item.caption || toCaption(item.file));
+            if (!file) return;
+            const fig = document.createElement('figure');
+            const img = document.createElement('img');
+            img.src = base + encodeURIComponent(file);
+            img.alt = caption;
+            img.classList.add('expandable');
+            // Bind click to open modal for dynamically added images
+            img.addEventListener('click', () => {
+              const modal = document.getElementById('image-modal');
+              const modalImg = document.getElementById('modal-img');
+              modalImg.src = img.src;
+              modalImg.alt = img.alt;
+              modal.classList.remove('hidden');
+              modal.style.display = 'flex';
+            });
+            const cap = document.createElement('figcaption');
+            cap.textContent = caption;
+            fig.appendChild(img);
+            fig.appendChild(cap);
+            frag.appendChild(fig);
+          });
+          gallery.appendChild(frag);
         }
       })
       .catch(() => {
-        // Leave the static href in place if manifest missing or invalid
+        // No manifest or invalid: leave static PDF and empty gallery
       });
+  })();
+
+  // Populate Project 10 (Intermediate Project 1) from images/Full_Projects/04/manifest.json
+  (() => {
+    const topPdf = document.getElementById('project10-pdf-btn');
+    const gallery = document.getElementById('project10-gallery');
+    if (!topPdf && !gallery) return;
+    const base = './images/Full_Projects/04/';
+    const manifestUrl = base + 'manifest.json';
+    const toCaption = (name) => name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ');
+
+    fetch(manifestUrl)
+      .then(r => (r.ok ? r.json() : Promise.reject()))
+      .then(m => {
+        if (topPdf && m && m.pdf) {
+          topPdf.href = base + encodeURIComponent(m.pdf);
+          topPdf.removeAttribute('aria-disabled');
+          topPdf.style.pointerEvents = 'auto';
+          topPdf.style.opacity = '1';
+          topPdf.textContent = 'Download PDF';
+          topPdf.setAttribute('download', '');
+        }
+        if (gallery && m && Array.isArray(m.images) && m.images.length) {
+          const frag = document.createDocumentFragment();
+          m.images.forEach(item => {
+            const file = typeof item === 'string' ? item : item.file;
+            const caption = typeof item === 'string' ? toCaption(item) : (item.caption || toCaption(item.file));
+            if (!file) return;
+            const fig = document.createElement('figure');
+            const img = document.createElement('img');
+            img.src = base + encodeURIComponent(file);
+            img.alt = caption;
+            img.classList.add('expandable');
+            img.addEventListener('click', () => {
+              const modal = document.getElementById('image-modal');
+              const modalImg = document.getElementById('modal-img');
+              modalImg.src = img.src;
+              modalImg.alt = img.alt;
+              modal.classList.remove('hidden');
+              modal.style.display = 'flex';
+            });
+            const cap = document.createElement('figcaption');
+            cap.textContent = caption;
+            fig.appendChild(img);
+            fig.appendChild(cap);
+            frag.appendChild(fig);
+          });
+          gallery.appendChild(frag);
+        }
+      })
+      .catch(() => {
+        // Leave disabled button and empty gallery if manifest is missing
+      });
+  })();
+
+  // Optionally enable Masters Thesis download button if a PDF becomes available via a future manifest
+  (() => {
+    const btn = document.getElementById('project9-pdf-btn');
+    if (!btn) return;
+    // If we later standardize a manifest for project9, we can fetch and enable here.
+    // For now, keep it disabled. Example wiring for future:
+    // const base = './images/Full_Projects/03/';
+    // fetch(base + 'manifest.json').then(r => r.ok ? r.json() : Promise.reject()).then(m => {
+    //   if (m && m.pdf) {
+    //     btn.href = base + encodeURIComponent(m.pdf);
+    //     btn.removeAttribute('aria-disabled');
+    //     btn.style.pointerEvents = 'auto';
+    //     btn.style.opacity = '1';
+    //     btn.textContent = 'Download PDF';
+    //     btn.setAttribute('download', '');
+    //   }
+    // }).catch(() => {});
   })();
 });

@@ -1,4 +1,14 @@
 {
-  "images": [],
-  "pdf": "Intermediate_Project_2.pdf"
+  "pdf": "Przejsciowka_Master_Frelek.pdf",
+  "images": [
+    { "file": "body_of_influence.png", "caption": "Region of influence (domain extent)" },
+    { "file": "cionverged_drag_coefficient.png", "caption": "Converged drag coefficient (CD history)" },
+    { "file": "closeup_meshg.png", "caption": "Mesh close-up (surface + prism layers)" },
+    { "file": "closeup_nosecone_and_cannards.png", "caption": "Nosecone and canards — close-up" },
+    { "file": "full_domain.png", "caption": "Full computational domain" },
+    { "file": "isosurface_Mach_1_.png", "caption": "Mach 1 iso-surface (shock envelope)" },
+    { "file": "pressure_contours.png", "caption": "Surface pressure contours" },
+    { "file": "residuals.png", "caption": "Solver residuals (convergence history)" },
+    { "file": "velocity_magnitude_crossection.png", "caption": "Velocity magnitude — cross-section" }
+  ]
 }

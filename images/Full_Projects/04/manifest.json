@@ -1,0 +1,11 @@
+{
+  "pdf": "15.06.2023 - Kacper Frelek Intermidiate Project.pdf",
+  "images": [
+    { "file": "Geometry_w_boi.png", "caption": "Geometry with body of influence" },
+    { "file": "mesh_boi_close.png", "caption": "Mesh close-up — body of influence" },
+    { "file": "mesh_boi_far.png", "caption": "Mesh overview — far-field and BOI" },
+    { "file": "residuals_wo_boi.png", "caption": "Solver residuals — without body of influence" },
+    { "file": "velocity_ang45.png", "caption": "Velocity contours — 45° configuration" },
+    { "file": "velocity_ang90.png", "caption": "Velocity contours — 90° configuration" }
+  ]
+}
