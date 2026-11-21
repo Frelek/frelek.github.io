@@ -1,0 +1,2705 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kacper Frelek | Inżynier Lotniczy i Kosmiczny & Aerodynamik | Portfolio CFD</title>
+  <meta name="description" content="Portfolio Kacpra Frelka - Inżyniera Lotnictwa i Kosmonautyki specjalizującego się w Numerycznej Mechanice Płynów (CFD), Aerotermodynamice Hipersonicznej, Modelowaniu Turbulencji i Pojazdach Powrotnych.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.5/dist/katex.min.css" integrity="sha384-2dNi/m6JtSiviznrOIZ5fTiZ5As0In2QwkuXSgoqcQtCNplvJAbt+jveeN+8en73" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.5/dist/katex.min.js" integrity="sha384-TTF8eEsEKInX2meLzP5V1z/npGYIElXYGksx93f0qBZHu6IL3PdzVB8objytx+TR" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.5/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}], throwOnError: false });"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. HEADER & PRIMARY NAVIGATION (Cleaned up, no fake telemetry)
+       ========================================================================= -->
+  <header>
+    <div class="nav-container">
+      <a href="#overview" class="logo-group" data-target="overview">
+        <div class="logo-badge">KF-AERO</div>
+        <div class="logo-text">
+          <h1>KACPER FRELEK</h1>
+          <span>AERODYNAMIKA // CFD // HIPERSONIKA</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item active">
+          <a class="nav-link" data-target="overview">Podsumowanie</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle">Przemysł i Badania ▾</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" data-target="exp-urans">
+              <span>Porównanie uRANS / LES / DES</span>
+              <span class="badge">Turbulencja</span>
+            </a>
+            <a class="dropdown-item" data-target="exp-jet">
+              <span>Uderzająca Struga Gazowa</span>
+              <span class="badge">CFX / UDF</span>
+            </a>
+            <a class="dropdown-item" data-target="exp-aeromech">
+              <span>Aeromechanika i Drgania</span>
+              <span class="badge">GE Aerospace</span>
+            </a>
+            <a class="dropdown-item" data-target="exp-rfa">
+              <span>Aerodynamika Rakiety RFA ONE</span>
+              <span class="badge">RFA</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle">Projekty Pojazdów ▾</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" data-target="proj-starship">
+              <span>Aerodynamika Wejścia Starshipa</span>
+              <span class="badge">SpaceX / WUT</span>
+            </a>
+            <a class="dropdown-item" data-target="proj-gridfin">
+              <span>Stery Kratownicowe Falcona 9</span>
+              <span class="badge">Praca Inżynierska</span>
+            </a>
+            <a class="dropdown-item" data-target="proj-masterthesis">
+              <span>Praca Magisterska: Kadłub MSL</span>
+              <span class="badge">Praca Magisterska</span>
+            </a>
+            <a class="dropdown-item" data-target="proj-urban">
+              <span>Komfort Wiatrowy w Mieście</span>
+              <span class="badge">Tunel Aerodynamiczny</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-target="lab">
+            <span style="color:var(--shock-gold); font-weight:700;">⚡ Laboratorium Aero</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-target="travel">Wyprawy</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-target="future">Horyzonty</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank" class="download-badge-btn">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Pobierz CV (PDF)
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Language Switcher: English (Default) / Polish -->
+        <div class="lang-switcher" aria-label="Select language">
+          <a href="index.html" class="lang-btn" title="English" data-lang="en">
+            <svg class="flag-svg" viewBox="0 0 60 30">
+              <clipPath id="s_uk"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+              <clipPath id="t_uk"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+              <g clip-path="url(#s_uk)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t_uk)" stroke="#C8102E" stroke-width="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+              </g>
+            </svg>
+            <span>EN</span>
+          </a>
+          <span class="lang-divider">|</span>
+          <a href="index_pl.html" class="lang-btn active" title="Język Polski" data-lang="pl">
+            <svg class="flag-svg" viewBox="0 0 16 10">
+              <rect width="16" height="5" fill="#ffffff"/>
+              <rect y="5" width="16" height="5" fill="#dc143c"/>
+            </svg>
+            <span>PL</span>
+          </a>
+        </div>
+
+        <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT
+       ========================================================================= -->
+  <main>
+
+    <!-- SECTION 1: OVERVIEW / ABOUT -->
+    <section id="overview" class="content-section active">
+      <div class="page-breadcrumb">
+        <span class="breadcrumb-item active">Podsumowanie</span>
+      </div>
+
+      <div class="hero-grid">
+        <!-- Left Profile Card -->
+        <div class="profile-card">
+          <div class="profile-frame">
+            <img src="./other/zdjecie.jpg" alt="Kacper Frelek - Aerospace Engineer" class="profile-img">
+          </div>
+          <h2 class="profile-name">Kacper Frelek</h2>
+          <div class="profile-title">mgr inż. Lotnictwa i Kosmonautyki & Aerodynamik</div>
+
+          <div class="profile-specs">
+            <div class="spec-row">
+              <span class="spec-label">UCZELNIA:</span>
+              <span class="spec-val">Politechnika Warszawska (MEiL)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">DOŚWIADCZENIE:</span>
+              <span class="spec-val">GE Aerospace (EDC) i RFA</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">SPECJALIZACJA:</span>
+              <span class="spec-val">Hipersonika, CFD i Aerotermodynamika</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">NARZĘDZIA:</span>
+              <span class="spec-val">ANSYS Fluent, CFX, Python</span>
+            </div>
+          </div>
+
+          <div class="quick-links">
+            <a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank" class="btn btn-primary" style="width: 100%;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Pobierz Pełne Curriculum Vitae
+            </a>
+            <a class="btn btn-gold route-btn" data-target="lab" style="width: 100%;">
+              Uruchom Interaktywne Laboratorium Aero ⚡
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Mission Content -->
+        <div class="hero-main">
+          
+          <!-- Aerospace Artwork Graphic Showcase Banner -->
+          <div class="aerospace-art-banner">
+            <div class="art-banner-img-wrap">
+              <img src="./images/aerospace_hero_bg.jpg" alt="Aerospace Engineering & Research - Kacper Frelek" class="art-banner-img">
+              <div class="art-banner-overlay"></div>
+            </div>
+            <div class="art-banner-footer">
+              <div class="art-legend-item">
+                <span class="art-legend-dot dot-aero"></span>
+                <span>Aerodynamika (Symulacje CFD)</span>
+              </div>
+              <div class="art-legend-item">
+                <span class="art-legend-dot dot-thermo"></span>
+                <span>Aerotermodynamika (Przepływy Hipersoniczne)</span>
+              </div>
+              <div class="art-legend-item">
+                <span class="art-legend-dot dot-mech"></span>
+                <span>Aeromechanika (Integralność Strukturalna)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission-statement">
+            <p class="lead-text">
+              Jestem inżynierem lotnictwa i kosmonautyki specjalizującym się w <strong>Numerycznej Mechanice Płynów (CFD)</strong>, 
+              <strong>aerodynamice dużych prędkości gazów ściśliwych</strong> oraz <strong>optymalizacji aerotermodynamicznej kapsuł powrotnych</strong>.
+            </p>
+            <p>
+              Moja praca inżynierska koncentruje się na rozwiązywaniu złożonych zjawisk przepływowych w zakresach prędkości poddźwiękowych, okołodźwiękowych, naddźwiękowych i hipersonicznych. 
+              Od analizy flatteru łopatek w GE Aerospace, przez projektowanie aerodynamiki rakiet nośnych w Rocket Factory Augsburg, po badania wejścia w atmosfery planetarne na Politechnice Warszawskiej.
+            </p>
+          </div>
+
+          <!-- Industry Affiliations / Logos Banner -->
+          <div style="margin: 0.5rem 0 1.5rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.75rem; letter-spacing: 0.05em;">
+              Industry & Research Partners
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+              
+              <!-- GE Aerospace Badge -->
+              <div class="org-header-banner" style="padding: 1rem 1.25rem; margin-bottom: 0;">
+                <div class="org-logo-wrap" style="width: 50px; height: 50px;">
+                  <svg viewBox="0 0 100 100" class="org-logo-svg">
+                    <circle cx="50" cy="50" r="46" fill="#005eb8" />
+                    <text x="50" y="58" font-family="'Segoe UI', Roboto, sans-serif" font-weight="bold" font-size="28" fill="#ffffff" text-anchor="middle">GE</text>
+                  </svg>
+                </div>
+                <div class="org-meta">
+                  <h3 style="font-size: 1rem;">GE Aerospace</h3>
+                  <p style="font-size: 0.78rem;">Engineering Design Center</p>
+                </div>
+              </div>
+
+              <!-- RFA Badge -->
+              <div class="org-header-banner" style="padding: 1rem 1.25rem; margin-bottom: 0;">
+                <div class="org-logo-wrap" style="width: 50px; height: 50px;">
+                  <img src="./images/Experience/project_04/RFA.png" alt="RFA Logo">
+                </div>
+                <div class="org-meta">
+                  <h3 style="font-size: 1rem;">Rocket Factory</h3>
+                  <p style="font-size: 0.78rem;">Augsburg, Germany</p>
+                </div>
+              </div>
+
+              <!-- WUT Badge -->
+              <div class="org-header-banner" style="padding: 1rem 1.25rem; margin-bottom: 0;">
+                <div class="org-logo-wrap" style="width: 50px; height: 50px;">
+                  <svg viewBox="0 0 100 100" class="org-logo-svg">
+                    <circle cx="50" cy="50" r="46" fill="#1b2a4a" stroke="#00f0ff" stroke-width="2"/>
+                    <text x="50" y="58" font-family="var(--font-mono)" font-weight="bold" font-size="24" fill="#00f0ff" text-anchor="middle">WUT</text>
+                  </svg>
+                </div>
+                <div class="org-meta">
+                  <h3 style="font-size: 1rem;">Politechnika</h3>
+                  <p style="font-size: 0.78rem;">Warsaw Univ of Tech</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Aerospace Stats Grid -->
+          <div class="aerospace-stats-grid">
+            <div class="stat-box">
+              <span class="num">15.5M</span>
+              <span class="label">Mesh Cells (Starship)</span>
+            </div>
+            <div class="stat-box">
+              <span class="num gold">M 0.1–25</span>
+              <span class="label">Mach Regimes Analyzed</span>
+            </div>
+            <div class="stat-box">
+              <span class="num">y⁺ ≈ 1.0</span>
+              <span class="label">Near-Wall Mesh Quality</span>
+            </div>
+            <div class="stat-box">
+              <span class="num plasma">4+</span>
+              <span class="label">Industry & Lab Partners</span>
+            </div>
+          </div>
+
+          <!-- Professional Narrative -->
+          <div class="narrative-card">
+            <h4>✈️ Experience & Engineering Trajectory</h4>
+            <p>
+              W <strong>Instytucie Lotnictwa w Warszawie (EDC)</strong> we współpracy z <strong>GE Aerospace</strong> 
+              przeprowadzałem zaawansowane analizy aeromechaniczne wieńców łopatkowych sprężarek i turbin lotniczych silników komercyjnych. 
+              Moja praca obejmowała budowę modeli dynamiki strukturalnej w środowisku ANSYS, wyznaczanie diagramów Campbella i Goodmana, 
+              ocenę trwałości zmęczeniowej o wysokiej liczbie cykli (HCF) oraz walidację symulacji z eksperymentalnymi pomiarami tensometrycznymi i optycznymi (Blade Tip-Timing).
+            </p>
+            <p>
+              Podczas stażu w dziale aerodynamiki w <strong>Rocket Factory Augsburg (RFA)</strong> w Niemczech uczestniczyłem w aerodynamice zewnętrznej 
+              wielostopniowej rakiety orbitalnej <strong>RFA ONE</strong>. Modelowałem okołodźwiękowy wzrost oporu falowego, interferencję fali uderzeniowej 
+              z warstwą przyścienną na owiewkach i tunelach kablowych oraz recyrkulację denną gazów wylotowych (plume-on vs plume-off) pod kątem osłon termicznych.
+            </p>
+            <p>
+              W <strong>Kole Naukowym Lotników / Sekcji Rakietowej SKA</strong> kierowałem optymalizacją aerodynamiczną kadłubów rakiet naddźwiękowych, 
+              w tym dzielonych canardów rakiety <em>FOK</em> oraz zespołu głowicy i stateczników rakiety <em>GROT</em>.
+            </p>
+          </div>
+
+          <!-- Four Focus Areas -->
+          <div class="exp-pillars">
+            <div class="pillar-card">
+              <span class="pillar-badge">HYPERSONICS & REENTRY</span>
+              <h4>MSL Forebody Entry Aeroheating</h4>
+              <p>Badania magisterskie: Wysokoentalpowa nierównowagowa aerotermodynamika kadłuba czaszowo-stożkowego 70° kapsuły MSL, walidowana względem danych z tunelu Caltech T5 przy użyciu chemii Park 2T i modeli katalityczności powierzchniowej.</p>
+            </div>
+            <div class="pillar-card">
+              <span class="pillar-badge">ADVANCED CFD</span>
+              <h4>Turbulence Modeling: uRANS, DES & LES</h4>
+              <p>Tranzycja warstwy przyściennej, rozdzielczość mikroskali Kołmogorowa i niestacjonarna dynamika śladu przy głębokim przeciągnięciu.</p>
+            </div>
+            <div class="pillar-card">
+              <span class="pillar-badge">ROCKETRY & GNC</span>
+              <h4>Reusable Launch Vehicle Control</h4>
+              <p>Aerodynamika tytanowych sterów kratownicowych SpaceX Falcon 9 w zakresie liczb Macha 0.8–1.91 oraz baza danych aerodynamicznych (ADB) wejścia Starshipa.</p>
+            </div>
+            <div class="pillar-card">
+              <span class="pillar-badge">AEROMECHANICS</span>
+              <h4>Turbomachinery Vibration & HCF</h4>
+              <p>Wyznaczanie rezonansów na diagramach Campbella, zapobieganie flatterowi łopatek, parametry modalne zależne od temperatury i obwiednie zmęczeniowe Goodmana.</p>
+            </div>
+          </div>
+
+          <!-- Bottom Nav -->
+          <div class="section-footer-nav">
+            <a class="nav-step-btn next route-btn" data-target="exp-urans">
+              <span class="nav-step-label">Następny Projekt →</span>
+              <span class="nav-step-title">Porównanie uRANS / LES / DES</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: uRANS / LES / DES TURBULENCE SHOWDOWN -->
+    <section id="exp-urans" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Industry & Research</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Porównanie uRANS / LES / DES</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>uRANS vs DES vs LES Turbulence Showdown</h2>
+          <div class="section-subtitle">Deep Stall & Unsteady Vortex Dynamics over NACA 2412 at Re = 6.85 × 10⁶ (30° AoA)</div>
+        </div>
+        <a href="./images/Experience/Project_01/uRANS_vs_LES_vs_DES_NACA.pdf" download class="download-badge-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Pobierz Raport z Badań (PDF 4.2 MB)
+        </a>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#uRANS</span>
+        <span class="tag-chip">#DES</span>
+        <span class="tag-chip">#LES</span>
+        <span class="tag-chip">#ANSYSFluent</span>
+        <span class="tag-chip">#NACA2412</span>
+        <span class="tag-chip">#30°AoA</span>
+        <span class="tag-chip gold">#Re=6.85M</span>
+        <span class="tag-chip plasma">#KolmogorovResolution</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🔬 Cel Fizyczny Badań</h4>
+        <p>
+          Gdy profil lotniczy pracuje w głębokim przeciągnięciu (kąt natarcia 30°) przy wysokiej liczbie Reynoldsa (\(Re = 6,85 \times 10^6\)), 
+          które podejście do modelowania turbulencji zapewnia fizycznie wierne odwzorowanie spływu wirów, pulsacji ciśnienia i dyssypacji energii?
+        </p>
+        <p>
+          Przeprowadziłem bezpośrednie porównanie numeryczne trzech paradygmatów w programie ANSYS Fluent:
+        </p>
+        <ul>
+          <li><strong>uRANS (Niestacjonarny RANS):</strong> Uśrednione po czasie równania Naviera-Stokesa z domknięciem SST \(k\text{-}\omega\). Bardzo ekonomiczny obliczeniowo, rejestruje dominujące cykle oderwania, lecz odfiltrowuje wysokoczęstotliwościowe kaskady widmowe turbulencji.</li>
+          <li><strong>DES (Symulacja Wirów Odłączonych):</strong> Hybrydowe podejście RANS-LES. Zachowuje odporne modelowanie warstwy przyściennej metodą RANS i aktywuje trójwymiarowe LES w strefach masywnego oderwania opływu.</li>
+          <li><strong>LES (Symulacja Dużych Wirów):</strong> Bezpośrednio rozstrzyga odfiltrowane trójwymiarowe równania Naviera-Stokesa aż do skali podsiatkowej (WALE / Smagorinsky), odwzorowując niestabilności Kelvina-Helmholtza i kaskadę energii w podzakresie inercjalnym.</li>
+        </ul>
+
+        <!-- Technical Comparison Table -->
+        <div class="tech-table-wrapper">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Model Turbulencji</th>
+                <th>Near-Wall Mesh (y⁺)</th>
+                <th>Resolved Flow Dynamics</th>
+                <th>Physical Fidelity</th>
+                <th>When to Use in Industry</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>uRANS (k-ω SST)</strong></td>
+                <td>y⁺ ≈ 1.0</td>
+                <td>Uśredniony pęcherz oderwania, dominująca częstość spływu</td>
+                <td>Odfiltrowuje widmową dynamikę turbulencji</td>
+                <td>Wczesne iteracje projektowe, wstępne obciążenia</td>
+              </tr>
+              <tr>
+                <td><strong>DES (Spalart-Allmaras)</strong></td>
+                <td>y⁺ ≈ 1.0</td>
+                <td>Wielkoskalowe struktury wirowe, niestabilność warstwy ścinania</td>
+                <td>Optymalny kompromis dokładności i kosztu obliczeń</td>
+                <td>Ślady aerodynamiczne, separacja stopni, buffeting</td>
+              </tr>
+              <tr>
+                <td><strong>LES (WALE / Subgrid)</strong></td>
+                <td>y⁺ &lt; 5.0</td>
+                <td>Pełne trójwymiarowe wiry aż do skali Taylora i Kołmogorowa</td>
+                <td>Maksymalna wierność fizyczna (wysoki koszt obliczeń)</td>
+                <td>Aeroakustyka, flatter przeciągnięciowy, badania naukowe</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Synchronized Video Showcase -->
+      <div class="gallery-section-title">🎬 Wizualizacje wideo niestacjonarnych symulacji CFD</div>
+      <div class="video-showcase-grid">
+        <div class="video-card">
+          <video controls preload="metadata">
+            <source src="./images/Experience/Project_01/all_models_compared.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+          <div class="video-info">
+            <h5>Synchronized Turbulence Comparison</h5>
+            <p>Bezpośrednie porównanie czasowej ewolucji prędkości i wirowości dla uRANS, DES i LES przy kącie natarcia 30°.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="metadata">
+            <source src="./images/Experience/Project_01/DES_vs_LES_vort.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+          <div class="video-info">
+            <h5>DES vs LES Vorticity Magnitude</h5>
+            <p>Wizualizacja drobnych wirów turbulentnych i zwijania warstwy ścinania w śladzie aerodynamicznym.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="metadata">
+            <source src="./images/Experience/Project_01/des_vs_urans_vel_and_pres.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+          <div class="video-info">
+            <h5>DES vs uRANS: Velocity & Pressure Fields</h5>
+            <p>Sygnatury pulsacji ciśnienia i dynamika strefy recyrkulacji wzdłuż cięciwy profilu.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Gallery -->
+      <div class="gallery-section-title">📊 Domena obliczeniowa, warstwy przyścienne i siatki przyścienne</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/Control_Volume.png" alt="Computational Domain & Farfield Boundaries">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Control Volume & Boundary Setup</div>
+            <div class="cfd-sub">Farfield extent, velocity inlet & pressure outlet</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/LES_overview.png" alt="LES Overall Flowfield">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">LES Instantaneous Flowfield</div>
+            <div class="cfd-sub">Turbulent vortex street & dissipation scales</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/LES_BL.png" alt="Warstwa przyścienna LES">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Zagęszczenie warstwy przyściennej LES</div>
+            <div class="cfd-sub">Prism layer refinement resolving near-wall shear</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/LES_close.png" alt="LES Airfoil Surface Close-Up">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">LES Airfoil Surface Close-Up</div>
+            <div class="cfd-sub">Fine subgrid-scale resolution along suction peak</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/DES_overview.png" alt="DES Flowfield">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">DES Wake Dynamics</div>
+            <div class="cfd-sub">Detached eddy transition in outer shear layer</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/DES_BL.png" alt="Warstwa przyścienna DES">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">DES Near-Wall Resolution</div>
+            <div class="cfd-sub">RANS zone wall treatment enforcing y⁺ ≈ 1.0</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/DES_close.png" alt="DES Trailing Edge Close-Up">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">DES Trailing Edge Mesh</div>
+            <div class="cfd-sub">Strefa przejściowa między przyścienną warstwą RANS a śladem wirowym LES</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/RANS_overview.png" alt="uRANS Flowfield">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">uRANS Averaged Vorticity</div>
+            <div class="cfd-sub">Płynne struktury wirowe z odfiltrowaną składową turbulencji</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/Project_01/RANS_Close.png" alt="uRANS Grid Close-Up">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">uRANS Surface Grid Close-Up</div>
+            <div class="cfd-sub">Orthogonal inflation layers over leading edge</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="overview">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Podsumowanie</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="exp-jet">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Uderzająca Struga Gazowa (CFD)</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 3: IMPINGING JET CFD -->
+    <section id="exp-jet" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Industry & Research</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Uderzająca Struga Gazowa</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Impinging Jet Aerothermodynamics & CFD</h2>
+          <div class="section-subtitle">Pseudo-2D Domain Formulation & Custom Velocity-Inlet UDF in ANSYS CFX</div>
+        </div>
+        <a href="./images/Experience/project_02/Frelek_Impinging_Jet.pdf" download class="download-badge-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Pobierz Raport (PDF)
+        </a>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#ImpingingJet</span>
+        <span class="tag-chip">#ANSYSCFX</span>
+        <span class="tag-chip">#CustomUDF</span>
+        <span class="tag-chip">#Pseudo2D</span>
+        <span class="tag-chip">#HeatTransfer</span>
+        <span class="tag-chip gold">#NusseltNumber</span>
+        <span class="tag-chip plasma">#TurbulenceValidation</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🧪 Kalibracja Eksperymentalna i Strategia Modelowania</h4>
+        <p>
+          Strugi uderzające gazu stanowią jeden z najbardziej wymagających przypadków testowych w aerotermodynamice, łącząc skoki ciśnienia spiętrzenia, 
+          intensywne ścinanie w przyściennym strumieniu rozlewnym oraz lokalne szczytowe współczynniki wnikania ciepła, kluczowe dla chłodzenia łopatek turbin i komór spalania silników rakietowych.
+        </p>
+        <p>
+          Aby zamodelować ściśle dwuwymiarowy opływ uderzeniowy w programie <strong>ANSYS CFX</strong> (który natywnie operuje w 3D), 
+          zaprojektowałem jednoelementową domenę <strong>pseudo-2D</strong> z symetrycznymi i periodycznymi warunkami brzegowymi. 
+          Opracowałem dedykowaną funkcję <strong>User-Defined Function (UDF)</strong> w języku C, zadającą profil prędkości w pełni rozwiniętego przepływu turbulentnego w rurze na wylocie dyszy, 
+          co zapewniło w pełni deterministyczne warunki wlotowe.
+        </p>
+        <h4>📊 Główne Wnioski i Analiza Wymiany Ciepła</h4>
+        <ul>
+          <li><strong>Rozbieżność modeli turbulencji:</strong> Zestawiłem model SST \(k\text{-}\omega\) z formułami \(k\text{-}\epsilon\), wykazując, że standardowe modele lepkości burzliwej nadmiernie zawyżają energię kinetyczną turbulencji w punkcie spiętrzenia bez zastosowania poprawek Kato-Laundera.</li>
+          <li><strong>Rozkład liczby Nusselta:</strong> Wyznaczyłem rozkłady współczynników przejmowania ciepła i liczby Nusselta w korelacji z opublikowanymi danymi laserowej anemometrii dopplerowskiej (LDV), uzyskując wysoką zgodność w strefie przyspieszania strugi przyściennej.</li>
+          <li><strong>Zagęszczenie siatki w strefie spiętrzenia:</strong> Udowodniłem, że lokalne zagęszczenie siatki w obszarze Body of Influence (BOI) jest kluczowe dla uniknięcia sztucznej dyfuzji numerycznej w warstwie ścinania strugi.</li>
+        </ul>
+      </div>
+
+      <div class="gallery-section-title">📈 Pola CFD, dyskretyzacja siatki i wykresy liczby Nusselta</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/pseudo 2D domain.png" alt="Pseudo 2D Domain Setup">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Pseudo-2D Domain Architecture</div>
+            <div class="cfd-sub">Single-element thickness in ANSYS CFX</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/BOI.png" alt="Body of Influence Refinement">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Body of Influence (BOI) Refinement</div>
+            <div class="cfd-sub">Kierunkowe zagęszczenie siatki w strefie uderzenia strugi</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/Velocity_contours_SSTke.png" alt="Velocity Contours SST k-w">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Velocity Contours (SST k-ω)</div>
+            <div class="cfd-sub">Jet potential core, stagnation zone & wall jet spread</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/Pressure_contours_SSTke.png" alt="Pressure Contours">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Static Pressure Contours</div>
+            <div class="cfd-sub">Stagnation pressure peak at impingement plate</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/Nusselts number #1.png" alt="Nusselt Number Validation Plot 1">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Nusselt Number Distribution (Case 1)</div>
+            <div class="cfd-sub">Validation against experimental heat-transfer curves</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/Nusselts number #2.png" alt="Nusselt Number Validation Plot 2">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Nusselt Number Distribution (Case 2)</div>
+            <div class="cfd-sub">High Re comparison showing secondary peak behavior</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_02/scaled_residuals.png" alt="Solver Convergence Residuals">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Solver Convergence History</div>
+            <div class="cfd-sub">Strict RMS residuals below 10⁻⁵ threshold</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="exp-urans">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">uRANS / LES / DES Showdown</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="exp-aeromech">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Aeromechanics & Turbomachinery (GE)</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 4: AEROMECHANICS (GE AEROSPACE / EDC) -->
+    <section id="exp-aeromech" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Industry & Research</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Aeromechanics & GE Aerospace</span>
+      </div>
+
+      <!-- Organization Banner with GE Aerospace Logo -->
+      <div class="org-header-banner">
+        <div class="org-logo-wrap" style="width: 70px; height: 70px;">
+          <svg viewBox="0 0 100 100" class="org-logo-svg">
+            <circle cx="50" cy="50" r="46" fill="#005eb8" />
+            <text x="50" y="58" font-family="'Segoe UI', Roboto, sans-serif" font-weight="bold" font-size="28" fill="#ffffff" text-anchor="middle">GE</text>
+          </svg>
+        </div>
+        <div class="org-meta">
+          <h3>GE Aerospace / Engineering Design Center (EDC)</h3>
+          <p>Warsaw Institute of Aviation — Commercial Aircraft Engine Aeromechanics & Structural Dynamics</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Aeromechanics & Turbomachinery Blade Dynamics</h2>
+          <div class="section-subtitle">Compressor & Turbine Modal Resonance, Campbell Diagrams & High Cycle Fatigue (HCF)</div>
+        </div>
+        <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <a href="https://www.researchgate.net/figure/Campbell-diagram-depicting-various-aeromechanical-phenomena-a-and-experimental-data_fig2_362210616" target="_blank" rel="noopener" class="download-badge-btn" style="border-color: rgba(255, 183, 3, 0.4); color: var(--shock-gold);">
+            ResearchGate Benchmark ↗
+          </a>
+          <a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank" class="download-badge-btn">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Aerospace CV (PDF)
+          </a>
+        </div>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#GEAerospace</span>
+        <span class="tag-chip">#EDC</span>
+        <span class="tag-chip">#CampbellDiagram</span>
+        <span class="tag-chip">#ModalAnalysis</span>
+        <span class="tag-chip">#GoodmanDiagram</span>
+        <span class="tag-chip gold">#HCF</span>
+        <span class="tag-chip">#BladeTipTiming</span>
+        <span class="tag-chip plasma">#Multiphysics</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>✈️ Aeromechanika Łopatek Sprężarek i Turbin Silników Lotniczych</h4>
+        <p>
+          Podczas pracy w <strong>Engineering Design Center (EDC) / Instytucie Lotnictwa w Warszawie</strong> we współpracy z <strong>GE Aerospace</strong>, 
+          prowadziłem analizy aeromechaniczne wirujących podzespołów sprężarek i turbin silników lotniczych. 
+          Głównym celem było zapobieganie zjawiskom flatteru aeromechanicznego i eliminacja ryzyka zmęczenia wysokocyklowego (HCF) wywoływanego niestacjonarnym opływem aerodynamicznym.
+        </p>
+
+        <h4>📈 Analiza Diagramu Campbella</h4>
+        <p>
+          Tworzyłem wielorzędowe <strong>diagramy Campbella</strong> w całym zakresie obrotów silnika (od biegu jałowego do prędkości maksymalnej). 
+          Lokalizowałem niebezpieczne przecięcia rezonansowe, w których częstości własne tarczy z łopatkami pokrywały się z harmonicznymi wymuszeń aerodynamicznych 
+          (rzędy silnikowe, częstości przejścia śladów aerodynamicznych wieńców kierowniczych oraz zaburzenia ciśnienia wlotowego). 
+          Kierowałem optymalizacją rozkładu masy i sztywności łopatek, aby ominąć pasma rezonansowe bez strat na sprężu aerodynamicznym.
+        </p>
+
+        <h4>🔬 Analiza Modalna i Zmęczenie Wysokocyklowe (HCF)</h4>
+        <p>
+          Przeprowadzałem trójwymiarowe analizy modalne MES dla drgań giętnych, skrętnych i pasmowych z uwzględnieniem stopów metali o własnościach zależnych od temperatury. 
+          Wyznaczałem zmodyfikowane <strong>diagramy Goodmana</strong> do oceny zmiennych naprężeń drganiowych w obecności naprężeń średnich od sił odśrodkowych i termicznych. 
+          Weryfikowałem prognozy analityczne z danymi z prób silnikowych z tensometrów dynamicznych oraz optycznych sensorów Blade Tip-Timing (BTT).
+        </p>
+      </div>
+
+      <div class="gallery-section-title">📐 Wykresy techniczne, postaci drgań i obwiednie zmęczeniowe</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_03/Campbell Diagram.png" alt="Campbell Diagram Engine Speed vs Frequency">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Campbell Diagram Analysis</div>
+            <div class="cfd-sub">Natural frequencies vs engine order harmonic excitations</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_03/Airfoil Modes.png" alt="Airfoil Vibration Mode Shapes">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Airfoil Modal Eigenmodes</div>
+            <div class="cfd-sub">I giętna (1F), I skrętna (1T) oraz mody pasmowe</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_03/Goodman diagram.png" alt="Goodman Diagram Fatigue Life">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Modified Goodman Diagram</div>
+            <div class="cfd-sub">Alternating stress vs mean stress fatigue envelope</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_03/LCF and HCF.png" alt="LCF and HCF Cycles">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Low-Cycle vs High-Cycle Fatigue</div>
+            <div class="cfd-sub">Mission-cycle thermal stresses vs vibratory resonance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="exp-jet">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Impinging Jet CFD</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="exp-rfa">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">RFA ONE Rocket Aerodynamics</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 5: AERODYNAMICS AT ROCKET FACTORY AUGSBURG (RFA) -->
+    <section id="exp-rfa" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Industry & Research</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Rocket Factory Augsburg</span>
+      </div>
+
+      <!-- Organization Banner with RFA Logo -->
+      <div class="org-header-banner">
+        <div class="org-logo-wrap" style="width: 100px; height: 60px;">
+          <img src="./images/Experience/project_04/RFA.png" alt="Rocket Factory Augsburg Logo">
+        </div>
+        <div class="org-meta">
+          <h3>Rocket Factory Augsburg (RFA)</h3>
+          <p>Augsburg, Germany — Aerodynamics Engineering & Launch Vehicle Development</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>RFA ONE Launch Vehicle Aerodynamics</h2>
+          <div class="section-subtitle">Full-Trajectory Mach Regimes, Plume-On Recirculation & Python Automation</div>
+        </div>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#RFA</span>
+        <span class="tag-chip">#RFAONE</span>
+        <span class="tag-chip">#LaunchVehicles</span>
+        <span class="tag-chip">#TransonicDrag</span>
+        <span class="tag-chip gold">#ShockBoundaryLayer</span>
+        <span class="tag-chip plasma">#PlumeInteractions</span>
+        <span class="tag-chip">#PythonAutomation</span>
+      </div>
+
+      <!-- RFA ONE Technical Specifications Callout Banner -->
+      <div class="tech-spec-banner">
+        <div class="tech-spec-item">
+          <span class="ts-label">LAUNCH VEHICLE:</span>
+          <span class="ts-val">RFA ONE</span>
+        </div>
+        <div class="tech-spec-item">
+          <span class="ts-label">ARCHITECTURE:</span>
+          <span class="ts-val">3-Stage Orbital Rocket</span>
+        </div>
+        <div class="tech-spec-item">
+          <span class="ts-label">PROPULSION:</span>
+          <span class="ts-val">Helix Staged Combustion</span>
+        </div>
+        <div class="tech-spec-item">
+          <span class="ts-label">PAYLOAD CAPACITY:</span>
+          <span class="ts-val">1,300 kg to LEO</span>
+        </div>
+        <div class="tech-spec-item">
+          <span class="ts-label">VEHICLE HEIGHT:</span>
+          <span class="ts-val">30 m (2.0 m dia)</span>
+        </div>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🚀 Aerodynamic Engineering Internship at Rocket Factory Augsburg</h4>
+        <p>
+          At <strong>Rocket Factory Augsburg (RFA)</strong> in Augsburg, Germany, I participated in external aerodynamic characterization 
+          dla rakiety orbitalnej <strong>RFA ONE</strong>. Zakres moich analiz obejmował całą obwiednię lotu atmosferycznego, 
+          minimalizację oporu okołodźwiękowego oraz modelowanie złożonych oddziaływań aerotermicznych w rejonie dennym wywołanych strugami silników.
+        </p>
+
+        <h4>🌌 Analiza Pełnego Zakresu Liczb Macha Lotu</h4>
+        <ul>
+          <li><strong>Wznoszenie poddźwiękowe (M &lt; 0,8):</strong> Wyznaczyłem rozkłady współczynnika ciśnienia \(C_p\) podczas startu i wznoszenia przy maksymalnym ciśnieniu dynamicznym max-Q.</li>
+          <li><strong>Reżim okołodźwiękowy (0,8 &lt; M &lt; 1,2):</strong> Badałem zjawiska oddziaływania fal uderzeniowych z warstwą przyścienną (SWBLI) na przejściu owiewki, kołnierzach separacji stopni i osłonach kabli w celu eliminacji pęcherzy oderwania i drgań buffetingowych.</li>
+          <li><strong>Reżim naddźwiękowy (1,2 &lt; M &lt; 5,0):</strong> Scharakteryzowałem zakotwiczenie stożkowej fali uderzeniowej, wachlarze fal rozrzedzeniowych oraz przesunięcie środka parcia (\(x_{\text{cp}}\)) w kierunku rufy w celu zdefiniowania marginesów stateczności dla algorytmów GNC.</li>
+        </ul>
+
+        <h4>🔥 Recyrkulacja Denna Gazów Wylotowych Silników (Plume-On vs Plume-Off)</h4>
+        <p>
+          Modelowałem przepływ z włączonymi i wyłączonymi silnikami w ANSYS Fluent w celu oceny ekspansji strugi gazów wylotowych. 
+          Zidentyfikowałem recyrkulujące wiry toroidalne we wnęce dennej wywołujące lokalne konwekcyjne i radiacyjne obciążenia cieplne siłowników wychylenia silników.
+        </p>
+
+        <h4>🐍 Zautomatyzowane Środowisko Post-Processingu w Pythonie</h4>
+        <p>
+          Opracowałem skrypty automatyzujące w języku Python do bezpośredniego parsowania wyników z ANSYS Fluent, wyznaczania współczynników sił i momentów aerodynamicznych (\(C_A, C_N, C_m\)), współrzędnych środka parcia oraz kątów skośnych fal uderzeniowych.
+        </p>
+      </div>
+
+      <div class="gallery-section-title">🚀 Launch Vehicle Architecture & Cleanroom Environment</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_04/RFA.png" alt="Rocket Factory Augsburg Logo & Cleanroom Facilities">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Rocket Factory Augsburg Facilities</div>
+            <div class="cfd-sub">Industrial production & testing environment in Germany</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Experience/project_04/rfa_one.png" alt="Konfiguracja rakiety orbitalnej RFA ONE">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">RFA ONE Multi-Stage Orbital Rocket</div>
+            <div class="cfd-sub">Kadłub ze stali nierdzewnej z silnikami Helix o spalaniu wieloetapowym</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="exp-aeromech">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Aeromechanics (GE Aerospace)</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="proj-starship">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Starship Reentry Aerodynamics</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 6: STARSHIP REENTRY AERODYNAMICS (PROJECT 08) -->
+    <section id="proj-starship" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Vehicle Projects</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Starship Atmospheric Reentry</span>
+      </div>
+
+      <!-- Organization Banner with SpaceX / WUT -->
+      <div class="org-header-banner">
+        <div class="org-logo-wrap" style="width: 80px; height: 50px;">
+          <svg viewBox="0 0 120 30" class="org-logo-svg">
+            <text x="5" y="22" font-family="'Arial Black', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="2">SPACE</text>
+            <path d="M95 8 L108 24 M108 8 L95 24" stroke="#00f0ff" stroke-width="4" stroke-linecap="round"/>
+            <path d="M100 6 Q115 16 118 24" stroke="#00f0ff" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="org-meta">
+          <h3>SpaceX Starship Reentry Investigation</h3>
+          <p>Warsaw University of Technology (WUT) — Hypersonic Aerodynamic Database & Control Trim Analysis</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Starship Atmospheric Reentry Aerodynamics</h2>
+          <div class="section-subtitle">15.5M-Cell High-Fidelity CFD Study — Canard/Flap Aerodynamic Superposition</div>
+        </div>
+        <a href="./images/Full_Projects/02/Przejsciowka_Master_Frelek.pdf" download class="download-badge-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download Thesis (PDF)
+        </a>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#Starship</span>
+        <span class="tag-chip">#SpaceX</span>
+        <span class="tag-chip">#AtmosphericReentry</span>
+        <span class="tag-chip gold">#15.5MCells</span>
+        <span class="tag-chip">#ANSYSFluent</span>
+        <span class="tag-chip plasma">#HypersonicTrim</span>
+        <span class="tag-chip">#CanardsAndFlaps</span>
+        <span class="tag-chip">#SuperpositionPrinciple</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🚀 Numeryczna Aerodynamika Wejścia Starshipa w Atmosferę</h4>
+        <p>
+          Przeprowadziłem szerokie badania numeryczne aerodynamiki pojazdu SpaceX Starship podczas wejścia w atmosferę. 
+          Przeanalizowałem, jak tępy kadłub dziobowy, ruchome canardy przednie i klapy rufowe współpracują, kontrolując pochylenie, siłę nośną, opór 
+          i orientację pojazdu podczas manewru opadania brzuchem do dołu (belly-flop) przy wysokich kątach natarcia.
+        </p>
+
+        <h4>📊 Dyskretyzacja Siatki o Rozmiarze 15,5 Miliona Komórek</h4>
+        <p>
+          Zbudowałem domenę obliczeniową o rozmiarze 15,5 miliona komórek w ANSYS Fluent z wykorzystaniem siatek wielościenno-pryzmatycznych (poly-hexcore). 
+          Umieściłem strefy zagęszczenia <strong>Bodies of Influence (BOI)</strong> wokół szczelin zawiasów canardów i stref wychylenia klap w celu uchwycenia oderwania fal uderzeniowych, 
+          recyrkulacji po stronie zawietrznej i poprzecznego oderwania warstwy przyściennej przy zachowaniu \(y^+ \approx 1,0\).
+        </p>
+
+        <h4>⚙️ Zasada Superpozycji Sił Sterowania Aerodynamicznego</h4>
+        <ul>
+          <li><strong>Macierz wychyleń:</strong> Przeprowadziłem symulacje canardów i klap rufowych dla niezależnych i przeciwsobnych wychyleń w kanałach pochylenia, odchylenia i przechylenia.</li>
+          <li><strong>Weryfikacja superpozycji:</strong> Udowodniłem, że siły i momenty aerodynamiczne canardów dziobowych i klap rufowych można z wysoką dokładnością składać liniowo (błąd sprzężeń poniżej kilku procent), co pozwoliło zredukować nakład obliczeniowy o ponad 60%.</li>
+          <li><strong>Aerodynamiczna Baza Danych (ADB):</strong> Opracowałem stabelaryzowaną bazę charakterystyk aerodynamicznych oraz skrypty interpolacyjne w Pythonie do symulacji trajektorii 6-DOF i planowania korytarza wejścia.</li>
+        </ul>
+      </div>
+
+      <div class="gallery-section-title">🌌 CFD Flowfields, Shock Waves & Mesh Convergence</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/isosurface_Mach_1_.png" alt="Mach 1 Iso-surface Shock Envelope">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Mach 1.0 Iso-Surface Shock Envelope</div>
+            <div class="cfd-sub">Sonic barrier envelope enclosing Starship airframe</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/pressure_contours.png" alt="Windward Surface Pressure Contours">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Surface Pressure Contours (Cp)</div>
+            <div class="cfd-sub">Windward stagnation high-pressure footprint & flap loading</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/velocity_magnitude_crossection.png" alt="Velocity Magnitude Symmetry Cross-Section">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Velocity Cross-Section Flowfield</div>
+            <div class="cfd-sub">Stagnation bow shock, leeward separation & wake vortex</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/closeup_nosecone_and_cannards.png" alt="Nosecone and Canard Surface Mesh">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Nosecone & Forward Canard Mesh</div>
+            <div class="cfd-sub">High-resolution surface prism discretization</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/full_domain.png" alt="Full Computational Domain and Far-field Boundaries">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Computational Domain & Farfield Extent</div>
+            <div class="cfd-sub">Preventing boundary shock reflections</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/cionverged_drag_coefficient.png" alt="Drag Coefficient Convergence History">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Converged Drag Coefficient (Cd)</div>
+            <div class="cfd-sub">Strict asymptotic force convergence over iterations</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/residuals.png" alt="Solver Convergence Residuals">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Solver Residual History</div>
+            <div class="cfd-sub">Ciągły spadek rezyduów dla równania ciągłości, pędu i k-ω</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/02/closeup_meshg.png" alt="Surface Mesh Close-Up">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Prism Layer Close-Up</div>
+            <div class="cfd-sub">Podmilimetrowa wysokość pierwszej komórki zapewniająca y⁺ ≈ 1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="exp-rfa">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Aerodynamika Rakiety RFA ONE</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="proj-gridfin">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Falcon 9 Grid Fins (B.Sc. Thesis)</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 7: FALCON 9 GRID FIN AERODYNAMICS (B.SC. THESIS) -->
+    <section id="proj-gridfin" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Vehicle Projects</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Stery Kratownicowe Falcon 9</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Falcon 9 Reusable Grid Fin Aerodynamics</h2>
+          <div class="section-subtitle">Praca Inżynierska: Charakterystyki Przepływów Wysokich Prędkości w Zakresie Liczb Macha (M = 0,8 – 1,91)</div>
+        </div>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#BScThesis</span>
+        <span class="tag-chip">#SpaceX</span>
+        <span class="tag-chip">#Falcon9</span>
+        <span class="tag-chip">#GridFins</span>
+        <span class="tag-chip gold">#SSTkw</span>
+        <span class="tag-chip plasma">#DensityBasedSolver</span>
+        <span class="tag-chip">#ChokedFlow</span>
+        <span class="tag-chip">#WaveDragMitigation</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🚀 Reusable Booster Atmospheric Guidance</h4>
+        <p>
+          Moja praca inżynierska pt. <em>„Aerodynamic Performance Analysis of Falcon 9 Grid Fins: A Computational Investigation”</em> 
+          poświęcona była analizie mechaniki płynów tytanowych sterów kratownicowych pierwszego stopnia Falcona 9 podczas powrotu atmosferycznego.
+        </p>
+        <p>
+          Siatkowe stery kratownicowe oferują wybitną skuteczność sterowania przy minimalnym momencie zawiasowym w porównaniu ze sterami płytowymi, 
+          stwarzają jednak poważne wyzwania związane ze zjawiskiem dławienia fal uderzeniowych w korytarzu okołodźwiękowym.
+        </p>
+
+        <h4>🔬 Modelowanie CFD i Fizyka Fal Uderzeniowych</h4>
+        <ul>
+          <li><strong>Geometrie obliczeniowe:</strong> Zbudowałem dwuwymiarowe kratownice planarne oraz pełne konfiguracje trójwymiarowe na kadłubie rakiety z płaszczyznami symetrii, aby precyzyjnie odwzorować interferencję aerodynamiczną kadłub-ster.</li>
+          <li><strong>Zjawisko dławienia okołodźwiękowego:</strong> Zaobserwowałem formowanie się prostopadłych fal uderzeniowych przed komórkami kratownicy przy dławieniu przepływu wewnętrznego w okolicach Ma 1,0, generujące gwałtowny wzrost oporu falowego.</li>
+          <li><strong>Opóźnienie wzrostu oporu dzięki skosowi krawędzi:</strong> Wykazałem, jak skośna geometria krawędzi natarcia w sterach SpaceX utrzymuje skośne fale uderzeniowe, opóźniając zjawisko dławienia poza Ma 1,5.</li>
+        </ul>
+      </div>
+
+      <div class="gallery-section-title">📐 Geometria steru kratownicowego, pola liczby Macha i interferencja fal uderzeniowych</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/01/01_IL.jpg" alt="Falcon 9 Grid Fin Geometry CAD">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Grid Fin CAD & Side View</div>
+            <div class="cfd-sub">SpaceX back-swept titanium lattice architecture</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/01/02_3D_boi.jpg" alt="Mesh Detail Around Fin Lattice">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Lattice Cell Mesh Refinement</div>
+            <div class="cfd-sub">High cell density inside individual lattice passages</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/01/03_3D_mesh_gridfin.jpg" alt="Mach Contours M=0.99 Transonic">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Mach Contours at M = 0.99</div>
+            <div class="cfd-sub">Okołodźwiękowe dławienie i lokalne fale uderzeniowe</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/01/04_26_new63.jpg" alt="Pressure Contours M=1.91 Supersonic">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Pressure Contours at M = 1.91</div>
+            <div class="cfd-sub">Supersonic shock reflection inside grid matrix</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/01/05_closer_look_3c.png" alt="Detailed Shock-Bow Structure">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">High-Resolution Bow Shock Structure</div>
+            <div class="cfd-sub">Oblique shock waves anchored at lattice leading edges</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="proj-starship">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Starship Reentry Aerodynamics</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="proj-masterthesis">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Praca Magisterska: Kadłub MSL</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 8: MASTER'S THESIS: MSL FOREBODY AEROHEATING -->
+    <section id="proj-masterthesis" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Vehicle Projects</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Master's Thesis: MSL Forebody Aeroheating</span>
+      </div>
+
+      <!-- Academic Banner: Warsaw University of Technology MEiL -->
+      <div class="org-header-banner">
+        <div class="org-logo-wrap" style="width: 75px; height: 75px; background: rgba(255, 255, 255, 0.08);">
+          <img src="./images/Master_Thesis/wut_faculty_logo.png" alt="Warsaw University of Technology - Faculty of Power and Aeronautical Engineering">
+        </div>
+        <div class="org-meta">
+          <h3>Warsaw University of Technology (Politechnika Warszawska)</h3>
+          <p>Wydział Mechaniczny Energetyki i Lotnictwa (MEiL) — Praca Magisterska (2026)</p>
+          <p style="color: var(--mach-cyan); font-size: 0.82rem; margin-top: 2px;">
+            Author: <strong>Kacper Frelek, Eng.</strong> (Album No. 313668) &nbsp;|&nbsp; Supervisor: <strong>Ph.D. Michał Remer</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Walidacja Laminarnych Modeli Nagrzewania Aerodynamicznego Kapsuły MSL Względem Danych z Tunelu Szokowego T5</h2>
+          <div class="section-subtitle">Hypersonic Thermochemical Non-Equilibrium, Park 2-Temperature Kinetics & Finite-Rate Wall Catalysis</div>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="./projects/Kacper_Frelek_Master_Thesis.pdf" target="_blank" class="download-badge-btn" style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 180, 0, 0.2)); border-color: var(--mach-cyan);">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Download Master's Thesis (PDF, 87 Pages)
+          </a>
+          <a href="./projects/CFD/JSR_2011_Paper_published_1.48331_plus.pdf" target="_blank" class="download-badge-btn" style="background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2);">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Wright et al. Reference Benchmark (JSR PDF)
+          </a>
+        </div>
+      </div>
+
+      
+        <span class="tag-chip gold">#MScDiplomaThesis</span>
+        <span class="tag-chip">#HypersonicAerothermodynamics</span>
+        <span class="tag-chip plasma">#MarsScienceLaboratory</span>
+        <span class="tag-chip">#CaltechT5Tunnel</span>
+        <span class="tag-chip">#Park2TModel</span>
+        <span class="tag-chip">#MitcheltreeCatalysis</span>
+        <span class="tag-chip">#5SpeciesCO2Chemistry</span>
+        <span class="tag-chip">#ANSYSFluent</span>
+        <span class="tag-chip">#ShockLayerPhysics</span>
+      </div>
+
+      <!-- Thesis Executive Summary -->
+      <div class="narrative-card">
+        <h4>🪐 Project Summary</h4>
+        <p>Niniejsza praca magisterska poświęcona była numerycznej walidacji laminarnych modeli aerotermodynamicznych kapsuły wejściowej Mars Science Laboratory (MSL) w programie ANSYS Fluent, skalibrowanych na podstawie danych pomiaru strumienia ciepła z tunelu uderzeniowego Caltech T5. Przyswoiłem pełny zestaw sformułowań teoretycznych i równań rządzących (ściśliwe równania Naviera-Stokesa, zachowanie masy wielu składników, energia drgań cząsteczkowych i człony źródłowe reakcji chemicznych) oraz zbadałem wpływ rozdzielczości siatki, modeli 1-T i 2-T oraz katalizy powierzchniowej na szczytowe obciążenia cieplne pod kątem projektowania osłon termicznych (TPS).</p>
+        <p>
+          Podczas wejścia w atmosferę Marsa z hiperdźwiękowymi prędkościami od \(6,0\text{ do }8,5\text{ km/s}\), energia kinetyczna pojazdu ulega gwałtownej konwersji w energię wewnętrzną i cieplną na odsuniętej fali uderzeniowej. 
+          W atmosferze Marsa (\(\sim 97,1\%\text{ CO}_2, 2,9\%\text{ N}_2\)), temperatura za falą przekracza \(6\,000\text{–}10\,000\text{ K}\), wywołując silną <strong>nierównowagę termiczną</strong> (relaksację drgań cząsteczkowych) oraz <strong>nierównowagę chemiczną</strong> (dysocjację molekuł \(CO_2\) na \(CO, C, O\) oraz \(O_2\)).
+        </p>
+        <p>
+          Praca magisterska stanowi kompleksową walidację numeryczną modelowania aerotermodynamiki laminarnej dla 70-stopniowej stożkowo-kulistej osłony czołowej pojazdu <strong>Mars Science Laboratory (MSL)</strong>. Obliczenia przeprowadzono w programie ANSYS Fluent i poddano ścisłej walidacji względem eksperymentalnych pomiarów powierzchniowego strumienia ciepła z hiperdźwiękowego tunelu uderzeniowego <strong>Caltech T5 (strzał 2254)</strong>, opublikowanych przez <strong>Wrighta i in. (NASA Ames / Caltech)</strong>.
+        </p>
+        <p>
+          W ramach badań przeanalizowano sprzężony wpływ dokładności dyskretyzacji przestrzennej (schematy Upwind 1. rzędu vs 2. rzędu), stanu termicznego gazu (model jedno-temperaturowy 1T vs dwu-temperaturowy Parka 2T) oraz warunków brzegowych katalityczności ścianki (niekatalityczna, model Mitcheltree o skończonej szybkości reakcji rekombinacji, superkatalityczna i adiabatyczna), określając pełną obwiednię nagrzewania aerodynamicznego na potrzeby doboru grubości TPS.
+        </p>
+      </div>
+
+      <!-- Two Column: Experimental Facility & Vehicle Geometry -->
+      <div class="exp-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); margin-bottom: 2rem;">
+        
+        <!-- Tunnel Facility Card -->
+        <div class="spec-card">
+          <h4>🧪 Caltech T5 Hypervelocity Shock Tunnel (Shot 2254)</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Warunki tunelu uderzeniowego z tłokiem swobodnym odtwarzające rzeczywistą entalpię spiętrzenia wejścia w atmosferę Marsa:
+          </p>
+          <div class="spec-grid" style="grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="spec-cell">
+              <span class="spec-label">Prędkość napływu (\(V_\infty\))</span>
+              <span class="spec-val highlight">3,367 m/s</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Liczba Macha napływu (\(M_\infty\))</span>
+              <span class="spec-val highlight">4.87</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Gęstość napływu (\(\rho_\infty\))</span>
+              <span class="spec-val">0.03116 kg/m³</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Temperatura statyczna (\(T_\infty\))</span>
+              <span class="spec-val">1,828 K</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Entalpia spiętrzenia (\(h_0\))</span>
+              <span class="spec-val gold">10.6 MJ/kg</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Reservoir Pressure (\(p_0\))</span>
+              <span class="spec-val gold">19.45 MPa</span>
+            </div>
+            <div class="spec-cell" style="grid-column: span 2;">
+              <span class="spec-label">Test Gas Composition (Mass Frac.)</span>
+              <span class="spec-val">\(CO_2: 0.957,\ CO: 0.015,\ O_2: 0.012,\ N_2: 0.016\)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Gallery of Geometry and Tunnel Model -->
+      <div class="cfd-gallery" style="margin-bottom: 2rem;">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/msl_t5_model_photo.png" alt="MSL 70-degree Sphere-Cone Model in Caltech T5 Shock Tunnel">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Caltech T5 Shock Tunnel Model</div>
+            <div class="cfd-sub">Model osłony czołowej 70° stożkowo-kulistej na żądle pomiarowym z gniazdami termopar</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/msl_geometry_profile.png" alt="MSL Forebody 2D Meridional Geometry Profile">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">2D Meridional Geometry Profile</div>
+            <div class="cfd-sub">Nose radius \(R_n = 44.45\text{ mm}\), base radius \(R_b = 88.9\text{ mm}\), corner radius \(r_c = 4.45\text{ mm}\)</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/tps_pica_model.png" alt="PICA Heat Shield Thermal Protection System Sample">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">PICA Heat Shield Architecture</div>
+            <div class="cfd-sub">Płytka ablacyjna PICA analizowana pod kątem grubości osłony termicznej</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theoretical & Mathematical Formulations -->
+      <div class="narrative-card">
+        <h4>📐 Theoretical Formulations & Governing Aerothermodynamic Equations</h4>
+        <p>
+          Hiperdźwiękowe pole przepływu opisują ściśliwe równania Naviera-Stokesa rozszerzone o zachowanie masy poszczególnych składników, zachowanie energii drganiowej oraz człony źródłowe reakcji chemicznych:
+        </p>
+
+        <div class="equation-grid">
+          <!-- 2T Energy Equation -->
+          <div class="equation-card">
+            <div class="equation-title">
+              <span>Model Energii Dwutemperaturowej (2T) Parka</span>
+              <span class="equation-tag">Nierównowaga Termiczna</span>
+            </div>
+            <div class="equation-math">
+              \[ \frac{\partial (\rho e_v)}{\partial t} + \nabla \cdot (\rho e_v \mathbf{u}) = -\nabla \cdot \mathbf{q}_v + Q_{T-V} + \sum_s \dot{\omega}_s e_{v,s} \]
+            </div>
+            <div class="equation-desc">
+              Sprzężone zachowanie energii drgań cząsteczkowych \(e_v(T_v)\), napędzane wymianą energii translacja-drgania \(Q_{T-V}\) oraz członami pochłaniania entalpii dysocjacji.
+            </div>
+          </div>
+
+          <!-- Landau-Teller Relaxation -->
+          <div class="equation-card">
+            <div class="equation-title">
+              <span>Relaksacja Drganiowa Landaua-Tellera</span>
+              <span class="equation-tag">Relaksacja Energii</span>
+            </div>
+            <div class="equation-math">
+              \[ Q_{T-V} = \sum_s \rho_s \frac{e_{v,s}^*(T) - e_{v,s}}{\tau_s}, \quad \tau_s = \tau_s^{MW} + \tau_s^P \]
+            </div>
+            <div class="equation-desc">
+              Czas relaksacji Millikana-White'a z poprawką Parka dla wysokich temperatur, zapobiegający niefizycznemu skracaniu czasów relaksacji przy \(T > 5\,000\text{ K}\).
+            </div>
+          </div>
+
+          <!-- Controlling Temperature -->
+          <div class="equation-card">
+            <div class="equation-title">
+              <span>Średnia Geometryczna Temperatura Kontrolna Parka</span>
+              <span class="equation-tag">Dysocjacja Chemiczna</span>
+            </div>
+            <div class="equation-math">
+              \[ T_a = \sqrt{T \cdot T_v} \quad \left(T_a = T^q T_v^{1-q}, \; q = 0.5\right) \]
+            </div>
+            <div class="equation-desc">
+              Średnia geometryczna temperatura stosowana w zmodyfikowanych współczynnikach szybkości Arrheniusa \(k_{f,r}(T_a)\), uwzględniająca opóźnienie dysocjacji do momentu wzbudzenia drgań.
+            </div>
+          </div>
+
+          <!-- Wall Heat Flux -->
+          <div class="equation-card">
+            <div class="equation-title">
+              <span>Całkowity konwekcyjny strumień ciepła na ściance</span>
+              <span class="equation-tag">Warunek Brzegowy</span>
+            </div>
+            <div class="equation-math">
+              \[ q_w = -\kappa \left( \frac{\partial T}{\partial n} \right)_w - \kappa_v \left( \frac{\partial T_v}{\partial n} \right)_w - \sum_{s=1}^{N_s} J_{s,w} h_{s,w} \]
+            </div>
+            <div class="equation-desc">
+              Suma przewodzenia energii translacyjno-rotacyjnej, drganiowej oraz dyfuzyjnego transportu entalpii składników pod wpływem niejednorodnej katalizy powierzchniowej.
+            </div>
+          </div>
+        </div>
+
+        <h4 style="margin-top: 1.5rem;">⚗️ 5-Składnikowy Mechanizm Reakcji w Ditlenku Węgla</h4>
+        <p>
+          Mechanizm kinetyki chemicznej obejmuje 5 składników obojętnych (\(CO_2, CO, C, O, O_2\)) podlegających 5 elementarnym reakcjom wprost i wstecz:
+        </p>
+        <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; color: #fff; line-height: 2;">
+          <div style="margin-bottom: 0.5rem;">$$1.\quad \mathrm{CO}_2 + M \rightleftharpoons \mathrm{CO} + \mathrm{O} + M \quad (\Delta H_{298}^\circ = +532.2\text{ kJ/mol})$$</div>
+          <div style="margin-bottom: 0.5rem;">$$2.\quad \mathrm{CO} + M \rightleftharpoons \mathrm{C} + \mathrm{O} + M \quad (\Delta H_{298}^\circ = +1076.4\text{ kJ/mol})$$</div>
+          <div style="margin-bottom: 0.5rem;">$$3.\quad \mathrm{O}_2 + M \rightleftharpoons 2\mathrm{O} + M \quad (\Delta H_{298}^\circ = +498.4\text{ kJ/mol})$$</div>
+          <div style="margin-bottom: 0.5rem;">$$4.\quad \mathrm{CO} + \mathrm{O} \rightleftharpoons \mathrm{C} + \mathrm{O}_2 \quad (\Delta H_{298}^\circ = +578.0\text{ kJ/mol})$$</div>
+          <div>$$5.\quad \mathrm{CO}_2 + \mathrm{O} \rightleftharpoons \mathrm{CO} + \mathrm{O}_2 \quad (\Delta H_{298}^\circ = +33.8\text{ kJ/mol})$$</div>
+        </div>
+
+        <h4 style="margin-top: 1.5rem;">🛡️ Sformułowania Warunków Brzegowych Katalizy Ścianki</h4>
+        <ul>
+          <li><strong>Ścianka niekatalityczna (NC):</strong> Chemicznie obojętna powierzchnia o zerowym strumieniu masy składników (\(J_{s,w} = 0\)). Zdysocjowane atomy nie ulegają rekombinacji na ściance, dając teoretyczną dolną granicę nagrzewania aerodynamicznego (\(q_{\text{stag}} \approx 620\text{--}662\text{ W/cm}^2\)).</li>
+          <li><strong>Model katalityczny Mitcheltree limitowany dyfuzją:</strong> Niejednorodny model rekombinacji Eley-Rideal / Langmuir-Hinshelwood opracowany dla osłon marsjańskich:
+            \[ O + s \to O_s, \quad CO + s \to CO_s, \quad CO_s + O_s \to CO_2 + 2s \]
+            Prowadzi rekombinację tlenku węgla i tlenu atomowego do dwutlenku węgla z szybkością ograniczoną dyfuzją przez warstwę przyścienną (\(q_{\text{stag}} \approx 712\text{--}739\text{ W/cm}^2\)).
+          </li>
+          <li><strong>Ścianka superkatalityczna (SC):</strong> Wyidealizowana ścianka w pełni katalityczna, wymuszająca udziały masowe stanu równowagi gazu nienaruszonego (\(Y_{CO_2} = 1,0\)), uwalniając całą entalpię dysocjacji chemicznej bezpośrednio do poszycia pojazdu (\(q_{\text{stag}} \approx 1125\text{--}1140\text{ W/cm}^2\)).</li>
+          <li><strong>Ścianka adiabatyczna:</strong> Warunek zerowego strumienia ciepła (\(q_w = 0\)) do wyznaczenia temperatury spiętrzenia odzysku \(T_{aw} \approx 6\,612\text{ K}\).</li>
+        </ul>
+      </div>
+
+
+
+      <!-- Temperature Contours of the Shock Layer -->
+      <div class="gallery-section-title">🔥 Shock-Layer Thermal Contours (2T Second-Order Upwind)</div>
+      <div class="cfd-gallery" style="margin-bottom: 2rem;">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/temp_contour_supercatalytic_2T_SS.png" alt="Supercatalytic Wall Temperature Contour (2T-SS)">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Ścianka superkatalityczna (2T-SS)</div>
+            <div class="cfd-sub">Ekstremalny gradient temperatury w warstwie przyściennej z pełną rekombinacją chemiczną</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/temp_contour_mitcheltree_2T_SS.png" alt="Mitcheltree Catalytic Model Temperature Contour (2T-SS)">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Ścianka z katalizą Mitcheltree (2T-SS)</div>
+            <div class="cfd-sub">Realistic finite-rate diffusion-limited recombination matching flight physics</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/temp_contour_noncatalytic_2T_SS.png" alt="Non-Catalytic Wall Temperature Contour (2T-SS)">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Ścianka niekatalityczna (2T-SS)</div>
+            <div class="cfd-sub">Powierzchnia obojętna chemicznie blokująca rekombinację, pozostawiająca niespójne atomy w warstwie przyściennej</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/temp_contour_adiabatic_2T_SS.png" alt="Adiabatic Wall Temperature Contour (2T-SS)">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Ścianka adiabatyczna (2T-SS)</div>
+            <div class="cfd-sub">Zero wall heat flux revealing stagnation recovery temperature \(T_{aw} \approx 6,612\text{ K}\)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surface Heat Flux Distributions -->
+      <div class="gallery-section-title">📈 Rozkłady strumienia ciepła wzdłuż znormalizowanego promienia (\(r/R_b\))</div>
+      <div class="cfd-gallery" style="margin-bottom: 2rem;">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/aeroheating_1T_FS.png" alt="Surface Heat Flux 1T First-Order Scheme">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Model 1T, schemat 1. rzędu (FS)</div>
+            <div class="cfd-sub">Promieniowy rozkład strumienia ciepła dla ścianki superkatalitycznej, Mitcheltree i niekatalitycznej</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/aeroheating_2T_FS.png" alt="Surface Heat Flux 2T First-Order Scheme">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Model 2T, schemat 1. rzędu (FS)</div>
+            <div class="cfd-sub">Nierównowaga drganiowa zwiększa strumień ciepła na nosku o 1,2–6,9% w porównaniu z modelem 1T</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/aeroheating_1T_SS.png" alt="Surface Heat Flux 1T Second-Order Scheme">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Model 1T, schemat 2. rzędu (SS)</div>
+            <div class="cfd-sub">Wyostrzone gradienty warstwy przyściennej i zredukowana dyssypacja numeryczna wzdłuż powierzchni stożka</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Master_Thesis/aeroheating_2T_SS.png" alt="Surface Heat Flux 2T Second-Order Scheme">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">2T Second-Order Scheme (SS)</div>
+            <div class="cfd-sub">Model o najwyższej zgodności fizycznej, precyzyjnie odwzorowujący spadek strumienia ciepła na zaokrągleniu naroża i profil nagrzewania stożka</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experimental Validation Against Caltech T5 Benchmark -->
+      <div class="gallery-section-title">🎯 Experimental Validation: 2T-SS vs Caltech T5 Shock-Tunnel Data (Wright et al.)</div>
+      <div class="narrative-card">
+        <h4>🔬 Direct Benchmark Against Experimental Thermocouple Measurements</h4>
+        <p>
+          Poniższy wykres przedstawia kluczowy wynik pracy: walidację obliczeń Fluent w schemacie drugiego rzędu Parka 2T (2T-SS) względem eksperymentalnych pomiarów termopar współosiowych z tunelu hiperdźwiękowego Caltech T5 (strzał 2254, Wright et al.), zestawionych z kodami NASA DPLR i LAURA:
+        </p>
+
+        <div style="text-align: center; margin: 1.5rem 0;">
+          <div style="display: inline-block; max-width: 900px; width: 100%; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden; background: #000;">
+            <img src="./images/Master_Thesis/validation_2T_SS_vs_wright.png" alt="Validation of 2T-SS Model Against Caltech T5 Shock-Tunnel Data and Wright et al." style="width: 100%; height: auto; display: block;">
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--mach-cyan); margin-top: 0.75rem;">
+            Rysunek: Rozkład radialny strumienia ciepła \(q_w(r/R_b)\) porównujący rozwiązania 2T-SS dla ścianki superkatalitycznej, Mitcheltree i niekatalitycznej z danymi eksperymentalnymi Wrighta i in. z tunelu T5 (strzał 2254).
+          </div>
+        </div>
+
+        <h4>🔑 Główne Wnioski Naukowe z Pracy</h4>
+        <ul>
+          <li><strong>Przewaga modelu katalitycznego Mitcheltree:</strong> Model rekombinacji limitowanej dyfuzją Mitcheltree w schemacie 2T-SS (\(q_{\text{stag}} = 738,7\text{ W/cm}^2\)) wykazuje znakomitą zgodność z eksperymentalnymi pomiarami termopar z tunelu T5 w całym obszarze sferycznego noska (\(r/R_b \le 0,5\)) oraz wzdłuż stożka.</li>
+          <li><strong>Granice katalityczności ścianki:</strong> Założenie ścianki superkatalitycznej zawyża nagrzewanie w punkcie spiętrzenia o ponad <strong>54,3%</strong> (\(1\,140,1\text{ W/cm}^2\)), podczas gdy założenie ścianki niekatalitycznej zaniża je o <strong>10,3%</strong> (\(662,3\text{ W/cm}^2\)). Jednoznacznie dowodzi to, że założenie pełnej katalityczności narzuca zbyt dużą masę osłony termicznej (TPS), a założenie braku katalizy groziłoby katastrofalnym przepaleniem poszycia.</li>
+          <li><strong>Wpływ nierównowagi drganiowej (2T vs 1T):</strong> Uwzględnienie równania energii drgań Parka (model 2T) zwiększa obliczony strumień ciepła w punkcie spiętrzenia o około <strong>3,7%</strong> i zmniejsza odległość fali uderzeniowej od czoła, gdyż zamrożenie drganiowe opóźnia dyssypację energii do drgań translacyjnych.</li>
+          <li><strong>Rząd dyskretyzacji przestrzennej:</strong> Schematy Upwind pierwszego rzędu wprowadzają sztuczną dyfuzję numeryczną, która pogrubia warstwę uderzeniową i zaniża szczytowe nagrzewanie na nosku oraz na narożu. Dokładność drugiego rzędu jest bezwzględnie konieczna do wymiarowania osłon termicznych.</li>
+        </ul>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="proj-gridfin">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Stery Kratownicowe Falcon 9</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="proj-urban">
+          <span class="nav-step-label">Następny Projekt →</span>
+          <span class="nav-step-title">Urban Wind Aerodynamics</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 9: URBAN WIND AERODYNAMICS (INTERMEDIATE PROJECT 1) -->
+    <section id="proj-urban" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Vehicle Projects</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Urban Wind Aerodynamics</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Aerodynamika Wiatru w Mieście i Komfort Pieszych</h2>
+          <div class="section-subtitle">Model w skali 1:1500 do tunelu aerodynamicznego i UDF atmosferycznej warstwy przyściennej w ANSYS Fluent</div>
+        </div>
+        <a href="./images/Full_Projects/04/15.06.2023 - Kacper Frelek Intermidiate Project.pdf" download class="download-badge-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Pobierz Raport Projektu (PDF)
+        </a>
+      </div>
+
+      <div class="tag-bar">
+        <span class="tag-chip">#UrbanAerodynamics</span>
+        <span class="tag-chip">#WindTunnelValidation</span>
+        <span class="tag-chip gold">#ANSYSFluent</span>
+        <span class="tag-chip">#CustomUDF</span>
+        <span class="tag-chip">#LogarithmicInlet</span>
+        <span class="tag-chip">#PedestrianComfort</span>
+        <span class="tag-chip plasma">#AtmosphericBoundaryLayer</span>
+      </div>
+
+      <div class="narrative-card">
+        <h4>🏙️ Środowiskowa Mechanika Płynów i Mikroklimat Miejski</h4>
+        <p>
+          Ocena opływu aerodynamicznego wywołanego wprowadzeniem wieżowca w gęstą istniejącą tkankę miejską. 
+          Projekt analizował przyspieszenie strugi wiatru na poziomie pieszych, spływ wirów narożnych i stagnację w śladzie aerodynamicznym pod kątem bezpieczeństwa i komfortu pieszych.
+        </p>
+
+        <h4>🛠️ Korelacja Eksperymentalna i Procedury UDF</h4>
+        <ul>
+          <li><strong>Model w skali:</strong> Zbudowano model geometryczny CAD w skali 1:1500 reprezentujący kwartał miejski z budynkami do 90 m wysokości, odpowiadający geometrii pomiarowej w tunelu aerodynamicznym.</li>
+          <li><strong>Logarytmiczna atmosferyczna warstwa przyścienna:</strong> Opracowano dedykowane funkcje UDF w języku C do zadawania pionowych profili prędkości i intensywności turbulencji zgodnych z III i IV kategorią terenu wg Eurokodu.</li>
+          <li><strong>Walidacja wielokierunkowa:</strong> Przebadano opływ dla kątów natarcia wiatru 0°, 45° i 90°, uzyskując korelację prognozy prędkości w granicach ±10% względem wskazań sond w tunelu aerodynamicznym.</li>
+        </ul>
+      </div>
+
+      <div class="gallery-section-title">📊 Domena miejska, zagęszczenie siatki i pola prędkości</div>
+      <div class="cfd-gallery">
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/Geometry_w_boi.png" alt="Geometria miejska ze strefą Body of Influence">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Urban Geometry & Domain Extent</div>
+            <div class="cfd-sub">High-rise clusters & pedestrian street level layout</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/velocity_ang45.png" alt="Velocity Contours at 45 deg incidence">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Velocity Field at 45° Inflow</div>
+            <div class="cfd-sub">Corner vortices & channeled street canyon jetting</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/velocity_ang90.png" alt="Velocity Contours at 90 deg incidence">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Velocity Field at 90° Inflow</div>
+            <div class="cfd-sub">Broad wake stagnation zone & recirculating eddies</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/mesh_boi_close.png" alt="Mesh Close-Up Near Building Surfaces">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Near-Wall Mesh Discretization</div>
+            <div class="cfd-sub">Zagęszczenie warstw pryzmatycznych na elewacjach i powierzchni gruntu</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/mesh_boi_far.png" alt="Overview Mesh with Far-Field Box">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Far-field Mesh Overview</div>
+            <div class="cfd-sub">Niestrukturalna siatka czworościenna ze stopniowanym wymiarowaniem objętościowym BOI</div>
+          </div>
+        </div>
+
+        <div class="cfd-card">
+          <div class="cfd-thumb-wrap">
+            <img src="./images/Full_Projects/04/residuals_wo_boi.png" alt="Solver Convergence Residuals">
+            <div class="zoom-overlay">🔍 Powiększ Widok</div>
+          </div>
+          <div class="cfd-info">
+            <div class="cfd-caption">Convergence Residual Trajectory</div>
+            <div class="cfd-sub">Second-order spatial discretization convergence history</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="proj-masterthesis">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Praca Magisterska: Kadłub MSL</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="lab">
+          <span class="nav-step-label">Następna Sekcja →</span>
+          <span class="nav-step-title">Laboratorium Aero ⚡</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 10: INTERACTIVE AERO & AEROTHERMO LAB -->
+    <section id="lab" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Laboratorium Aero</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Interaktywne Laboratorium Aerodynamiki i Aerotermodynamiki</h2>
+          <div class="section-subtitle">Zestaw Rozdzielczości Warstwy Przyściennej CFD & Solwer Nagrzewania Hipersonicznego Fay-Riddell</div>
+        </div>
+      </div>
+
+      <div class="lab-container">
+        
+        <!-- TOOL 1: Boundary Layer Resolution (y+) & Atmospheric Viscosity Table -->
+        <div class="calculator-grid" style="border-color: rgba(0, 240, 255, 0.35); margin-bottom: 2.5rem;">
+          <div class="calc-inputs">
+            <h3 style="color:#fff;">📐 Projekt 1: Warstwa przyścienna i jakość siatki przyściennej (y⁺)</h3>
+            <p style="font-size:0.88rem;">Oblicz wymaganą wysokość pierwszej komórki pryzmatycznej (\(\Delta y\)) dla docelowego \(y^+ \approx 1\), rozdzielczości podwarstwy lepkiej, grubości warstwy przyściennej (\(\delta_{99}\)) i współczynnika tarcia (\(C_f\)) w atmosferze Ziemi i Marsa.</p>
+            
+            <div class="calc-field">
+              <label>Prędkość Przepływu U_inf (m/s):</label>
+              <input type="number" id="meshVel" min="0.1" max="5000" step="1" value="68.0">
+            </div>
+
+            <div class="calc-field">
+              <label>Długość Charakterystyczna L (m):</label>
+              <input type="number" id="meshChord" min="0.001" max="100" step="0.05" value="1.0">
+            </div>
+
+            <div class="calc-field">
+              <label>Docelowa Wartość y⁺ przy Ściance:</label>
+              <input type="number" id="meshTargetYPlus" min="0.1" max="300" step="0.1" value="1.0">
+            </div>
+
+            <div class="calc-field">
+              <label>Środowisko Płynne (Modele Atmosfery):</label>
+              <select id="meshFluidSelect">
+                <option value="earth" selected>Atmosfera Ziemi — US Standard Atmosphere 1976 (Zależna od wysokości)</option>
+                <option value="mars">Atmosfera Marsa — Model Wejścia CO₂ (Zależna od wysokości)</option>
+                <option value="water">Woda Ciekła — 20°C (ρ = 998.2 kg/m³, ν = 1.004×10⁻⁶ m²/s)</option>
+              </select>
+            </div>
+
+            <div class="calc-field" id="meshAltGroup">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="meshAlt">Wysokość Geometryczna z (km) [Tabela Własności]:</label>
+                <span id="meshAltBadge" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--mach-cyan);">z = 0 km (Sea Level)</span>
+              </div>
+              <input type="number" id="meshAlt" min="0" max="80" step="1" value="0">
+              <div style="margin-top: 0.35rem;">
+                <button type="button" id="btnToggleAtmTable" class="btn btn-outline" style="font-size:0.75rem; padding:0.35rem 0.75rem; border-color:var(--mach-cyan); color:var(--mach-cyan);">
+                  📊 Wyświetl Tabelę Atmosfery (0–80 km)
+                </button>
+              </div>
+            </div>
+
+            <!-- Collapsible Atmospheric Viscosity & Density Table -->
+            <div id="atmTableContainer" class="atm-table-container">
+              <div style="padding: 0.6rem 0.8rem; background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.8rem; font-weight:700; color:#fff;" id="atmTableTitle">Tabela Atmosfery Wzorcowej Ziemi 1976</span>
+                <span style="font-size:0.72rem; color:var(--text-dim);">Siatka Wysokości od 0 do 80 km</span>
+              </div>
+              <div class="atm-table-wrapper">
+                <table class="atm-table">
+                  <thead>
+                    <tr>
+                      <th>Wys z [km]</th>
+                      <th>Temp T [K]</th>
+                      <th>Ciśn P [Pa]</th>
+                      <th>Gęst ρ [kg/m³]</th>
+                      <th>Lepk Dyn μ [μPa·s]</th>
+                      <th>Lepk Kin ν [m²/s]</th>
+                    </tr>
+                  </thead>
+                  <tbody id="atmTableBody">
+                    <!-- Populated dynamically by script.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Lepkość Kinematyczna ν (m²/s):</label>
+                <span style="font-size:0.72rem; color:var(--mach-cyan); font-family:var(--font-mono);">[Pobrana z tabeli]</span>
+              </div>
+              <input type="number" id="meshNu" min="1e-8" max="1" step="1e-7" value="0.0000146" readonly style="background: rgba(15, 23, 42, 0.5); opacity: 0.9;">
+            </div>
+
+            <div class="calc-field">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Gęstość Płynu ρ (kg/m³):</label>
+                <span style="font-size:0.72rem; color:var(--mach-cyan); font-family:var(--font-mono);">[Pobrana z tabeli]</span>
+              </div>
+              <input type="number" id="meshDensity" min="1e-6" max="10000" step="0.001" value="1.225" readonly style="background: rgba(15, 23, 42, 0.5); opacity: 0.9;">
+            </div>
+          </div>
+
+          <div class="calc-results">
+            <div class="result-row" style="background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: var(--radius-sm); padding: 0.75rem;">
+              <span class="result-name" style="font-weight:700; color:#fff;"><span class="calc-step-tag">Step 5</span>Wysokość 1. Komórki Siatki (Δy) <a href="#ref-4" class="ref-cite">[4]</a>:</span>
+              <span class="result-value" style="color:var(--mach-cyan); font-size:1.15rem; font-weight:800;" id="resFirstCell">6.6 μm (0.0066 mm)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag">Step 2</span>Liczba Reynoldsa (Re_L) <a href="#ref-3" class="ref-cite">[3]</a><a href="#ref-4" class="ref-cite">[4]</a>:</span>
+              <span class="result-value" id="resRe">4.66 × 10⁶ (Turbulent Flow)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag">Step 3</span>Grubość Warstwy Przyściennej (δ_99) <a href="#ref-2" class="ref-cite">[2]</a><a href="#ref-3" class="ref-cite">[3]</a>:</span>
+              <span class="result-value" id="resBLThickness">17.2 mm</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag">Step 4</span>Prędkość Tarcia u_τ i Naprężenie Ścinające τ_w <a href="#ref-4" class="ref-cite">[4]</a>:</span>
+              <span class="result-value" id="resFrictionVel">2.25 m/s | 6.20 Pa</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag">Step 3</span>Współczynnik Tarcia Powierzchniowego (C_f) <a href="#ref-2" class="ref-cite">[2]</a><a href="#ref-3" class="ref-cite">[3]</a>:</span>
+              <span class="result-value" id="resCf">2.77 × 10⁻³</span>
+            </div>
+
+            <!-- C_f Literature Origin & Derivation Box -->
+            <div class="cf-origin-box" id="cfOriginBox">
+              <strong>📖 Pochodzenie Teoretyczne Współczynnika Tarcia (\(C_f\)):</strong><br>
+              <span id="cfOriginText">
+                Dla przepływu turbulentnego (\(Re_L \ge 5 \times 10^5\)), \(C_f\) oblicza się ze wzoru <strong>Schlichtinga i Gerstena (2016) <a href="#ref-3" class="ref-cite">[3]</a> / Franka M. White'a (wyd. 7, rozdz. 7.4) <a href="#ref-4" class="ref-cite">[4]</a></strong>:
+                <code>C_f = 0,0592 · Re_L^(-0,2)</code>, wyprowadzonego z profilu 1/7 potęgi Prandtla dla przepływu turbulentnego na gładkiej ściance.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOL 2: Fay-Riddell Hypersonic Aeroheating & Gas Dynamics Solver -->
+        <div class="calculator-grid" style="border-color: rgba(255, 107, 53, 0.35); margin-bottom: 2.5rem;">
+          <div class="calc-inputs">
+            <h3 style="color:#fff;">🔥 Project 2: Fay-Riddell Hypersonic Aeroheating Solver</h3>
+            <p style="font-size:0.88rem;">Laminarny strumień ciepła w punkcie spiętrzenia obliczany pełnym sformułowaniem Fay-Riddell z Pracy Magisterskiej (str. 20–23) <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>, with Normal Shock jump relations <a href="#ref-6" class="ref-cite">[6]</a>, Newtonian velocity gradient <a href="#ref-6" class="ref-cite">[6]</a>, Sutherland viscosities <a href="#ref-7" class="ref-cite">[7]</a>, and boundary layer wall catalysis <a href="#ref-1" class="ref-cite">[1]</a>.</p>
+            
+            <div class="calc-field">
+              <label>Środowisko Atmosferyczne:</label>
+              <select id="calcGas">
+                <option value="co2_mars" selected>Atmosfera Marsa — Wejście w Atmosferę (CO₂: Model P_inf i T_inf z wysokości)</option>
+                <option value="air_earth">Atmosfera Ziemi — Wejście w Atmosferę (Powietrze: US Standard Atmosphere 1976)</option>
+                <option value="co2_t5">Marsjański CO₂ — Benchmark z Pracy Magisterskiej (Tunel T5 Strzał 2254: V_inf = 3367 m/s)</option>
+              </select>
+            </div>
+
+            <div class="calc-field">
+              <label>Liczba Macha Lotu (M_∞):</label>
+              <input type="number" id="calcMach" min="0.1" max="30" step="0.1" value="5.0">
+            </div>
+
+            <div class="calc-field">
+              <label>Wysokość Geometryczna z (km) [P_inf & T_inf Otoczenia]:</label>
+              <input type="number" id="calcAlt" min="0" max="100" step="1" value="35">
+            </div>
+
+            <div class="calc-field">
+              <label>Promień Krzywizny Nosa R_n (m) [Model w Pracy: 0.04445 m]:</label>
+              <input type="number" id="calcNoseRadius" min="0.001" max="10" step="0.001" value="0.04445">
+            </div>
+
+            <div class="calc-field">
+              <label>Model Katalityczności Warstwy Przyściennej (Praca str. 20–21):</label>
+              <select id="calcCatalysis">
+                <option value="eq" selected>Równowagowa Warstwa Przyścienna [Równ. 5: 1 + (Le^0.52 - 1)·(h_D / h_0e)]</option>
+                <option value="frozen_cat">Zamrożona Warstwa + Ściana Katalityczna [Równ. 7: 1 + (Le^0.63 - 1)·(h_D / h_0e)]</option>
+                <option value="frozen_noncat">Zamrożona Warstwa + Ściana Niekatalityczna [Równ. 8: 1 - (h_D / h_0e)]</option>
+                <option value="convective">Uproszczony Model Konwekcyjny [Praca str. 23: Le ≈ 1.0, nawias = 1.0]</option>
+              </select>
+            </div>
+
+            <div class="calc-field">
+              <label>Liczba Lewisa (Le = α / D) [Założenie w Pracy: Le = 1.0 do 1.4]:</label>
+              <input type="number" id="calcLewis" min="0.5" max="3.0" step="0.05" value="1.40">
+            </div>
+
+            <div class="calc-field">
+              <label>Temperatura Ścianki T_w (K) [Założenie Zimnej Ścianki: Tw = 300 K]:</label>
+              <input type="number" id="calcTw" min="100" max="2500" step="10" value="300">
+            </div>
+
+            <div style="margin-top: 0.5rem;">
+              <button type="button" id="btnThesisBenchmark" class="btn btn-outline" style="font-size:0.78rem; padding:0.4rem 0.8rem; border-color:var(--plasma-orange); color:var(--plasma-orange);">
+                🎯 Wczytaj Benchmark z Pracy: Strzał T5 2254 (M5, Rn=0.04445m)
+              </button>
+            </div>
+          </div>
+
+          <div class="calc-results">
+            <div class="result-row" style="background: rgba(255, 107, 53, 0.12); border: 1px solid rgba(255, 107, 53, 0.35); border-radius: var(--radius-sm); padding: 0.75rem;">
+              <span class="result-name" style="font-weight:700; color:#fff;"><span class="calc-step-tag plasma">Step 8</span>Strumień Ciepła Fay-Riddell w Punkcie Spiętrzenia (q̇_w) <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value plasma" id="resHeatFlux" style="font-size:1.25rem; font-weight:800;">11.0 MW/m² (1,100 W/cm²)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 5</span>Gradient Prędkości (du_e / dx)_s <a href="#ref-6" class="ref-cite">[6]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value" id="resVelGrad">4.00 × 10⁴ s⁻¹</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 6</span>Entalpia Spiętrzenia (h_0e) / Entalpia Ścianki (h_w) <a href="#ref-6" class="ref-cite">[6]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value" id="resEnthalpies">10.60 MJ/kg / 0.25 MJ/kg (Δh = 10.35 MJ/kg)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 7</span>Czynnik Dysocjacji [1 + (Le^a - 1)·h_D/h_0e] <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value" id="resDissBracket">1.102 (h_D/h_0e = 0.532)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 2</span>Stan na Krawędzi Warstwy (p_e, T_e, ρ_e) <a href="#ref-6" class="ref-cite">[6]</a>:</span>
+              <span class="result-value" id="resEdgeState">306.0 kPa | 8,560 K | 0.189 kg/m³</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 4</span>Lepkość Dynamiczna Sutherlanda (μ_e, μ_w) <a href="#ref-7" class="ref-cite">[7]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value" id="resViscosities">245.0 μPa·s / 14.8 μPa·s</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 3</span>Gęstość Płynu przy Ściance ρ_w (p_e / (R·T_w)) <a href="#ref-8" class="ref-cite">[8]</a>:</span>
+              <span class="result-value" id="resRhoWall">5.40 kg/m³</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 1</span>Stan w Przepływie Swobodnym (p_∞, T_∞, ρ_∞, V_∞) <a href="#ref-5" class="ref-cite">[5]</a><a href="#ref-6" class="ref-cite">[6]</a>:</span>
+              <span class="result-value" id="resFreestream">10.8 kPa | 1,828 K | 0.0312 kg/m³ | 3,367 m/s</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name"><span class="calc-step-tag plasma">Step 9</span>Odzysk Ciśnienia Całkowitego (P₀₂ / P₀₁) <a href="#ref-6" class="ref-cite">[6]</a>:</span>
+              <span class="result-value" id="resP02Loss">6.1% (93.9% entropy loss)</span>
+            </div>
+          </div>
+
+          <!-- Fay-Riddell Governing Physical Assumptions Box -->
+          <div class="cf-origin-box" style="grid-column: 1 / -1; border-left-color: var(--plasma-orange); background: rgba(255, 107, 53, 0.05); border-color: rgba(255, 107, 53, 0.25); margin-top: 0.5rem; padding: 1.15rem 1.25rem;">
+            <div style="font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--plasma-orange);">📋 Założenia Fizyczne w Obliczeniach Nagrzewania Fay-Riddell (Praca Magisterska str. 20–23) <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>:</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0.75rem 1.5rem; font-size: 0.83rem; color: var(--text-dim); line-height: 1.55;">
+              <div>
+                <strong style="color: #fff;">1. Osiowosymetryczna Linia Prądu w Punkcie Spiętrzenia <a href="#ref-1" class="ref-cite">[1]</a>:</strong> Ustalone, laminarne równania warstwy przyściennej w punkcie spiętrzenia (\(x = 0\)) tępej osłony stożkowo-kulistej.
+              </div>
+              <div>
+                <strong style="color: #fff;">2. Skok Własności na Fali Normalnej Rankine-Hugoniota <a href="#ref-6" class="ref-cite">[6]</a>:</strong> Przepływ przez odsuniętą falę uderzeniową traktowany jest lokalnie jako prostopadła fala uderzeniowa, wyznaczając warunki na zewnętrznej krawędzi warstwy przyściennej (\(p_e, T_e, \rho_e\)).
+              </div>
+              <div>
+                <strong style="color: #fff;">3. Zmodyfikowany Newtonowski Gradient Prędkości <a href="#ref-6" class="ref-cite">[6]</a><a href="#ref-8" class="ref-cite">[8]</a>:</strong> Przyspieszenie strugi poza warstwą przyścienną opisane jest newtonowską teorią uderzeniową: \(\left(\frac{du_e}{dx}\right)_s = \frac{1}{R_n}\sqrt{\frac{2(p_e - P_\infty)}{\rho_e}}\).
+              </div>
+              <div>
+                <strong style="color: #fff;">4. Stałe Ciśnienie w Poprzek Warstwy Przyściennej <a href="#ref-1" class="ref-cite">[1]</a>:</strong> Równanie pędu w kierunku normalnym redukuje się do \(\frac{\partial p}{\partial y} = 0 \implies p_w \approx p_e\) w poprzek cienkiej warstwy lepkiej.
+              </div>
+              <div>
+                <strong style="color: #fff;">5. Izotermiczna Zimna Ścianka (\(T_w = 300\text{ K}\)) <a href="#ref-8" class="ref-cite">[8]</a>:</strong> Powierzchnia osłony termicznej utrzymywana jest w stałej temperaturze zimnej ścianki (\(T_w \ll T_e\)), maksymalizując napędzający gradient entalpii (\(h_{0e} - h_w\)). Gęstość na ściance wynosi \(\rho_w = p_e / (R_{\text{gas}} T_w)\).
+              </div>
+              <div>
+                <strong style="color: #fff;">6. Prawo Lepkości Sutherlanda <a href="#ref-7" class="ref-cite">[7]</a>:</strong> Własności transportowe \(\mu_e\) oraz \(\mu_w\) wyznaczane są temperaturowym prawem lepkości Sutherlanda.
+              </div>
+              <div>
+                <strong style="color: #fff;">7. Stała Liczba Prandtla w Warstwie Przyściennej <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>:</strong> Liczba Prandtla \(Pr = \frac{\mu c_p}{\kappa}\) jest przyjmowana jako stała w warstwie przyściennej (\(0,70\) dla marsjańskiego \(\text{CO}_2\), \(0,71\) dla powietrza ziemskiego).
+              </div>
+              <div>
+                <strong style="color: #fff;">8. Liczba Lewisa i Parametryzacja Katalityczności <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>:</strong> Dyfuzja masy składników parametryzowana jest liczbą Lewisa \(Le = \frac{\rho D_{12} c_p}{\kappa}\). Rekombinacja dysocjacyjna opisywana jest reżimami katalitycznymi: Równowagowym (\(Le^{0,52}\)), Zamrożonym ze Ścianką Katalityczną (\(Le^{0,63}\)), Zamrożonym ze Ścianką Niekatalityczną (\(1 - h_D/h_{0e}\)) lub Konwekcyjnym (\(Le \approx 1\)).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MATHEMATICAL & PHYSICAL EQUATIONS SECTION -->
+        <div class="equations-section">
+          <div class="equations-section-header">
+            <h3>📖 Równania Matematyczne i Prawa Fizyczne Wykorzystane w Obliczeniach</h3>
+            <p style="color:var(--text-muted);">Kompletne sformułowania analityczne, relacje skoku gazodynamicznego oraz prawa aerotermodynamiki zaimplementowane w powyższych modułach.</p>
+          </div>
+
+          <div class="equations-accordion-group">
+
+            <!-- SUBSECTION 1: Project 1 - Viscous Boundary Layer & Near-Wall Mesh Resolution -->
+            <details class="equation-accordion">
+              <summary class="equation-accordion-summary">
+                <div class="equation-accordion-title">
+                  <span class="equation-accordion-icon">🌊</span>
+                  <span class="equation-accordion-name">Projekt 1: Lepka Warstwa Przyścienna, Tarcie Powierzchniowe i Rozdzielczość Siatki (y⁺)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="equation-accordion-badge">6 Sformułowań</span>
+                  <span class="equation-accordion-arrow">▼</span>
+                </div>
+              </summary>
+              <div class="equation-accordion-content">
+                <div class="equations-grid">
+                  
+                  <!-- Equation 1.1: Atmospheric Profile & Kinematic Viscosity -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Atmospheric State & Viscosity [5, 7]</span>
+                      <span class="equation-tag">Step 1: Ambient Fluid</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\rho = \frac{P(z)}{R_{\text{gas}} \cdot T(z)}, \quad \mu(T) = \mu_0 \left(\frac{T}{T_0}\right)^{3/2} \left(\frac{T_0 + S}{T + S}\right), \quad \nu = \frac{\mu}{\rho}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Wyznacza temperaturę otoczenia \(T(z)\) i ciśnienie statyczne \(P(z)\) dla danej wysokości \(z\) (Wzorcowa Atmosfera USA 1976 <a href="#ref-5" class="ref-cite">[5]</a> lub model atmosfery Marsa CO₂), oblicza gęstość z równania stanu gazu doskonałego oraz stosuje prawo Sutherlanda <a href="#ref-7" class="ref-cite">[7]</a> do wyznaczenia lepkości dynamicznej \(\mu\) i kinematycznej \(\nu\).
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(\rho\)</span><span class="var-def">Gęstość płynu w stanie swobodnym [kg/m³]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\mu\)</span><span class="var-def">Lepkość dynamiczna [Pa·s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\nu\)</span><span class="var-def">Lepkość kinematyczna \(\nu = \mu / \rho\) [m²/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(R_{\text{gas}}\)</span><span class="var-def">Indywidualna stała gazowa (\(287,05\text{ J/kg}\cdot\text{K}\) dla powietrza, \(188,90\text{ J/kg}\cdot\text{K}\) dla \(\text{CO}_2\))</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 1.2: Chord Reynolds Number -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Liczba Reynoldsa Cięciwy (Re_L) [3, 4]</span>
+                      <span class="equation-tag">Krok 2: Warstwa Przyścienna</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$Re_L = \frac{U_\infty \cdot L}{\nu}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Określa stosunek dynamicznych sił bezwładności do sił lepkości wzdłuż długości charakterystycznej \(L\) <a href="#ref-3" class="ref-cite">[3]</a><a href="#ref-4" class="ref-cite">[4]</a>. Decyduje o laminarnym lub turbulentnym charakterze przepływu w warstwie przyściennej (\(Re_{\text{crit}} \approx 5 \times 10^5\)).
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(Re_L\)</span><span class="var-def">Liczba Reynoldsa odniesiona do długości \(L\) [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(U_\infty\)</span><span class="var-def">Prędkość przepływu w stanie swobodnym [m/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(L\)</span><span class="var-def">Referencyjna długość cięciwy / charakterystyczna ciała [m]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\nu\)</span><span class="var-def">Lepkość kinematyczna [m²/s] (z tabeli atmosferycznej)</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 1.3: Skin Friction Coefficient -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Współczynnik Tarcia Ścianki (C_f) [2, 3, 4]</span>
+                      <span class="equation-tag">Krok 3: Tarcie Ścienne</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$C_f = \begin{cases} \dfrac{0.664}{\sqrt{Re_L}} & (Re_L < 5\times 10^5 \text{ — Blasius [2]}) \\[8pt] 0.0592 \cdot Re_L^{-0.2} & (Re_L \ge 5\times 10^5 \text{ — Schlichting [3]}) \end{cases}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza bezwymiarowy współczynnik tarcia powierzchniowego ze ścisłego rozwiązania laminarnego Blasiusa <a href="#ref-2" class="ref-cite">[2]</a> lub korelacji turbulentnej Schlichtinga-Gerstena / Franka White'a <a href="#ref-3" class="ref-cite">[3]</a><a href="#ref-4" class="ref-cite">[4]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(C_f\)</span><span class="var-def">Współczynnik oporu tarcia ścianki [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(Re_L\)</span><span class="var-def">Lokalna liczba Reynoldsa [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(Re_{\text{crit}}\)</span><span class="var-def">Próg przejścia laminarno-turbulentnego (\(5 \times 10^5\)) <a href="#ref-3" class="ref-cite">[3]</a></span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 1.4: 99% Boundary Layer Thickness -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Grubość Warstwy Przyściennej (δ_99) [2, 3, 4]</span>
+                      <span class="equation-tag">Krok 3: Grubość Warstwy</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\delta_{99} = \begin{cases} \dfrac{5.0 \cdot L}{\sqrt{Re_L}} & (Re_L < 5\times 10^5 \text{ — Laminar [2, 3]}) \\[8pt] 0.37 \cdot L \cdot Re_L^{-0.2} & (Re_L \ge 5\times 10^5 \text{ — Turbulent [3, 4]}) \end{cases}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Wyznacza odległość normalną od ścianki, w której prędkość styczna osiąga \(99\%\) prędkości napływu (\(u = 0,99 U_\infty\)), wyznaczając wymaganą grubość warstw pryzmatycznych siatki.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(\delta_{99}\)</span><span class="var-def">Grubość warstwy przyściennej [m / mm]</span></div>
+                      <div class="var-row"><span class="var-sym">\(L\)</span><span class="var-def">Charakterystyczna długość ciała / cięciwa [m]</span></div>
+                      <div class="var-row"><span class="var-sym">\(Re_L\)</span><span class="var-def">Charakterystyczna liczba Reynoldsa [-]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 1.5: Wall Shear Stress & Friction Velocity -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Naprężenie Ścinające na Ściance (τ_w) i Prędkość Tarcia u_τ [4]</span>
+                      <span class="equation-tag">Krok 4: Skalowanie Przyścienne</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\tau_w = \frac{1}{2} \rho U_\infty^2 C_f \quad \Longrightarrow \quad u_\tau = \sqrt{\frac{\tau_w}{\rho}} = U_\infty \sqrt{\frac{C_f}{2}}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Określa styczną siłę lepkości na jednostkę powierzchni ścianki oraz definiuje charakterystyczną prędkość tarcia \(u_\tau\), fundamentalną dla uniwersalnego prawa ścianki <a href="#ref-4" class="ref-cite">[4]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(\tau_w\)</span><span class="var-def">Naprężenie ścinające na ściance [Pa] (\(\text{N/m}^2\))</span></div>
+                      <div class="var-row"><span class="var-sym">\(u_\tau\)</span><span class="var-def">Skala prędkości tarcia [m/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho\)</span><span class="var-def">Gęstość płynu [kg/m³]</span></div>
+                      <div class="var-row"><span class="var-sym">\(U_\infty\)</span><span class="var-def">Prędkość przepływu w stanie swobodnym [m/s]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 1.6: First-Cell Height for Target y+ -->
+                  <div class="equation-card">
+                    <div class="equation-title">
+                      <span>Rozdzielczość Siatki Przyściennej (y⁺, Δy) [4]</span>
+                      <span class="equation-tag">Krok 5: Siatka CFD</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$y^+ = \frac{u_\tau \cdot \Delta y}{\nu} \quad \Longleftrightarrow \quad \Delta y = \frac{y^+_{\text{target}} \cdot \nu}{u_\tau}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza wymaganą wysokość pierwszej komórki pryzmatycznej siatki \(\Delta y\) do rozstrzygnięcia laminarnej podwarstwy lepkiej (\(y^+ \approx 1\)) dla modeli turbulencji low-Reynolds (\(k\text{-}\omega\) SST, Spalart-Allmaras) <a href="#ref-4" class="ref-cite">[4]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(y^+\)</span><span class="var-def">Bezwymiarowa odległość od ścianki (Cel: \(y^+ \approx 1,0\))</span></div>
+                      <div class="var-row"><span class="var-sym">\(\Delta y\)</span><span class="var-def">Wysokość pierwszej komórki normalnie do ścianki [m / μm]</span></div>
+                      <div class="var-row"><span class="var-sym">\(u_\tau\)</span><span class="var-def">Prędkość tarcia [m/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\nu\)</span><span class="var-def">Kinematic viscosity [m²/s]</span></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </details>
+
+            <!-- SUBSECTION 2: Project 2 - Gas Dynamics, Normal Shock & Transport Properties -->
+            <details class="equation-accordion gold">
+              <summary class="equation-accordion-summary">
+                <div class="equation-accordion-title">
+                  <span class="equation-accordion-icon">⚡</span>
+                  <span class="equation-accordion-name">Projekt 2: Hipersoniczna Gazodynamika, Warstwa Uderzeniowa i Transport Wysokotemperaturowy</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="equation-accordion-badge">7 Sformułowań</span>
+                  <span class="equation-accordion-arrow">▼</span>
+                </div>
+              </summary>
+              <div class="equation-accordion-content">
+                <div class="equations-grid">
+
+                  <!-- Equation 2.1: Freestream Speed of Sound & Velocity -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Prędkość Dźwięku (a_∞) i Prędkość Lotu (V_∞) [6]</span>
+                      <span class="equation-tag">Krok 1: Gazodynamika</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$a_\infty = \sqrt{\gamma R_{\text{gas}} T_\infty}, \quad V_\infty = M_\infty \cdot a_\infty$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza prędkość dźwięku \(a_\infty\) z temperatury statycznej \(T_\infty\) i wykładnika izentropy gazu \(\gamma\), wyznaczając rzeczywistą prędkość lotu \(V_\infty\) dla zadanej liczby Macha \(M_\infty\) <a href="#ref-6" class="ref-cite">[6]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(a_\infty\)</span><span class="var-def">Prędkość dźwięku w gazie napływającym [m/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(V_\infty\)</span><span class="var-def">Rzeczywista hiperdźwiękowa prędkość lotu [m/s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\gamma\)</span><span class="var-def">Wykładnik izentropy (1,40 dla powietrza, 1,30 dla CO₂)</span></div>
+                      <div class="var-row"><span class="var-sym">\(M_\infty\)</span><span class="var-def">Liczba Macha lotu [-]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.2: Rankine-Hugoniot Normal Shock Jump Relations -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Relacje Skoku Fali Normalnej Rankine-Hugoniota [6]</span>
+                      <span class="equation-tag">Krok 2: Warstwa Uderzeniowa</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\frac{p_e}{p_\infty} = 1 + \frac{2\gamma}{\gamma + 1}\left(M_\infty^2 - 1\right), \quad \frac{\rho_e}{\rho_\infty} = \frac{(\gamma + 1)M_\infty^2}{2 + (\gamma - 1)M_\infty^2}, \quad T_e = T_\infty \left(\frac{p_e}{p_\infty}\right) \left(\frac{\rho_\infty}{\rho_e}\right)$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Opisuje zachowanie masy, pędu normalnego i całkowitej energii na odsuniętej fali uderzeniowej wzdłuż osiowej linii prądu, dostarczając parametry na zewnętrznej krawędzi warstwy przyściennej (\(p_e, T_e, \rho_e\)) <a href="#ref-6" class="ref-cite">[6]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(p_e, p_\infty\)</span><span class="var-def">Ciśnienie statyczne na krawędzi za falą i ciśnienie napływu [Pa]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho_e, \rho_\infty\)</span><span class="var-def">Gęstość na krawędzi za falą i gęstość napływu [kg/m³]</span></div>
+                      <div class="var-row"><span class="var-sym">\(T_e, T_\infty\)</span><span class="var-def">Temperatura statyczna na krawędzi za falą i temperatura napływu [K]</span></div>
+                      <div class="var-row"><span class="var-sym">\(M_\infty\)</span><span class="var-def">Hiperdźwiękowa liczba Macha lotu</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.3: Isothermal Cold Wall Density & Pressure -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Stan Izotermicznej Zimnej Ścianki (ρ_w, p_w) [8]</span>
+                      <span class="equation-tag">Krok 3: Parametry Ścianki</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$p_w \approx p_e, \quad \rho_w = \frac{p_w}{R_{\text{gas}} \cdot T_w} = \frac{p_e}{R_{\text{gas}} \cdot T_w}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Zgodnie z równaniem pędu warstwy przyściennej (\(\partial p / \partial y = 0\)), ciśnienie na ściance równe jest ciśnieniu na krawędzi za falą \(p_e\). Gęstość gazu na ściance \(\rho_w\) obliczana jest przy izotermicznej temperaturze ścianki (\(T_w = 300\text{ K}\)) <a href="#ref-8" class="ref-cite">[8]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(p_w\)</span><span class="var-def">Ciśnienie na ściance (\(p_w \approx p_e\)) [Pa]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho_w\)</span><span class="var-def">Gęstość gazu na ściance [kg/m³]</span></div>
+                      <div class="var-row"><span class="var-sym">\(T_w\)</span><span class="var-def">Izotermiczna temperatura zimnej ścianki (Domyślnie: \(300\text{ K}\)) [K]</span></div>
+                      <div class="var-row"><span class="var-sym">\(R_{\text{gas}}\)</span><span class="var-def">Indywidualna stała gazowa [J/(kg·K)]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.4: Sutherland Dynamic Viscosity Law -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Lepkości Dynamiczne wg Prawa Sutherlanda (μ_e, μ_w) [7, 8]</span>
+                      <span class="equation-tag">Krok 4: Transport Lepki</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\mu(T) = \mu_0 \left(\frac{T}{T_0}\right)^{3/2} \left( \frac{T_0 + S}{T + S} \right) \quad \Longrightarrow \quad \mu_e = \mu(T_e), \quad \mu_w = \mu(T_w)$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza temperaturową lepkość dynamiczną na gorącej krawędzi warstwy przyściennej (\(\mu_e\)) oraz na zimnej ściance (\(\mu_w\)) dla powietrza (\(S = 110,4\text{ K}\)) i \(\text{CO}_2\) (\(S = 222,0\text{ K}\)) <a href="#ref-7" class="ref-cite">[7]</a><a href="#ref-8" class="ref-cite">[8]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(\mu_e\)</span><span class="var-def">Lepkość dynamiczna przy temperaturze krawędzi \(T_e\) [Pa·s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\mu_w\)</span><span class="var-def">Lepkość dynamiczna przy temperaturze ścianki \(T_w\) [Pa·s]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\mu_0, T_0, S\)</span><span class="var-def">Parametry kalibracyjne prawa Sutherlanda <a href="#ref-7" class="ref-cite">[7]</a></span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.5: Modified Newtonian Velocity Gradient -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Newtonowski Gradient Prędkości w Punkcie Spiętrzenia [6, 8]</span>
+                      <span class="equation-tag">Krok 5: Gradient Prędkości</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\left(\frac{du_e}{dx}\right)_s = \frac{1}{R_n} \sqrt{\frac{2(p_e - P_\infty)}{\rho_e}}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza przyspieszenie opływu od punktu spiętrzenia (\(x = 0\)) dla sferycznego noska o promieniu \(R_n\) ze zmodyfikowanej newtonowskiej teorii uderzeniowej (Równanie 9 w Pracy Magisterskiej, s. 21) <a href="#ref-6" class="ref-cite">[6]</a><a href="#ref-8" class="ref-cite">[8]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(\left(\frac{du_e}{dx}\right)_s\)</span><span class="var-def">Newtonowski gradient prędkości [s⁻¹]</span></div>
+                      <div class="var-row"><span class="var-sym">\(R_n\)</span><span class="var-def">Promień zaokrąglenia noska [m] (\(0,04445\text{ m}\) dla modelu MSL)</span></div>
+                      <div class="var-row"><span class="var-sym">\(p_e - P_\infty\)</span><span class="var-def">Spadek ciśnienia wzdłuż linii spiętrzenia [Pa]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho_e\)</span><span class="var-def">Gęstość na krawędzi warstwy przyściennej [kg/m³]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.6: Stagnation & Wall Enthalpies -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Potencjały Entalpii Spiętrzenia i Ścianki [6, 8]</span>
+                      <span class="equation-tag">Krok 6: Termodynamika</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$h_{0e} = c_p T_\infty + \frac{1}{2}V_\infty^2, \quad h_w = c_p T_w, \quad \Delta h = h_{0e} - h_w \quad \left(c_p = \frac{\gamma}{\gamma - 1}R_{\text{gas}}\right)$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Określa całkowitą entalpię spiętrzenia \(h_{0e}\) wnikającą do warstwy uderzeniowej oraz entalpię ścianki \(h_w\), definiując termodynamiczny gradient entalpii \(\Delta h = h_{0e} - h_w\) napędzający transport ciepła <a href="#ref-6" class="ref-cite">[6]</a><a href="#ref-8" class="ref-cite">[8]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(h_{0e}\)</span><span class="var-def">Całkowita entalpia spiętrzenia napływu [J/kg / MJ/kg]</span></div>
+                      <div class="var-row"><span class="var-sym">\(h_w\)</span><span class="var-def">Entalpia gazu na ściance w \(T_w\) [J/kg / MJ/kg]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\Delta h\)</span><span class="var-def">Napędzający potencjał entalpii w poprzek warstwy przyściennej [J/kg]</span></div>
+                      <div class="var-row"><span class="var-sym">\(c_p\)</span><span class="var-def">Ciepło właściwe przy stałym ciśnieniu [J/(kg·K)]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 2.7: Rayleigh Pitot Total Pressure Recovery -->
+                  <div class="equation-card gold">
+                    <div class="equation-title">
+                      <span>Stosunek Ciśnień Spiętrzenia Rayleigha-Pitota [6]</span>
+                      <span class="equation-tag">Krok 9: Wzrost Entropii na Fali</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\frac{P_{02}}{P_{01}} = \left[ \frac{(\gamma+1)M_\infty^2}{2 + (\gamma-1)M_\infty^2} \right]^{\frac{\gamma}{\gamma-1}} \cdot \left[ \frac{\gamma+1}{2\gamma M_\infty^2 - (\gamma-1)} \right]^{\frac{1}{\gamma-1}}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Oblicza całkowity odzysk ciśnienia spiętrzenia za normalną falą uderzeniową, określając zachowanie ciśnienia spiętrzenia i generację entropii przy prędkościach hiperdźwiękowych <a href="#ref-6" class="ref-cite">[6]</a>.
+                    </p>
+                    <div class="equation-vars">
+                      <div class="var-row"><span class="var-sym">\(P_{02} / P_{01}\)</span><span class="var-def">Stosunek ciśnienia całkowitego za falą do ciśnienia przed falą [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(M_\infty\)</span><span class="var-def">Liczba Macha lotu [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\gamma\)</span><span class="var-def">Wykładnik izentropy [-]</span></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </details>
+
+            <!-- SUBSECTION 3: Project 2 - Fay-Riddell Stagnation Aeroheating Solver -->
+            <details class="equation-accordion plasma">
+              <summary class="equation-accordion-summary">
+                <div class="equation-accordion-title">
+                  <span class="equation-accordion-icon">🔥</span>
+                  <span class="equation-accordion-name">Projekt 2: Hipersoniczne Nagrzewanie Aerodynamiczne i Katalityczność (Równanie 5 z Pracy Magisterskiej)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="equation-accordion-badge">2 Sformułowania z Pracy Magisterskiej</span>
+                  <span class="equation-accordion-arrow">▼</span>
+                </div>
+              </summary>
+              <div class="equation-accordion-content">
+                <div class="equations-grid" style="grid-template-columns: 1fr;">
+
+                  <!-- Equation 3.1: Dissociation & Catalytic Recombination Factor -->
+                  <div class="equation-card plasma">
+                    <div class="equation-title">
+                      <span>Dysocjacja Składników i Współczynnik Rekombinacji Katalitycznej (Φ_cat) [1, 8]</span>
+                      <span class="equation-tag">Krok 7: Reżimy Katalizy</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$\Phi_{\text{cat}} = \begin{cases} 1 + \left(Le^{0.52} - 1\right)\dfrac{h_D}{h_{0e}} & \text{Equilibrium Boundary Layer (Thesis Eq. 5 [1, 8])} \\[10pt] 1 + \left(Le^{0.63} - 1\right)\dfrac{h_D}{h_{0e}} & \text{Frozen Boundary Layer + Fully Catalytic Wall (Thesis Eq. 7 [1, 8])} \\[10pt] 1 - \dfrac{h_D}{h_{0e}} & \text{Frozen Boundary Layer + Non-Catalytic Wall (Thesis Eq. 8 [1, 8])} \\[10pt] 1.0 & \text{Convective Simplification } (Le \approx 1.0) \text{ (Thesis p. 23 [8])} \end{cases}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Określa wzrost lub redukcję powierzchniowego strumienia ciepła wywołaną rekombinacją atomową zdysocjowanych składników (\(\text{CO}_2 \rightarrow \text{CO} + \text{O}\) lub \(\text{O}_2 \rightarrow 2\text{O}\)) dyfundujących przez warstwę przyścienną wg liczby Lewisa \(Le\) oraz katalitycznej sprawności ścianki <a href="#ref-1" class="ref-cite">[1]</a><a href="#ref-8" class="ref-cite">[8]</a>.
+                    </p>
+                    <div class="equation-vars" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.5rem 1.5rem;">
+                      <div class="var-row"><span class="var-sym">\(\Phi_{\text{cat}}\)</span><span class="var-def">Współczynnik korekcyjny strumienia ciepła z tytułu dysocjacji/katalizy [-]</span></div>
+                      <div class="var-row"><span class="var-sym">\(Le\)</span><span class="var-def">Liczba Lewisa \(Le = \alpha / D = \rho D_{12} c_p / \kappa\) (Domyślnie: \(1,40\) lub \(1,0\))</span></div>
+                      <div class="var-row"><span class="var-sym">\(h_D\)</span><span class="var-def">Chemiczna entalpia dysocjacji: \(\sum_i c_{i,e} (\Delta h_f^\circ)_i\) [J/kg]</span></div>
+                      <div class="var-row"><span class="var-sym">\(h_D / h_{0e}\)</span><span class="var-def">Udział entalpii dysocjacji w całkowitej entalpii spiętrzenia [-]</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Equation 3.2: Complete Fay-Riddell Stagnation Heat Flux Formulation -->
+                  <div class="equation-card plasma">
+                    <div class="equation-title">
+                      <span>Pełne Sformułowanie Faya-Riddella dla Hiperdźwiękowego Nagrzewania w Punkcie Spiętrzenia [1, 8]</span>
+                      <span class="equation-tag">Krok 8: Wzorzec z Pracy Magisterskiej</span>
+                    </div>
+                    <div class="equation-formula-box">
+                      <div class="formula-math">$$q_w = 0.76 \cdot Pr^{-0.6} \cdot (\rho_e \mu_e)^{0.4} \cdot (\rho_w \mu_w)^{0.1} \cdot \sqrt{\left(\frac{du_e}{dx}\right)_s} \cdot (h_{0e} - h_w) \cdot \Phi_{\text{cat}}$$</div>
+                    </div>
+                    <p class="equation-desc">
+                      Klasyczne sformułowanie teorii warstwy przyściennej Faya i Riddella (1958) <a href="#ref-1" class="ref-cite">[1]</a>, poddane walidacji w pracy magisterskiej Kacpra Frelka z danymi doświadczalnymi z tunelu Caltech T5 (strzał 2254, s. 20–23) <a href="#ref-8" class="ref-cite">[8]</a>. Integruje własności transportowe za falą, izotermiczną zimną ściankę (\(T_w = 300\text{ K}\)), newtonowski gradient prędkości, napędzający gradient entalpii i katalizę chemiczną, wyznaczając szczytowy strumień ciepła na ściance \(q_w\).
+                    </p>
+                    <div class="equation-vars" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.5rem 1.5rem;">
+                      <div class="var-row"><span class="var-sym">\(q_w\)</span><span class="var-def">Strumień ciepła na ściance w punkcie spiętrzenia [W/m² / MW/m² / W/cm²]</span></div>
+                      <div class="var-row"><span class="var-sym">\(Pr\)</span><span class="var-def">Liczba Prandtla (\(0,70\) dla marsjańskiego \(\text{CO}_2\), \(0,71\) dla powietrza)</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho_e, \mu_e\)</span><span class="var-def">Gęstość i lepkość dynamiczna na krawędzi za falą uderzeniową</span></div>
+                      <div class="var-row"><span class="var-sym">\(\rho_w, \mu_w\)</span><span class="var-def">Gęstość i lepkość dynamiczna przy temperaturze zimnej ścianki (\(T_w = 300\text{ K}\))</span></div>
+                      <div class="var-row"><span class="var-sym">\(\left(\frac{du_e}{dx}\right)_s\)</span><span class="var-def">Newtonowski gradient prędkości: \(\frac{1}{R_n}\sqrt{\frac{2(p_e - P_\infty)}{\rho_e}}\) [s⁻¹]</span></div>
+                      <div class="var-row"><span class="var-sym">\(h_{0e} - h_w\)</span><span class="var-def">Różnica entalpii spiętrzenia i ścianki \(\Delta h\) [J/kg]</span></div>
+                      <div class="var-row"><span class="var-sym">\(\Phi_{\text{cat}}\)</span><span class="var-def">Człon dysocjacji/katalizy: \(\left[1 + (Le^a - 1)\frac{h_D}{h_{0e}}\right]\)</span></div>
+                      <div class="var-row"><span class="var-sym">\(R_n\)</span><span class="var-def">Promień noska osłony (\(0,04445\text{ m}\) dla geometrii modelu MSL)</span></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </details>
+
+          </div>
+        </div>
+
+        <!-- SCIENTIFIC REFERENCES & LITERATURE CITATIONS -->
+        <div class="references-section" id="aero-references">
+          <div class="references-header">
+            <h3>📚 Literatura i Cytowania Naukowe</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Główne recenzowane publikacje naukowe, fundamentalne traktaty aerotermodynamiczne, wzorce atmosferyczne oraz benchmarki z pracy magisterskiej stanowiące podstawę powyższych równań.</p>
+          </div>
+          <div class="references-grid">
+            
+            <div class="ref-card" id="ref-1">
+              <span class="ref-tag">[1]</span>
+              <div class="ref-content">
+                <span class="ref-title">Theory of Stagnation Point Heat Transfer in Dissociated Air</span>
+                <span class="ref-authors">Fay, J. A., & Riddell, F. R. (1958)</span>
+                <span class="ref-journal">Journal of the Aeronautical Sciences, Vol. 25, No. 2, pp. 73–85. DOI: 10.2514/8.7517.</span>
+                <span class="ref-annotation">Fundamentalne sformułowanie teorii podobieństwa warstwy przyściennej dla hiperdźwiękowego nagrzewania w punkcie spiętrzenia z rekombinacją termodynamiczną, skalowaniem liczbą Lewisa i skończoną katalitycznością ścianki.</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-2">
+              <span class="ref-tag">[2]</span>
+              <div class="ref-content">
+                <span class="ref-title">Grenzschichten in Flüssigkeiten mit kleiner Reibung (Warstwy przyścienne w płynach o małym tarciu)</span>
+                <span class="ref-authors">Blasius, H. (1908)</span>
+                <span class="ref-journal">Zeitschrift für Mathematik und Physik, Vol. 56, pp. 1–37.</span>
+                <span class="ref-annotation">Ścisłe analityczne rozwiązanie podobieństwa stacjonarnych laminarnych równań warstwy przyściennej na płaskiej płycie przy zerowym kącie natarcia (dające \(C_f = 0,664/\sqrt{Re_L}\) oraz \(\delta = 5,0 L/\sqrt{Re_L}\)).</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-3">
+              <span class="ref-tag">[3]</span>
+              <div class="ref-content">
+                <span class="ref-title">Boundary-Layer Theory (9th English Edition)</span>
+                <span class="ref-authors">Schlichting, H., & Gersten, K. (2016)</span>
+                <span class="ref-journal">Springer-Verlag Berlin Heidelberg. ISBN: 978-3-662-52917-1.</span>
+                <span class="ref-annotation">Kompleksowa monografia dotycząca kryteriów przejścia laminarno-turbulentnego (\(Re_{\text{crit}} \approx 5 \times 10^5\)), rozwoju grubości warstwy przyściennej na płycie oraz praw tarcia turbulentnego.</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-4">
+              <span class="ref-tag">[4]</span>
+              <div class="ref-content">
+                <span class="ref-title">Viscous Fluid Flow (3rd Edition)</span>
+                <span class="ref-authors">White, F. M. (2006)</span>
+                <span class="ref-journal">McGraw-Hill, New York. ISBN: 978-0-07-240231-5 (Chapters 6 & 7).</span>
+                <span class="ref-annotation">Definiuje prawa ścianki (\(y^+ = u_\tau y / \nu\)), prędkość tarcia \(u_\tau = \sqrt{\tau_w/\rho}\) oraz dobór wysokości pierwszej komórki siatki pryzmatycznej dla modeli turbulencji CFD.</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-5">
+              <span class="ref-tag">[5]</span>
+              <div class="ref-content">
+                <span class="ref-title">U.S. Standard Atmosphere, 1976</span>
+                <span class="ref-authors">NOAA, NASA, & USAF (1976)</span>
+                <span class="ref-journal">NASA-TM-X-74335, NOAA-S/T 76-1562, Washington, D.C.</span>
+                <span class="ref-annotation">Definiuje warstwowy gradient temperatury, równowagę barometryczną oraz parametry termodynamiczne otoczenia (\(T_\infty, P_\infty, \rho_\infty\)) od poziomu morza do 80 km wysokości.</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-6">
+              <span class="ref-tag">[6]</span>
+              <div class="ref-content">
+                <span class="ref-title">Hypersonic and High-Temperature Gas Dynamics (Wydanie 2)</span>
+                <span class="ref-authors">Anderson, J. D. (2006)</span>
+                <span class="ref-journal">AIAA Education Series, Reston, VA. ISBN: 978-1-56347-780-5.</span>
+                <span class="ref-annotation">Standardowy podręcznik akademicki dla relacji skoku normalnej fali uderzeniowej Rankine-Hugoniota, newtonowskiego gradientu prędkości w punkcie spiętrzenia (\((du_e/dx)_s\)) oraz wzoru Rayleigha-Pitota.</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-7">
+              <span class="ref-tag">[7]</span>
+              <div class="ref-content">
+                <span class="ref-title">The Viscosity of Gases and Molecular Force</span>
+                <span class="ref-authors">Sutherland, W. (1893)</span>
+                <span class="ref-journal">The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science, Vol. 36, No. 223, pp. 507–531.</span>
+                <span class="ref-annotation">Sformułowanie kinetycznej teorii gazów modelujące zależność lepkości dynamicznej od temperatury dla powietrza (\(S = 110,4\text{ K}\)) oraz marsjańskiego dwutlenku węgla (\(S = 222,0\text{ K}\)).</span>
+              </div>
+            </div>
+
+            <div class="ref-card" id="ref-8">
+              <span class="ref-tag">[8]</span>
+              <div class="ref-content">
+                <span class="ref-title">Numeryczna symulacja nagrzewania aerodynamicznego kapsuły wejściowej Mars Science Laboratory (MSL)</span>
+                <span class="ref-authors">Frelek, K. (2024)</span>
+                <span class="ref-journal">Master's Thesis, Faculty of Power and Aeronautical Engineering (MEiL), Warsaw University of Technology (pp. 20–23).</span>
+                <span class="ref-annotation">Wyprowadza i kalibruje wieloskładnikowy solwer Faya-Riddella względem pomiarów eksperymentalnych strumienia ciepła z tunelu hiperdźwiękowego Caltech T5 (strzał 2254, \(q_w \approx 11,0\text{ MW/m}^2\)) oraz profili wejścia w atmosferę Marsa.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="proj-urban">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Komfort Wiatrowy w Mieście</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="travel">
+          <span class="nav-step-label">Następna Sekcja →</span>
+          <span class="nav-step-title">Wyprawy i Podróże</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 11: TRAVELOGUE & PHOTOGRAPHY -->
+    <section id="travel" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Wyprawy & Podróże</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Wyprawy Globalne i Perspektywy Kulturowe</h2>
+          <div class="section-subtitle">Kronika fotograficzna i osobiste refleksje z podróży po Azji i Europie</div>
+        </div>
+      </div>
+
+      <!-- Opis Odwiedzonych Miejsc -->
+      <div class="travel-overview-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+        <div class="narrative-card" style="margin-bottom: 0;">
+          <h4>⛩️ Japonia — Tokio, Kioto, Nara i Fukuoka</h4>
+          <p>
+            Spacerując tętniącymi życiem ulicami Tokio w Shibuyi i Shinjuku, wędrując o wschodzie słońca alejami cynobrowych bram torii Fushimi Inari w Kioto, 
+            spotykając wolno żyjące jelenie w Narze i delektując się ramenem tonkotsu w ulicznych kramach yatai w Fukuoce. 
+            Japonia pokazała mi niezwykłą wartość dbałości o każdy detal — dokładnie tej samej filozofii, której wymaga tworzenie precyzyjnych siatek obliczeniowych CFD i inżynieria aerotermodynamiczna.
+          </p>
+        </div>
+
+        <div class="narrative-card" style="margin-bottom: 0;">
+          <h4>🏙️ Korea Południowa — Seul, Gangnam i Historyczne Pałace</h4>
+          <p>
+            Odkrywając gwarny targ Myeongdong w Seulu, podziwiając odważną architekturę Gangnam i Dongdaemun oraz zgłębiając historię dynastii Joseon w pałacu Gyeongbokgung. 
+            Dynamiczny postęp technologiczny Korei Południowej idealnie współgra z moją pasją do zaawansowanych innowacji w lotnictwie i kosmonautyce.
+          </p>
+        </div>
+
+        <div class="narrative-card" style="margin-bottom: 0;">
+          <h4>🏛️ Grecja — Wybrzeża Morza Egejskiego i Dziedzictwo Antyku</h4>
+          <p>
+            Od skąpanych w słońcu wód Krety po antyczne ruiny, Grecja zapewniła niezrównany letni odpoczynek pomiędzy intensywnymi kampaniami symulacji numerycznych. 
+            Przemierzanie krętych nadmorskich dróg, próbowanie autentycznych smaków śródziemnomorskich oraz chłonięcie wieków klasycznej historii.
+          </p>
+        </div>
+      </div>
+
+      <!-- Galeria Połączona & Filtry -->
+      <div class="gallery-section-title">📷 Połączona Galeria Fotografii z Wypraw</div>
+      <div class="travel-nav-chips">
+        <button class="travel-chip active" data-country="all">Wszystkie Lokacje (15)</button>
+        <button class="travel-chip" data-country="japan">Japonia (6)</button>
+        <button class="travel-chip" data-country="southkorea">Korea Południowa (6)</button>
+        <button class="travel-chip" data-country="greece">Grecja (3)</button>
+      </div>
+
+      <!-- Zbiorcza Siatka Zdjęć -->
+      <div class="country-grid travel-combined-grid" style="margin-bottom: 2.5rem;">
+        <!-- Japonia -->
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499950009.jpg" alt="Japonia - Shibuya i Shinjuku"></div>
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499960004.jpg" alt="Japonia - Kioto Fushimi Inari"></div>
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499960008.jpg" alt="Japonia - Tradycyjna Architektura"></div>
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499960012.jpg" alt="Japonia - Park w Narze"></div>
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499960018.jpg" alt="Japonia - Dziedzictwo Kulturowe"></div>
+        <div class="travel-thumb" data-country="japan"><img src="./images/travel/Japan/000499960021.jpg" alt="Japonia - Kramy Yatai w Fukuoce"></div>
+
+        <!-- Korea Południowa -->
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000499970004.jpg" alt="Korea Południowa - Panorama Seulu"></div>
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000499970017.jpg" alt="Korea Południowa - Myeongdong i Architektura"></div>
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000499980016.jpg" alt="Korea Południowa - Pałac Gyeongbokgung"></div>
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000499980024.jpg" alt="Korea Południowa - Nowoczesne Gangnam"></div>
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000499990028.jpg" alt="Korea Południowa - Dziedzictwo Narodowe"></div>
+        <div class="travel-thumb" data-country="southkorea"><img src="./images/travel/SouthKorea/000500000023.jpg" alt="Korea Południowa - Innowacje Miejskie"></div>
+
+        <!-- Grecja -->
+        <div class="travel-thumb" data-country="greece"><img src="./images/travel/Greece/000406510003.jpg" alt="Grecja - Wybrzeże Morza Śródziemnego i Kreta"></div>
+        <div class="travel-thumb" data-country="greece"><img src="./images/travel/Greece/000406510005.jpg" alt="Grecja - Dziedzictwo Antyku"></div>
+        <div class="travel-thumb" data-country="greece"><img src="./images/travel/Greece/000406510016.jpg" alt="Grecja - Architektura Klasyczna"></div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="lab">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Laboratorium Aero ⚡</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="future">
+          <span class="nav-step-label">Następna Sekcja →</span>
+          <span class="nav-step-title">Horyzonty Badawcze</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 12: FUTURE RESEARCH HORIZONS -->
+    <section id="future" class="content-section">
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-item route-btn" data-target="overview">Podsumowanie</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Horyzonty Badawcze</span>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>Przyszłe Horyzonty Badawcze</h2>
+          <div class="section-subtitle">Nowe Metodologie w Dynamice Gazów Rozrzedzonych i Fizyce Komputerowej</div>
+        </div>
+      </div>
+
+      <div class="future-grid">
+        <div class="future-card">
+          <h4>🌌 DSMC (Direct Simulation Monte Carlo)</h4>
+          <p>
+            Symulacja przejściowych i swobodno-molekularnych reżimów hiperdźwiękowych, w których hipoteza ciągłości ośrodka przestaje obowiązywać (\(Kn > 0,05\)). Śledzenie stochastycznej dynamiki zderzeń miliardów cząsteczek gazu podczas wejścia w górne warstwy atmosfery.
+          </p>
+        </div>
+
+        <div class="future-card">
+          <h4>🔄 Hybrid CFD-DSMC Multiscale Solvers</h4>
+          <p>
+            Sprzęganie solwerów ośrodka ciągłego Naviera-Stokesa w gęstych warstwach uderzeniowych z cząstkami DSMC w rozrzedzonych domenach zewnętrznych, maksymalizując szybkość obliczeń bez utraty wierności na poziomie molekularnym.
+          </p>
+        </div>
+
+        <div class="future-card">
+          <h4>⚛️ Kinetic Boltzmann Solvers</h4>
+          <p>
+            Solwery metody dyskretnych prędkości (DVM) całkujące nieliniowe równanie transportu Boltzmanna, eliminujące szum statystyczny metody Monte Carlo w reżimach mikroprzepływowych i rozrzedzonych.
+          </p>
+        </div>
+
+        <div class="future-card">
+          <h4>🧠 Physics-Informed Neural Networks (PINNs)</h4>
+          <p>
+            Bezpośrednie osadzanie praw zachowania Naviera-Stokesa i warstwy przyściennej w funkcji strat głębokich sieci neuronowych na potrzeby estymacji współczynników aerodynamicznych w czasie rzeczywistym podczas naprowadzania statków kosmicznych.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="section-footer-nav">
+        <a class="nav-step-btn prev route-btn" data-target="travel">
+          <span class="nav-step-label">← Poprzednia</span>
+          <span class="nav-step-title">Wyprawy</span>
+        </a>
+        <a class="nav-step-btn next route-btn" data-target="overview">
+          <span class="nav-step-label">Powrót do Początku →</span>
+          <span class="nav-step-title">Podsumowanie & Profil</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       3. FOOTER
+       ========================================================================= -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="./projects/Kacper_Frelek_CV_19_02.pdf" target="_blank">Curriculum Vitae (PDF)</a>
+        <span>•</span>
+        <a href="https://www.linkedin.com/in/kacper-frelek-741545235/" target="_blank" rel="noopener">Profil LinkedIn</a>
+        <span>•</span>
+        <a href="https://www.instagram.com/luisfreefrelas/" target="_blank" rel="noopener">Instagram (@luisfreefrelas)</a>
+        <span>•</span>
+        <a href="./projects/CFD/JSR_2011_Paper_published_1.48331_plus.pdf" target="_blank">Opublikowany Artykuł (JSR)</a>
+      </div>
+      <div>
+        Kacper Frelek • Aerospace Engineer & Aerodynamist • Warsaw University of Technology
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       4. INTERACTIVE LIGHTBOX MODAL
+       ========================================================================= -->
+  <div id="lightboxModal" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Expanded Image View">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <button class="modal-nav-btn modal-prev" id="modalPrev" aria-label="Previous image">❮</button>
+      <img src="" alt="Expanded View" id="modalImg" class="modal-img">
+      <button class="modal-nav-btn modal-next" id="modalNext" aria-label="Next image">❯</button>
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
