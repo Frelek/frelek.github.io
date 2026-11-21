@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T22:58:06Z",
+  "title": "Design System: Kacper Frelek, Aerospace Engineer",
+  "extensions": {
+    "colorMeta": {
+      "international-orange": { "role": "primary", "displayName": "International Orange", "canonical": "#c43c0a", "tonalRamp": ["#3a1303", "#5f1f06", "#872c08", "#c43c0a", "#e05a28", "#ee8a63", "#f6bea6", "#fbe6dc"] },
+      "flame-orange": { "role": "primary", "displayName": "Flame Orange (decorative)", "canonical": "#e8490f", "tonalRamp": ["#421504", "#6c2307", "#a1340a", "#e8490f", "#f2713f", "#f69d78", "#fac6b0", "#fde9e0"] },
+      "cool-paper": { "role": "neutral", "displayName": "Cool Paper", "canonical": "#f6f7f5", "tonalRamp": ["#262826", "#454845", "#6b6e6b", "#949794", "#bcbfbc", "#dcdeda", "#eceeea", "#f6f7f5"] },
+      "paper-shade": { "role": "neutral", "displayName": "Paper Shade", "canonical": "#eceeea", "tonalRamp": ["#242624", "#434642", "#686c67", "#91958f", "#b9bdb7", "#d6d9d3", "#eceeea", "#f6f7f5"] },
+      "plate-white": { "role": "neutral", "displayName": "Plate White", "canonical": "#ffffff", "tonalRamp": ["#262626", "#474747", "#6e6e6e", "#969696", "#bdbdbd", "#dedede", "#f2f2f2", "#ffffff"] },
+      "report-ink": { "role": "neutral", "displayName": "Report Ink", "canonical": "#14181c", "tonalRamp": ["#14181c", "#262c32", "#3c444c", "#5b646d", "#7f8891", "#a6adb3", "#cdd1d4", "#eceef0"] },
+      "ink-secondary": { "role": "neutral", "displayName": "Ink Secondary", "canonical": "#3c444c", "tonalRamp": ["#14181c", "#262c32", "#3c444c", "#5b646d", "#7f8891", "#a6adb3", "#cdd1d4", "#eceef0"] },
+      "ink-tertiary": { "role": "neutral", "displayName": "Ink Tertiary", "canonical": "#5b646d", "tonalRamp": ["#14181c", "#262c32", "#3c444c", "#5b646d", "#7f8891", "#a6adb3", "#cdd1d4", "#eceef0"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline Rule", "canonical": "rgba(20, 24, 28, 0.14)", "tonalRamp": ["rgba(20,24,28,0.06)", "rgba(20,24,28,0.10)", "rgba(20,24,28,0.14)", "rgba(20,24,28,0.20)", "rgba(20,24,28,0.26)", "rgba(20,24,28,0.32)", "rgba(20,24,28,0.35)", "rgba(20,24,28,1)"] },
+      "rule-strong": { "role": "neutral", "displayName": "Strong Rule", "canonical": "rgba(20, 24, 28, 0.32)", "tonalRamp": ["rgba(20,24,28,0.06)", "rgba(20,24,28,0.10)", "rgba(20,24,28,0.14)", "rgba(20,24,28,0.20)", "rgba(20,24,28,0.26)", "rgba(20,24,28,0.32)", "rgba(20,24,28,0.35)", "rgba(20,24,28,1)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The name on the overview page only." },
+      "headline": { "displayName": "Headline", "purpose": "Project page titles, capped at 26ch." },
+      "title": { "displayName": "Title", "purpose": "Section titles under a 2px ink rule." },
+      "body": { "displayName": "Body", "purpose": "Source Serif 4 reading text at 60-68ch." },
+      "caption": { "displayName": "Caption", "purpose": "Numbered figure captions, led by an orange Figure N." },
+      "label": { "displayName": "Label", "purpose": "Dates, metadata terms, field labels, nav and buttons; sentence case." },
+      "data": { "displayName": "Data", "purpose": "Tables, dates and calculator values in tabular figures." }
+    },
+    "shadows": [
+      { "name": "dropdown", "value": "0 10px 30px -8px rgba(20, 24, 28, 0.18)", "purpose": "Desktop project menu floating under the nav." },
+      { "name": "sheet", "value": "0 16px 30px -18px rgba(20, 24, 28, 0.25)", "purpose": "Mobile nav panel under the header." },
+      { "name": "lightbox-plate", "value": "0 18px 50px -20px rgba(20, 24, 28, 0.35)", "purpose": "Enlarged figure in the lightbox." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveal and lightbox entrance." },
+      { "name": "state-transition", "value": "0.2s", "purpose": "Colour, border and background changes on hover." },
+      { "name": "reveal", "value": "1.1s ease-out, translateY(14px) + blur(3px) to none, 80ms stagger", "purpose": "One-time page reveal after the launch intro." },
+      { "name": "launch-intro", "value": "~4.9s canvas: ignite 0.9s, lift 1.55s, fade 3.2s; failsafe fade at 9s", "purpose": "First-visit rocket launch; skippable, off under reduced motion." },
+      { "name": "lightbox-in", "value": "0.25s opacity", "purpose": "Lightbox open." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "nav", "value": "900px" },
+      { "name": "md", "value": "1000px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action per view (Download CV, Thesis PDF).",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\"><svg viewBox=\"0 0 20 20\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5M4 15.5h12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Download CV</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 0.5rem; font: 600 0.95rem/1 Archivo, 'Helvetica Neue', Arial, sans-serif; padding: 0.8rem 1.15rem; border: 1px solid #14181c; border-radius: 2px; color: #14181c; background: transparent; text-decoration: none; cursor: pointer; transition: background-color 0.2s, color 0.2s, border-color 0.2s; } .ds-btn-primary { background: #14181c; color: #f6f7f5; } .ds-btn-primary:hover { background: #c43c0a; border-color: #c43c0a; color: #ffffff; } .ds-btn:focus-visible { outline: 2px solid #c43c0a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary actions beside the primary (Email me, LinkedIn).",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Email me</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; font: 600 0.95rem/1 Archivo, 'Helvetica Neue', Arial, sans-serif; padding: 0.8rem 1.15rem; border: 1px solid #14181c; border-radius: 2px; color: #14181c; background: transparent; text-decoration: none; transition: background-color 0.2s, color 0.2s; } .ds-btn-outline:hover { background: #14181c; color: #f6f7f5; } .ds-btn-outline:focus-visible { outline: 2px solid #c43c0a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Travel photo filters; selected state fills ink.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip ds-chip-on\">All</button><button class=\"ds-chip\">Norway</button><button class=\"ds-chip\">Italy</button></div>",
+      "css": ".ds-chips { display: flex; gap: 0.5rem; } .ds-chip { font: 500 0.9rem/1 Archivo, 'Helvetica Neue', Arial, sans-serif; padding: 0.55rem 0.85rem; border: 1px solid rgba(20,24,28,0.32); background: transparent; color: #3c444c; border-radius: 2px; cursor: pointer; } .ds-chip:hover { color: #14181c; border-color: #14181c; } .ds-chip-on { background: #14181c; border-color: #14181c; color: #f6f7f5; } .ds-chip:focus-visible { outline: 2px solid #c43c0a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Calculator Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Aero Lab numeric input with a sans label above.",
+      "html": "<label class=\"ds-field\"><span>Free-stream velocity (m/s)</span><input type=\"number\" value=\"3367\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.35rem; max-width: 16rem; } .ds-field span { font: 500 0.85rem/1.3 Archivo, 'Helvetica Neue', Arial, sans-serif; color: #3c444c; } .ds-field input { font: 500 1rem/1.3 Archivo, 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: tabular-nums; color: #14181c; background: #ffffff; border: 1px solid rgba(20,24,28,0.35); border-radius: 2px; padding: 0.55rem 0.65rem; } .ds-field input:hover { border-color: #3c444c; } .ds-field input:focus { outline: 2px solid #c43c0a; outline-offset: 0; border-color: #c43c0a; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky ruled header; active section in ink with a 2px ink underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-active\" href=\"#\">Overview</a><a class=\"ds-nav-link\" href=\"#\">Projects</a><a class=\"ds-nav-link\" href=\"#\">Aero Lab</a><a class=\"ds-nav-link ds-nav-cv\" href=\"#\">CV</a><span class=\"ds-lang\"><a class=\"ds-cur\">EN</a><a href=\"#\">PL</a></span></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 0.25rem; min-height: 4rem; background: #f6f7f5; border-bottom: 1px solid rgba(20,24,28,0.14); padding: 0 1rem; } .ds-nav-link { font: 500 0.94rem/1 Archivo, 'Helvetica Neue', Arial, sans-serif; color: #3c444c; text-decoration: none; padding: 0.6rem 0.7rem; border-radius: 2px; } .ds-nav-link:hover { color: #14181c; } .ds-active { color: #14181c; box-shadow: inset 0 -2px 0 #14181c; } .ds-nav-cv { margin-left: auto; color: #14181c; border: 1px solid rgba(20,24,28,0.32); padding: 0.5rem 0.75rem; } .ds-nav-cv:hover { border-color: #14181c; } .ds-lang { display: flex; border: 1px solid rgba(20,24,28,0.14); border-radius: 2px; margin-left: 0.5rem; } .ds-lang a { font: 600 0.8rem/1 Archivo, 'Helvetica Neue', Arial, sans-serif; padding: 0.45rem 0.55rem; color: #5b646d; text-decoration: none; } .ds-lang .ds-cur { background: #14181c; color: #f6f7f5; } .ds-nav-link:focus-visible { outline: 2px solid #c43c0a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Numbered Figure",
+      "kind": "custom",
+      "description": "Signature: image on a white mount with a hairline border and a numbered sans caption.",
+      "html": "<figure class=\"ds-fig\"><div class=\"ds-fig-img\"></div><figcaption><span class=\"ds-fig-no\">Figure 1.</span> Heat flux along the forebody of the 70° sphere-cone, two-temperature model, second-order scheme.</figcaption></figure>",
+      "css": ".ds-fig { margin: 0; max-width: 32rem; } .ds-fig-img { aspect-ratio: 16 / 10; background: #ffffff; border: 1px solid rgba(20,24,28,0.14); transition: border-color 0.2s; cursor: zoom-in; } .ds-fig:hover .ds-fig-img { border-color: rgba(20,24,28,0.32); } .ds-fig figcaption { font: 400 0.875rem/1.45 Archivo, 'Helvetica Neue', Arial, sans-serif; color: #3c444c; margin-top: 0.65rem; max-width: 62ch; } .ds-fig-no { color: #c43c0a; font-weight: 600; margin-right: 0.15em; }"
+    },
+    {
+      "name": "Data Table",
+      "kind": "custom",
+      "description": "Hairline report table with tabular figures and an ink header rule.",
+      "html": "<table class=\"ds-data\"><thead><tr><th>Wall model</th><th>q (W/cm²)</th><th>DPLR</th></tr></thead><tbody><tr><th>Supercatalytic</th><td>1,122</td><td>1,100</td></tr><tr><th>Mitcheltree</th><td>721</td><td>700</td></tr><tr><th>Non-catalytic</th><td>652</td><td>650</td></tr></tbody></table>",
+      "css": ".ds-data { border-collapse: collapse; font: 400 0.92rem/1.45 Archivo, 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: tabular-nums; color: #14181c; min-width: 22rem; } .ds-data th, .ds-data td { text-align: left; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid rgba(20,24,28,0.14); } .ds-data td, .ds-data thead th:not(:first-child) { text-align: right; } .ds-data thead th { font-weight: 600; font-size: 0.85rem; border-bottom: 1px solid #14181c; } .ds-data tbody th { font-weight: 500; color: #3c444c; }"
+    },
+    {
+      "name": "Ruled CV List",
+      "kind": "card",
+      "description": "Section opened by a 2px ink rule; rows as date column plus content, closed by hairlines.",
+      "html": "<section class=\"ds-block\"><h2>Experience</h2><ul><li><span class=\"ds-when\">Years</span><div><h3>Role title</h3><p class=\"ds-org\">Organisation, city</p><p>One or two sentences on the work.</p></div></li></ul></section>",
+      "css": ".ds-block h2 { font: 600 1.75rem/1.25 Archivo, 'Helvetica Neue', Arial, sans-serif; letter-spacing: -0.015em; color: #14181c; padding-top: 0.8rem; border-top: 2px solid #14181c; margin: 0 0 1.25rem; } .ds-block ul { list-style: none; margin: 0; padding: 0; } .ds-block li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 0.5rem 2rem; padding: 1.35rem 0; border-bottom: 1px solid rgba(20,24,28,0.14); } .ds-when { font: 500 0.92rem/1.6 Archivo, 'Helvetica Neue', Arial, sans-serif; color: #5b646d; font-variant-numeric: tabular-nums; } .ds-block h3 { font: 600 1.2rem/1.25 Archivo, 'Helvetica Neue', Arial, sans-serif; margin: 0; color: #14181c; } .ds-org { font: 400 0.95rem Archivo, 'Helvetica Neue', Arial, sans-serif; color: #5b646d; margin: 0.3rem 0 0.6rem; } .ds-block p { font: 400 1.0625rem/1.62 'Source Serif 4', Georgia, serif; color: #14181c; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Technical Report",
+    "overview": "The site reads like a well-made engineering report: cool paper, near-black blue-grey ink, hairline rules, numbered figure captions, real tables with tabular figures, and equations set in KaTeX. The work itself is the design; his own CFD images, meshes and plots carry each page, and the chrome around them stays quiet, flat and exact.\n\nDensity is report-like rather than poster-like: a single 72rem column, generous block spacing, and lists ruled off line by line like a CV table. Archivo sets every heading, label and control; Source Serif 4 sets reading text. A single International Orange is held back for figure numbers and for the moment of interaction (hover, focus), so it reads as an annotation colour, never as decoration.\n\nMotion is rare and earned: on a first visit a canvas rocket, drawn in the same ink line and paper fill, lifts off and its smoke clears into the page, followed by a one-time staggered reveal. After that the site is still.",
+    "keyCharacteristics": [
+      "Paper, ink and one orange; no gradient surfaces, no dark mode, no glass.",
+      "Rules (1px hairline, 1px ink, 2px ink) do the structural work that cards and shadows do elsewhere.",
+      "Numbered figure captions in small Archivo with an orange \"Figure N.\" lead.",
+      "Tabular figures on every date, measurement and table cell.",
+      "Corners at 2px everywhere: drafted, not rounded."
+    ],
+    "rules": [
+      { "name": "The Annotation Rule", "body": "Orange marks a figure number or an interaction, nothing else. Resting UI, active navigation and selected states are marked in ink.", "section": "colors" },
+      { "name": "The Two Oranges Rule", "body": "`#c43c0a` wherever orange carries text or a functional edge; `#e8490f` only where it is pure decoration (flame, selection tint). Never swap them.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Every number a reader might compare (dates, table cells, inputs, results) is set with `font-variant-numeric: tabular-nums`.", "section": "typography" },
+      { "name": "The Sentence Case Rule", "body": "Labels, buttons and nav are sentence case at normal tracking; the system has no uppercase tracked labels.", "section": "typography" },
+      { "name": "The Floating-Only Rule", "body": "A shadow means the element floats over the page (menu, sheet, lightbox). Content in the flow (figures, cards, tables) never casts one; it gets a hairline border instead.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do start every section with a 2px ink rule over an Archivo title, and close list rows with a hairline.",
+      "Do number figures and lead each caption with \"Figure N.\" in International Orange.",
+      "Do mount images on white with a 1px hairline border.",
+      "Do set dates, measurements and table cells in tabular figures.",
+      "Do keep corners at 2px and depth flat; reserve shadows for menus, sheets and the lightbox.",
+      "Do mark active and selected states in ink (underline or ink fill)."
+    ],
+    "donts": [
+      "Don't use `#e8490f` for text or `#c43c0a` as a decorative fill.",
+      "Don't put orange on resting UI or on active navigation.",
+      "Don't add gradient backgrounds or gradient text to page surfaces (the launch flame is the one place colour blends), glass panels, stat counters or emoji; the work carries the page.",
+      "Don't give in-flow content (figures, cards, tables) a shadow.",
+      "Don't set labels in uppercase with tracking."
+    ]
+  }
+}

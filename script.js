@@ -1,824 +1,733 @@
-/**
- * AEROSPACE & AERODYNAMICS SUITE - SCRIPT ENGINE (v2.0)
- * Engineer: Kacper Frelek | Aerodynamics, Aerothermodynamics & CFD
- */
+/* Kacper Frelek, personal site: routing, lightbox, calculators, launch intro. */
+(function () {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // =========================================================================
-  // 1. NAVIGATION, BREADCRUMBS & SECTION ROUTING
-  // =========================================================================
-  const allSections = document.querySelectorAll("section.content-section");
-  const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
-  const mobileToggle = document.querySelector(".mobile-toggle");
-  const navMenu = document.querySelector(".nav-menu");
+  var LANG = (document.documentElement.lang || "en").slice(0, 2);
+  var T = {
+    en: {
+      laminar: "laminar", turbulent: "turbulent",
+      cfLam: "Laminar boundary layer, so c_f and δ come from the Blasius flat-plate solution.",
+      cfTurb: "Turbulent boundary layer, assumed turbulent from the leading edge: c_f and δ come from Prandtl's one-seventh power law, which holds up to roughly Re = 10⁷.",
+      showTable: "Show atmosphere table", hideTable: "Hide atmosphere table",
+      earthTable: "US Standard Atmosphere 1976", marsTable: "Mars atmosphere (NASA Glenn model)",
+      waterRow: "Water at 20 °C: ρ = 998.2 kg/m³, ν = 1.004 × 10⁻⁶ m²/s, independent of altitude.",
+      t5Hint: "Mach number and altitude are fixed by the tunnel condition: V = 3,367 m/s, ρ = 0.03116 kg/m³, T = 1,828 K, h₀ = 10.6 MJ/kg, giving M ≈ 5.0.",
+      noDissHint: "The Lewis number and the dissociation enthalpy ratio are only used by the other three options.",
+      highMach: "Above roughly M 10 the perfect-gas shock relations overestimate the edge temperature badly; treat the result as an order of magnitude only.",
+      dissFactor: "Dissociation factor",
+      retained: "retained"
+    },
+    pl: {
+      laminar: "laminarny", turbulent: "turbulentny",
+      cfLam: "Warstwa laminarna, więc c_f i δ wynikają z rozwiązania Blasiusa dla płaskiej płyty.",
+      cfTurb: "Warstwa turbulentna, przyjęta jako turbulentna od krawędzi natarcia: c_f i δ wynikają z prawa potęgowego 1/7 Prandtla, stosowalnego mniej więcej do Re = 10⁷.",
+      showTable: "Pokaż tabelę atmosfery", hideTable: "Ukryj tabelę atmosfery",
+      earthTable: "Atmosfera wzorcowa USA 1976", marsTable: "Atmosfera Marsa (model NASA Glenn)",
+      waterRow: "Woda w 20 °C: ρ = 998,2 kg/m³, ν = 1,004 × 10⁻⁶ m²/s, niezależnie od wysokości.",
+      t5Hint: "Liczba Macha i wysokość wynikają z warunków w tunelu: V = 3367 m/s, ρ = 0,03116 kg/m³, T = 1828 K, h₀ = 10,6 MJ/kg, co daje M ≈ 5,0.",
+      noDissHint: "Liczba Lewisa i stosunek entalpii dysocjacji są używane tylko w pozostałych trzech wariantach.",
+      highMach: "Powyżej ok. M 10 relacje dla gazu doskonałego mocno zawyżają temperaturę za falą; wynik traktuj tylko jako rząd wielkości.",
+      dissFactor: "Współczynnik dysocjacji",
+      retained: "zachowane"
+    }
+  }[LANG === "pl" ? "pl" : "en"];
 
-  // Friendly names for breadcrumbs
-  const sectionTitles = {
-    overview: "Mission Briefing & Overview",
-    "exp-urans": "CFD Turbulence: uRANS vs DES vs LES",
-    "exp-jet": "Impinging Jet CFD (ANSYS CFX)",
-    "exp-aeromech": "Aeromechanics & Turbomachinery (GE Aerospace / EDC)",
-    "exp-rfa": "Rocket Aerodynamics (Rocket Factory Augsburg)",
-    "proj-starship": "Starship Atmospheric Reentry (15.5M Mesh)",
-    "proj-gridfin": "Falcon 9 Grid Fin Aerodynamics (B.Sc. Thesis)",
-    "proj-masterthesis": "Master's Thesis: MSL Forebody Aeroheating (WUT MEiL)",
-    "proj-urban": "Urban Wind Aerodynamics (1:1500 Wind Tunnel)",
-    lab: "Aerodynamics & Aerothermodynamics Interactive Lab",
-    travel: "Global Expeditions & Travelogue",
-    future: "Future Research Horizons"
-  };
+  var $ = function (id) { return document.getElementById(id); };
+  var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function switchSection(targetId) {
-    if (!targetId) targetId = "overview";
-    let found = false;
+  /* ------------------------------------------------------------------ number formatting */
 
-    allSections.forEach(sec => {
-      if (sec.id === targetId) {
-        sec.classList.add("active");
-        found = true;
-      } else {
-        sec.classList.remove("active");
-      }
+  var SUP = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+  function localise(s) { return LANG === "pl" ? s.replace(/\./g, ",") : s; }
+  function sci(x, digits) {
+    if (!isFinite(x)) return "–";
+    if (x === 0) return "0";
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    var m = x / Math.pow(10, e);
+    if (Math.abs(m) >= 9.995) { m /= 10; e += 1; }
+    var exp = String(e).split("").map(function (c) { return SUP[c]; }).join("");
+    return localise(m.toFixed(digits === undefined ? 2 : digits)) + " × 10" + exp;
+  }
+  function num(x, dp) {
+    if (!isFinite(x)) return "–";
+    var s = x.toLocaleString(LANG === "pl" ? "pl-PL" : "en-GB", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    return s;
+  }
+  function smart(x, sig) {
+    if (!isFinite(x)) return "–";
+    var a = Math.abs(x);
+    if (a !== 0 && (a < 0.01 || a >= 1e5)) return sci(x, sig - 1);
+    var dp = Math.max(0, sig - 1 - Math.floor(Math.log10(a || 1)));
+    return num(x, dp);
+  }
+
+  /* ------------------------------------------------------------------ atmosphere models */
+
+  // US Standard Atmosphere 1976 (geopotential altitude h, km) and the NASA Glenn Mars model.
+  function earthAtm(z) {
+    var T, p;
+    if (z <= 11) { T = 288.15 - 6.5 * z; p = 101325 * Math.pow(T / 288.15, 5.2559); }
+    else if (z <= 20) { T = 216.65; p = 22632.1 * Math.exp(-(z - 11) * 1000 / 6341.62); }
+    else if (z <= 32) { T = 216.65 + 1.0 * (z - 20); p = 5474.89 * Math.pow(216.65 / T, 34.1632); }
+    else if (z <= 47) { T = 228.65 + 2.8 * (z - 32); p = 868.019 * Math.pow(228.65 / T, 12.2011); }
+    else if (z <= 51) { T = 270.65; p = 110.906 * Math.exp(-(z - 47) * 1000 / 7922.26); }
+    else if (z <= 71) { T = 270.65 - 2.8 * (z - 51); p = 66.9389 * Math.pow(T / 270.65, 12.2011); }
+    else { T = 214.65 - 2.0 * (z - 71); p = 3.95642 * Math.pow(T / 214.65, 17.0816); }
+    return { T: T, p: p, R: 287.05, mu0: 1.716e-5, T0: 273.15, S: 110.4 };
+  }
+  function marsAtm(z) {
+    var T = z <= 7 ? 242.15 - 0.998 * z : 249.75 - 2.22 * z;
+    T = Math.max(T, 120);
+    var p = 699 * Math.exp(-0.09 * z);
+    return { T: T, p: p, R: 188.92, mu0: 1.370e-5, T0: 273.15, S: 222 };
+  }
+  function sutherland(gas, T) { return gas.mu0 * Math.pow(T / gas.T0, 1.5) * (gas.T0 + gas.S) / (T + gas.S); }
+  function atmosphere(planet, z) {
+    z = Math.max(0, Math.min(80, z || 0));
+    // Earth model works in geopotential altitude; inputs are geometric altitude.
+    var g = planet === "mars" ? marsAtm(z) : earthAtm(6356.766 * z / (6356.766 + z));
+    var rho = g.p / (g.R * g.T), mu = sutherland(g, g.T);
+    return { z: z, T: g.T, p: g.p, rho: rho, mu: mu, nu: mu / rho, gas: g };
+  }
+
+  /* ------------------------------------------------------------------ routing */
+
+  var pages = Array.prototype.slice.call(document.querySelectorAll("main > .page"));
+  var navMenu = $("navMenu");
+  var navToggle = document.querySelector(".nav-toggle");
+  var baseTitle = document.title;
+
+  function closeMenus() {
+    document.querySelectorAll(".has-menu.is-open").forEach(function (li) {
+      li.classList.remove("is-open");
+      var b = li.querySelector(".menu-toggle"); if (b) b.setAttribute("aria-expanded", "false");
+    });
+  }
+  function closeMobileNav() {
+    if (navMenu) navMenu.classList.remove("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+  }
+
+  function show(id, scroll) {
+    var target = pages.filter(function (p) { return p.id === id; })[0] || pages[0];
+    pages.forEach(function (p) { p.classList.toggle("active", p === target); });
+
+    document.querySelectorAll(".nav-item").forEach(function (li) {
+      var direct = li.querySelector(":scope > .nav-link[data-target]");
+      var inMenu = li.querySelector('.menu [data-target="' + target.id + '"]');
+      li.classList.toggle("is-active", !!(direct && direct.getAttribute("data-target") === target.id) || !!inMenu);
+    });
+    document.querySelectorAll(".menu a").forEach(function (a) {
+      if (a.getAttribute("data-target") === target.id) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
     });
 
-    if (!found && allSections.length > 0) {
-      allSections[0].classList.add("active");
-      targetId = allSections[0].id;
-    }
+    var heading = target.querySelector("h1, h2");
+    document.title = target.id === "overview" || !heading ? baseTitle : heading.textContent.trim() + " · Kacper Frelek";
 
-    // Update active state in navbar
-    document.querySelectorAll(".nav-item").forEach(item => {
-      item.classList.remove("active");
-      const link = item.querySelector(".nav-link");
-      if (link && link.getAttribute("data-target") === targetId) {
-        item.classList.add("active");
-      }
-      // Also highlight dropdown parents if child is active
-      const dropdownItems = item.querySelectorAll(".dropdown-item");
-      dropdownItems.forEach(di => {
-        if (di.getAttribute("data-target") === targetId) {
-          item.classList.add("active");
-        }
-      });
+    closeMenus();
+    closeMobileNav();
+    if (scroll) window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    return target;
+  }
+
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest("[data-target]");
+    if (!link) return;
+    e.preventDefault();
+    var id = link.getAttribute("data-target");
+    if (location.hash !== "#" + id) history.pushState(null, "", "#" + id);
+    show(id, true);
+  });
+  window.addEventListener("popstate", function () { show(location.hash.slice(1), false); });
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1), true); });
+  show(location.hash.slice(1), false);
+
+  document.querySelectorAll(".menu-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var li = btn.closest(".has-menu");
+      var open = !li.classList.contains("is-open");
+      closeMenus();
+      li.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", String(open));
     });
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".has-menu")) closeMenus(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeMenus(); closeMobileNav(); } });
 
-    // Close any open dropdowns and mobile menu
-    document.querySelectorAll(".dropdown-menu").forEach(dm => dm.classList.remove("show"));
-    if (navMenu) navMenu.classList.remove("open");
-
-    // Smooth scroll to top of main content
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // When switching to the Aero Lab, trigger calculator recalculations
-    if (targetId === "lab") {
-      requestAnimationFrame(() => {
-        if (typeof window.runMeshYPlusCalculation === "function") {
-          window.runMeshYPlusCalculation();
-        }
-        if (typeof window.runAerothermoCalculation === "function") {
-          window.runAerothermoCalculation();
-        }
-      });
-    }
-
-    requestAnimationFrame(() => {
-      triggerKaTeX();
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", function () {
+      var open = !navMenu.classList.contains("is-open");
+      navMenu.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
     });
   }
 
-  function triggerKaTeX() {
-    if (typeof renderMathInElement === "function") {
-      try {
-        renderMathInElement(document.body, {
-          delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '\\[', right: '\\]', display: true},
-            {left: '\\(', right: '\\)', display: false},
-            {left: '$', right: '$', display: false}
-          ],
-          throwOnError: false
-        });
-      } catch (err) {
-        console.warn("KaTeX render error:", err);
-      }
-    }
-  }
-  window.triggerKaTeX = triggerKaTeX;
-
-  // Delayed retries to guarantee KaTeX runs once deferred scripts are ready
-  triggerKaTeX();
-  window.addEventListener("load", () => {
-    triggerKaTeX();
-    setTimeout(triggerKaTeX, 200);
-    setTimeout(triggerKaTeX, 600);
-    setTimeout(triggerKaTeX, 1200);
-  });
-
-  // Re-trigger KaTeX if an equation accordion is toggled
-  document.querySelectorAll(".equation-accordion").forEach(acc => {
-    acc.addEventListener("toggle", () => {
-      if (acc.open) {
-        requestAnimationFrame(() => triggerKaTeX());
-      }
-    });
-  });
-
-  // Handle click on routing links
-  document.addEventListener("click", e => {
-    const routeTarget = e.target.closest("[data-target]");
-    if (routeTarget && !routeTarget.classList.contains("disabled")) {
-      const targetId = routeTarget.getAttribute("data-target");
-      if (targetId) {
-        e.preventDefault();
-        window.location.hash = targetId;
-        switchSection(targetId);
-      }
-    }
-  });
-
-  // Dropdown menus
-  dropdownToggles.forEach(toggle => {
-    toggle.addEventListener("click", e => {
+  // Language switch keeps the current section.
+  document.querySelectorAll(".lang-btn:not(.is-current)").forEach(function (a) {
+    a.addEventListener("click", function (e) {
       e.preventDefault();
-      e.stopPropagation();
-      const parent = toggle.closest(".nav-item");
-      const menu = parent.querySelector(".dropdown-menu");
-      const isOpen = menu.classList.contains("show");
-      document.querySelectorAll(".dropdown-menu").forEach(dm => dm.classList.remove("show"));
-      if (!isOpen) menu.classList.add("show");
+      location.href = a.getAttribute("href").split("#")[0] + (location.hash || "");
     });
   });
 
-  document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown-menu").forEach(dm => dm.classList.remove("show"));
-  });
+  /* ------------------------------------------------------------------ KaTeX */
 
-  // Mobile menu toggle
-  if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener("click", e => {
-      e.stopPropagation();
-      navMenu.classList.toggle("open");
+  function renderMath() {
+    if (typeof window.renderMathInElement !== "function") return false;
+    window.renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false }
+      ],
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option", "output"],
+      throwOnError: false
+    });
+    return true;
+  }
+  if (!renderMath()) window.addEventListener("load", renderMath);
+
+  /* ------------------------------------------------------------------ lightbox */
+
+  var lb = $("lightbox"), lbFigure = $("lbFigure"), lbCaption = $("lbCaption");
+  var lbImg = document.createElement("img");
+  lbImg.alt = "";
+  if (lbFigure) lbFigure.insertBefore(lbImg, lbCaption);
+  var lbItems = [], lbIndex = 0, lbReturn = null;
+
+  function lbShow(i) {
+    lbIndex = (i + lbItems.length) % lbItems.length;
+    var img = lbItems[lbIndex];
+    lbImg.src = img.getAttribute("data-full") || img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    var cap = img.closest("figure").querySelector("figcaption");
+    lbCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+  }
+  function lbOpen(img) {
+    var scope = img.closest(".page") || document;
+    lbItems = Array.prototype.slice.call(scope.querySelectorAll(".zoomable:not([hidden]) img"));
+    lbReturn = document.activeElement;
+    lbShow(Math.max(0, lbItems.indexOf(img)));
+    lb.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    $("lbClose").focus();
+  }
+  function lbClose() {
+    lb.hidden = true;
+    lbImg.removeAttribute("src");
+    document.documentElement.style.overflow = "";
+    if (lbReturn && lbReturn.focus) lbReturn.focus();
+  }
+  document.addEventListener("click", function (e) {
+    var img = e.target.closest(".zoomable img");
+    if (img) lbOpen(img);
+  });
+  document.querySelectorAll(".zoomable img").forEach(function (img) {
+    img.tabIndex = 0;
+    img.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); lbOpen(img); } });
+  });
+  if (lb) {
+    $("lbClose").addEventListener("click", lbClose);
+    $("lbPrev").addEventListener("click", function () { lbShow(lbIndex - 1); });
+    $("lbNext").addEventListener("click", function () { lbShow(lbIndex + 1); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) lbClose(); });
+    document.addEventListener("keydown", function (e) {
+      if (lb.hidden) return;
+      if (e.key === "Escape") lbClose();
+      else if (e.key === "ArrowLeft") lbShow(lbIndex - 1);
+      else if (e.key === "ArrowRight") lbShow(lbIndex + 1);
     });
   }
 
-  // Language Switcher - preserves current section hash
-  document.querySelectorAll(".lang-btn").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const targetHref = btn.getAttribute("href");
-      if (targetHref && !btn.classList.contains("active")) {
-        e.preventDefault();
-        const baseTarget = targetHref.split("#")[0];
-        const currentHash = window.location.hash || "#overview";
-        window.location.href = baseTarget + currentHash;
-      }
-    });
-  });
+  /* ------------------------------------------------------------------ calculator 1: y+ */
 
-  // Header scroll shadow
-  const header = document.querySelector("header");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 20) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
+  var meshEls = ["meshVel", "meshChord", "meshTargetYPlus", "meshFluidSelect", "meshAlt"].map($);
+  var meshState = { rho: 1.225, nu: 1.46e-5 };
 
-  // Initial routing based on URL hash
-  const initialHash = window.location.hash.replace("#", "");
-  switchSection(initialHash || "overview");
-
-  window.addEventListener("hashchange", () => {
-    const hash = window.location.hash.replace("#", "");
-    switchSection(hash || "overview");
-  });
-
-  // =========================================================================
-  // 2. INTERACTIVE LIGHTBOX MODAL
-  // =========================================================================
-  const modal = document.getElementById("lightboxModal");
-  const modalImg = document.getElementById("modalImg");
-  const modalCaption = document.getElementById("modalCaption");
-  const modalClose = document.getElementById("modalClose");
-  const modalPrev = document.getElementById("modalPrev");
-  const modalNext = document.getElementById("modalNext");
-
-  let galleryItems = [];
-  let currentIndex = 0;
-
-  function refreshGalleryItems() {
-    galleryItems = Array.from(document.querySelectorAll(".cfd-card, .travel-thumb, .expandable-img")).map(card => {
-      const img = card.querySelector("img") || card;
-      const captionEl = card.querySelector(".cfd-caption") || card.querySelector("figcaption");
-      const caption = captionEl ? captionEl.textContent : (img.alt || "Aerospace Visual");
-      return { src: img.src, caption: caption };
-    });
-  }
-
-  function openModal(index) {
-    refreshGalleryItems();
-    if (!galleryItems.length || index < 0 || index >= galleryItems.length) return;
-    currentIndex = index;
-    modalImg.src = galleryItems[currentIndex].src;
-    modalCaption.textContent = galleryItems[currentIndex].caption;
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeModal() {
-    if (modal) {
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-  }
-
-  function showNext() {
-    if (!galleryItems.length) return;
-    currentIndex = (currentIndex + 1) % galleryItems.length;
-    modalImg.src = galleryItems[currentIndex].src;
-    modalCaption.textContent = galleryItems[currentIndex].caption;
-  }
-
-  function showPrev() {
-    if (!galleryItems.length) return;
-    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-    modalImg.src = galleryItems[currentIndex].src;
-    modalCaption.textContent = galleryItems[currentIndex].caption;
-  }
-
-  document.addEventListener("click", e => {
-    const card = e.target.closest(".cfd-card, .travel-thumb, .expandable-img");
-    if (card) {
-      refreshGalleryItems();
-      const img = card.querySelector("img") || card;
-      const idx = galleryItems.findIndex(item => item.src === img.src);
-      if (idx !== -1) openModal(idx);
-    }
-  });
-
-  if (modalClose) modalClose.addEventListener("click", closeModal);
-  if (modalPrev) modalPrev.addEventListener("click", showPrev);
-  if (modalNext) modalNext.addEventListener("click", showNext);
-
-  if (modal) {
-    modal.addEventListener("click", e => {
-      if (e.target === modal) closeModal();
-    });
-  }
-
-  document.addEventListener("keydown", e => {
-    if (!modal || !modal.classList.contains("active")) return;
-    if (e.key === "Escape") closeModal();
-    if (e.key === "ArrowLeft") showPrev();
-    if (e.key === "ArrowRight") showNext();
-  });
-
-  // =========================================================================
-  // 3. PROJECT 1: BOUNDARY LAYER & NEAR-WALL MESH QUALITY (y⁺)
-  // =========================================================================
-  const meshVel = document.getElementById("meshVel");
-  const meshChord = document.getElementById("meshChord");
-  const meshTargetYPlus = document.getElementById("meshTargetYPlus");
-  const meshFluidSelect = document.getElementById("meshFluidSelect");
-  const meshAltGroup = document.getElementById("meshAltGroup");
-  const meshAlt = document.getElementById("meshAlt");
-  const meshAltBadge = document.getElementById("meshAltBadge");
-  const meshNu = document.getElementById("meshNu");
-  const meshDensity = document.getElementById("meshDensity");
-  const btnToggleAtmTable = document.getElementById("btnToggleAtmTable");
-  const atmTableContainer = document.getElementById("atmTableContainer");
-  const atmTableTitle = document.getElementById("atmTableTitle");
-  const atmTableBody = document.getElementById("atmTableBody");
-
-  const resFirstCell = document.getElementById("resFirstCell");
-  const resRe = document.getElementById("resRe");
-  const resBLThickness = document.getElementById("resBLThickness");
-  const resFrictionVel = document.getElementById("resFrictionVel");
-  const resCf = document.getElementById("resCf");
-  const cfOriginText = document.getElementById("cfOriginText");
-  const cfOriginBox = document.getElementById("cfOriginBox");
-
-  // Atmospheric Look-up Model for Earth (US Standard 1976) and Mars (CO2 Entry)
-  function getAtmosphereProperties(planet, altKm) {
-    const z = Math.max(0.0, Math.min(80.0, parseFloat(altKm) || 0.0));
-    let T, P, rho, mu, nu;
-
-    if (planet === "earth") {
-      // US Standard Atmosphere 1976
-      if (z <= 11.0) {
-        T = 288.15 - 6.5 * z;
-        P = 101325.0 * Math.pow(288.15 / T, -5.2561);
-      } else if (z <= 20.0) {
-        T = 216.65;
-        P = 22632.1 * Math.exp(-((z - 11.0) * 1000.0) / 6341.62);
-      } else if (z <= 32.0) {
-        T = 216.65 + 1.0 * (z - 20.0);
-        P = 5474.89 * Math.pow(216.65 / T, 34.1632);
-      } else if (z <= 47.0) {
-        T = 228.65 + 2.8 * (z - 32.0);
-        P = 868.019 * Math.pow(228.65 / T, 17.0816);
-      } else if (z <= 51.0) {
-        T = 270.65;
-        P = 110.906 * Math.exp(-((z - 47.0) * 1000.0) / 7922.0);
-      } else if (z <= 71.0) {
-        T = 270.65 - 2.8 * (z - 51.0);
-        P = 66.9388 * Math.pow(270.65 / T, -12.2011);
-      } else {
-        T = 214.65 - 2.0 * (z - 71.0);
-        P = 3.9564 * Math.pow(214.65 / T, -17.0816);
-      }
-      const R_air = 287.05;
-      rho = P / (R_air * T);
-      // Sutherland law for air
-      mu = 1.716e-5 * Math.pow(T / 273.15, 1.5) * ((273.15 + 110.4) / (T + 110.4));
-      nu = mu / rho;
-    } else if (planet === "mars") {
-      // Martian CO2 Atmosphere Model (Scale height H ~ 11.1 km, surface P = 699 Pa)
-      P = 699.0 * Math.exp(-z / 11.1);
-      if (z <= 7.0) {
-        T = 242.15 - 0.998 * z;
-      } else {
-        T = Math.max(110.0, 249.7 - 2.22 * z);
-      }
-      const R_co2 = 188.90;
-      rho = P / (R_co2 * T);
-      // Sutherland law for CO2
-      mu = 1.370e-5 * Math.pow(T / 273.15, 1.5) * ((273.15 + 222.0) / (T + 222.0));
-      nu = mu / rho;
-    } else {
-      // Incompressible Liquid Water (20°C)
-      T = 293.15;
-      P = 101325.0;
-      rho = 998.2;
-      mu = 1.002e-3;
-      nu = 1.004e-6;
-    }
-
-    return { z, T, P, rho, mu, nu };
-  }
-
-  // Populate interactive atmospheric look-up table
-  const ATM_TABLE_GRID = [0, 2, 5, 8, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80];
-  function renderAtmosphericTable(planet, currentZ) {
-    if (!atmTableBody) return;
-    atmTableBody.innerHTML = "";
-
+  function updateFluid() {
+    var planet = $("meshFluidSelect").value;
+    var altField = $("meshAltGroup");
     if (planet === "water") {
-      atmTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:1rem;">Incompressible Liquid Water (20°C): ρ = 998.2 kg/m³, ν = 1.004×10⁻⁶ m²/s (Independent of altitude)</td></tr>`;
-      return;
+      meshState = { rho: 998.2, nu: 1.004e-6 };
+      altField.classList.add("is-off");
+      $("meshAlt").disabled = true;
+    } else {
+      var a = atmosphere(planet, parseFloat($("meshAlt").value));
+      meshState = { rho: a.rho, nu: a.nu };
+      altField.classList.remove("is-off");
+      $("meshAlt").disabled = false;
     }
+    $("meshDensity").textContent = smart(meshState.rho, 4);
+    $("meshNu").textContent = sci(meshState.nu, 3);
+    renderAtmTable(planet);
+  }
 
-    ATM_TABLE_GRID.forEach(z => {
-      const data = getAtmosphereProperties(planet, z);
-      const tr = document.createElement("tr");
-      if (Math.abs(z - currentZ) < 1.5) {
-        tr.className = "active-row";
-      }
-      const p_str = data.P >= 1000 ? `${(data.P / 1000).toFixed(2)} k` : data.P.toFixed(1);
-      const rho_str = data.rho < 0.001 ? data.rho.toExponential(2) : data.rho.toFixed(4);
-      tr.innerHTML = `
-        <td>${z} km</td>
-        <td>${data.T.toFixed(1)}</td>
-        <td>${p_str}</td>
-        <td>${rho_str}</td>
-        <td>${(data.mu * 1e6).toFixed(1)}</td>
-        <td>${data.nu.toExponential(2)}</td>
-      `;
-      atmTableBody.appendChild(tr);
+  function renderAtmTable(planet) {
+    var body = $("atmTableBody");
+    if (!body) return;
+    $("atmTableTitle").textContent = planet === "mars" ? T.marsTable : T.earthTable;
+    if (planet === "water") { body.innerHTML = '<tr><td colspan="6" style="text-align:left">' + T.waterRow + "</td></tr>"; return; }
+    var zNow = parseFloat($("meshAlt").value) || 0;
+    var rows = [0, 2, 5, 8, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80].map(function (z) {
+      var a = atmosphere(planet, z);
+      var cls = Math.abs(z - zNow) < 1.5 ? ' class="is-current"' : "";
+      return "<tr" + cls + "><td>" + z + "</td><td>" + num(a.T, 1) + "</td><td>" + smart(a.p, 4) + "</td><td>" + smart(a.rho, 4) +
+        "</td><td>" + num(a.mu * 1e6, 2) + "</td><td>" + sci(a.nu, 2) + "</td></tr>";
     });
+    body.innerHTML = rows.join("");
   }
 
-  // Toggle atmospheric table container
-  if (btnToggleAtmTable && atmTableContainer) {
-    btnToggleAtmTable.addEventListener("click", () => {
-      atmTableContainer.classList.toggle("open");
+  function runMesh() {
+    var U = Math.max(1e-3, parseFloat($("meshVel").value) || 0);
+    var L = Math.max(1e-4, parseFloat($("meshChord").value) || 0);
+    var yp = Math.max(1e-3, parseFloat($("meshTargetYPlus").value) || 0);
+    var rho = meshState.rho, nu = meshState.nu;
+
+    var Re = U * L / nu;
+    var turb = Re >= 5e5;
+    var cf = turb ? 0.0592 * Math.pow(Re, -0.2) : 0.664 / Math.sqrt(Re);
+    var d99 = turb ? 0.37 * L * Math.pow(Re, -0.2) : 5.0 * L / Math.sqrt(Re);
+    var tau = 0.5 * rho * U * U * cf;
+    var utau = Math.sqrt(tau / rho);
+    var dy = yp * nu / utau;
+
+    $("resRe").textContent = sci(Re, 2) + " (" + (turb ? T.turbulent : T.laminar) + ")";
+    $("resCf").textContent = sci(cf, 3);
+    $("resFrictionVel").textContent = smart(tau, 3) + " Pa / " + smart(utau, 3) + " m/s";
+    $("resBLThickness").textContent = d99 < 1 ? smart(d99 * 1000, 3) + " mm" : smart(d99, 3) + " m";
+    $("resFirstCell").textContent = dy < 1e-3 ? smart(dy * 1e6, 3) + " μm" : smart(dy * 1000, 3) + " mm";
+    $("cfOriginText").textContent = turb ? T.cfTurb : T.cfLam;
+  }
+
+  if ($("meshVel")) {
+    meshEls.forEach(function (el) {
+      el.addEventListener("input", function () { if (el.id === "meshFluidSelect" || el.id === "meshAlt") updateFluid(); runMesh(); });
+      el.addEventListener("change", function () { if (el.id === "meshFluidSelect" || el.id === "meshAlt") updateFluid(); runMesh(); });
     });
-  }
-
-  // Handle fluid & altitude changes
-  function updateFluidAtmosphereState() {
-    const planet = meshFluidSelect ? meshFluidSelect.value : "earth";
-    const altKm = meshAlt ? parseFloat(meshAlt.value) || 0.0 : 0.0;
-
-    if (planet === "water") {
-      if (meshAltGroup) meshAltGroup.style.display = "none";
-      if (atmTableContainer) atmTableContainer.classList.remove("open");
-      if (meshNu) meshNu.value = (1.004e-6).toExponential(3);
-      if (meshDensity) meshDensity.value = "998.2";
-    } else {
-      if (meshAltGroup) meshAltGroup.style.display = "block";
-      if (meshAltBadge) {
-        meshAltBadge.textContent = `z = ${altKm} km (${altKm === 0 ? "Sea Level / Surface" : altKm < 20 ? "Troposphere / Lower" : "Stratosphere / Entry"})`;
-      }
-      if (atmTableTitle) {
-        atmTableTitle.textContent = planet === "earth" 
-          ? "Earth US Standard Atmosphere 1976 Look-up Table" 
-          : "Martian CO₂ Atmosphere Entry Look-up Table";
-      }
-
-      const props = getAtmosphereProperties(planet, altKm);
-      if (meshNu) meshNu.value = props.nu.toExponential(3);
-      if (meshDensity) meshDensity.value = props.rho < 0.01 ? props.rho.toExponential(3) : props.rho.toFixed(4);
-      renderAtmosphericTable(planet, altKm);
-    }
-  }
-
-  if (meshFluidSelect) {
-    meshFluidSelect.addEventListener("change", () => {
-      updateFluidAtmosphereState();
-      runMeshYPlusCalculation();
+    var tableBtn = $("btnToggleAtmTable");
+    tableBtn.addEventListener("click", function () {
+      var box = $("atmTableContainer");
+      box.hidden = !box.hidden;
+      tableBtn.setAttribute("aria-expanded", String(!box.hidden));
+      tableBtn.textContent = box.hidden ? T.showTable : T.hideTable;
     });
+    updateFluid();
+    runMesh();
   }
 
-  if (meshAlt) {
-    meshAlt.addEventListener("input", () => {
-      updateFluidAtmosphereState();
-      runMeshYPlusCalculation();
+  /* ------------------------------------------------------------------ calculator 2: Fay-Riddell */
+
+  var frIds = ["calcGas", "calcMach", "calcAlt", "calcNoseRadius", "calcTw", "calcCatalysis", "calcLewis", "calcHd"];
+  var lastCase = null;
+
+  function setOff(id, off) {
+    var el = $(id);
+    el.disabled = off;
+    el.closest(".field").classList.toggle("is-off", off);
+  }
+
+  function runFR() {
+    var kase = $("calcGas").value;
+    var isT5 = kase === "co2_t5", isMars = kase !== "air_earth";
+    var model = $("calcCatalysis").value;
+
+    if (kase !== lastCase) {
+      // Sensible defaults when the case changes.
+      if (isT5) { $("calcHd").value = "0.29"; $("calcNoseRadius").value = "0.04445"; $("calcTw").value = "300"; }
+      else if (lastCase === "co2_t5") { $("calcHd").value = "0"; }
+      lastCase = kase;
+    }
+    setOff("calcMach", isT5);
+    setOff("calcAlt", isT5);
+    setOff("calcLewis", model === "convective");
+    setOff("calcHd", model === "convective");
+
+    var gamma = isMars ? 1.30 : 1.40;
+    var gas = isMars ? { R: 188.92, mu0: 1.370e-5, T0: 273.15, S: 222 } : { R: 287.05, mu0: 1.716e-5, T0: 273.15, S: 110.4 };
+    var Pr = isMars ? 0.70 : 0.71;
+    var cp = gamma / (gamma - 1) * gas.R;
+
+    var Rn = Math.max(1e-4, parseFloat($("calcNoseRadius").value) || 0.04445);
+    var Tw = Math.max(50, parseFloat($("calcTw").value) || 300);
+    var Le = Math.max(0.1, parseFloat($("calcLewis").value) || 1);
+    var hdRatio = Math.min(0.8, Math.max(0, parseFloat($("calcHd").value) || 0));
+
+    var Tinf, pinf, rhoinf, Vinf, M, h0e;
+    if (isT5) {
+      Vinf = 3367; rhoinf = 0.03116; Tinf = 1828;
+      pinf = rhoinf * gas.R * Tinf;
+      M = Vinf / Math.sqrt(gamma * gas.R * Tinf);
+      h0e = 10.6e6;                                   // tunnel total enthalpy, includes chemical enthalpy of the freestream
+      $("calcMach").value = M.toFixed(2);
+    } else {
+      var a = atmosphere(isMars ? "mars" : "earth", parseFloat($("calcAlt").value));
+      Tinf = a.T; pinf = a.p; rhoinf = a.rho;
+      M = Math.max(1.01, parseFloat($("calcMach").value) || 5);
+      Vinf = M * Math.sqrt(gamma * gas.R * Tinf);
+      h0e = cp * Tinf + 0.5 * Vinf * Vinf;
+    }
+
+    var M2 = M * M;
+    var pr = 1 + 2 * gamma / (gamma + 1) * (M2 - 1);
+    var rr = (gamma + 1) * M2 / (2 + (gamma - 1) * M2);
+    var pe = pinf * pr, rhoe = rhoinf * rr, Te = Tinf * pr / rr;
+
+    var rhow = pe / (gas.R * Tw);
+    var mue = sutherland(gas, Te), muw = sutherland(gas, Tw);
+    var beta = Math.sqrt(2 * (pe - pinf) / rhoe) / Rn;
+    var hw = cp * Tw;
+    var dh = h0e - hw;
+
+    var phi = 1;
+    if (model === "eq") phi = 1 + (Math.pow(Le, 0.52) - 1) * hdRatio;
+    else if (model === "frozen_cat") phi = 1 + (Math.pow(Le, 0.63) - 1) * hdRatio;
+    else if (model === "frozen_noncat") phi = 1 - hdRatio;
+
+    var q = 0.763 * Math.pow(Pr, -0.6) * Math.pow(rhoe * mue, 0.4) * Math.pow(rhow * muw, 0.1) * Math.sqrt(beta) * dh * phi;
+
+    var p02 = Math.pow(rr, gamma / (gamma - 1)) * Math.pow((gamma + 1) / (2 * gamma * M2 - (gamma - 1)), 1 / (gamma - 1));
+
+    $("resHeatFlux").textContent = smart(q / 1e4, 3) + " W/cm² (" + smart(q / 1e6, 3) + " MW/m²)";
+    $("resFreestream").textContent = smart(pinf / 1000, 3) + " kPa, " + num(Tinf, 0) + " K, " + smart(rhoinf, 3) + " kg/m³, " + num(Vinf, 0) + " m/s";
+    $("resEdgeState").textContent = smart(pe / 1000, 3) + " kPa, " + num(Te, 0) + " K, " + smart(rhoe, 3) + " kg/m³";
+    $("resRhoWall").textContent = smart(rhow, 3) + " kg/m³";
+    $("resViscosities").textContent = smart(mue * 1e6, 3) + " / " + smart(muw * 1e6, 3) + " μPa·s";
+    $("resVelGrad").textContent = sci(beta, 2) + " s⁻¹";
+    $("resEnthalpies").textContent = smart(h0e / 1e6, 3) + " / " + smart(hw / 1e6, 2) + " / " + smart(dh / 1e6, 3) + " MJ/kg";
+    $("resDissBracket").textContent = num(phi, 3);
+    $("resP02Loss").textContent = num(p02 * 100, 1) + " % " + T.retained;
+
+    var hints = [];
+    if (isT5) hints.push(T.t5Hint);
+    if (model === "convective") hints.push(T.noDissHint);
+    if (M > 10) hints.push(T.highMach);
+    $("calcHint").textContent = hints.join(" ");
+  }
+
+  if ($("calcGas")) {
+    frIds.forEach(function (id) {
+      $(id).addEventListener("input", runFR);
+      $(id).addEventListener("change", runFR);
     });
+    runFR();
   }
 
-  // Store last boundary layer state for Project 1B sync
-  window.lastBoundaryLayerState = {
-    u_tau: 2.25,
-    delta_99_m: 0.0172,
-    nu: 1.46e-5,
-    L: 1.0,
-    U: 68.0
-  };
+  /* ------------------------------------------------------------------ travel filter */
 
-  function runMeshYPlusCalculation() {
-    if (!meshVel || !meshChord || !meshTargetYPlus) return;
-
-    const U = Math.max(0.01, parseFloat(meshVel.value) || 68.0);
-    const L = Math.max(0.001, parseFloat(meshChord.value) || 1.0);
-    const yPlusTarget = Math.max(0.01, parseFloat(meshTargetYPlus.value) || 1.0);
-    const nu = Math.max(1e-8, parseFloat(meshNu ? meshNu.value : 1.46e-5) || 1.46e-5);
-    const rho = Math.max(1e-6, parseFloat(meshDensity ? meshDensity.value : 1.225) || 1.225);
-
-    // 1. Reynolds Number: Re_L = U * L / nu
-    const Re_L = (U * L) / nu;
-    const isTurbulent = Re_L >= 5e5;
-
-    if (resRe) {
-      const regime = isTurbulent ? "Turbulent Flow (Re_L ≥ 5×10⁵)" : "Laminar Flow (Re_L < 5×10⁵)";
-      if (Re_L >= 1e6) {
-        resRe.textContent = `${Re_L.toExponential(2)} (${(Re_L / 1e6).toFixed(2)}M — ${regime})`;
-      } else {
-        resRe.textContent = `${Re_L.toExponential(2)} (${Math.round(Re_L).toLocaleString()} — ${regime})`;
-      }
-    }
-
-    // 2. Skin friction coefficient (Cf) & Boundary Layer Thickness (delta_99)
-    let Cf, delta_99_m;
-    if (!isTurbulent) {
-      // Blasius exact laminar flat-plate solution
-      Cf = 0.664 / Math.sqrt(Math.max(10, Re_L));
-      delta_99_m = 5.0 * L / Math.sqrt(Math.max(10, Re_L));
-      if (cfOriginText) {
-        cfOriginText.innerHTML = `For laminar boundary layer (\\(Re_L = ${Re_L.toExponential(2)} < 5\\times 10^5\\)), \\(C_f\\) is obtained from the exact <strong>H. Blasius (1908)</strong> self-similar boundary-layer solution to the Prandtl laminar boundary layer equations: <code>C_f = 0.664 / \\sqrt{Re_L}</code>.`;
-      }
-    } else {
-      // Schlichting & Gersten / Frank M. White turbulent flat-plate correlation
-      Cf = 0.0592 * Math.pow(Math.max(1000, Re_L), -0.2);
-      delta_99_m = 0.37 * L * Math.pow(Math.max(1000, Re_L), -0.2);
-      if (cfOriginText) {
-        cfOriginText.innerHTML = `For turbulent boundary layer (\\(Re_L = ${Re_L.toExponential(2)} \\ge 5\\times 10^5\\)), \\(C_f\\) is obtained from <strong>Schlichting & Gersten (2016) / Frank M. White (Fluid Mechanics 7th ed., Sec. 7.4)</strong>: <code>C_f = 0.0592 · Re_L^(-0.2)</code>, derived from the classical Prandtl 1/7th power turbulent velocity profile on a smooth boundary.`;
-      }
-    }
-
-    if (resCf) resCf.textContent = Cf.toExponential(3);
-
-    // 3. Wall shear stress & friction velocity: tau_w = 0.5 * rho * U^2 * Cf, u_tau = sqrt(tau_w / rho)
-    const tau_w = 0.5 * rho * U * U * Cf;
-    const u_tau = Math.sqrt(Math.max(1e-7, tau_w / rho));
-    if (resFrictionVel) {
-      resFrictionVel.textContent = `${u_tau.toFixed(2)} m/s | ${tau_w.toFixed(2)} Pa`;
-    }
-
-    // 4. Boundary Layer Thickness display
-    if (resBLThickness) {
-      if (delta_99_m < 0.001) {
-        resBLThickness.textContent = `${(delta_99_m * 1e6).toFixed(1)} μm`;
-      } else if (delta_99_m < 1.0) {
-        resBLThickness.textContent = `${(delta_99_m * 1000).toFixed(1)} mm`;
-      } else {
-        resBLThickness.textContent = `${delta_99_m.toFixed(2)} m`;
-      }
-    }
-
-    // 5. First cell height: delta_y = (yPlus * nu) / u_tau
-    const delta_y_m = (yPlusTarget * nu) / u_tau;
-    const delta_y_um = delta_y_m * 1e6;
-    const delta_y_mm = delta_y_m * 1000;
-    if (resFirstCell) {
-      if (delta_y_um < 1000) {
-        resFirstCell.textContent = `${delta_y_um.toFixed(1)} μm (${delta_y_mm.toFixed(4)} mm)`;
-      } else {
-        resFirstCell.textContent = `${delta_y_mm.toFixed(3)} mm`;
-      }
-    }
-
-    // Save state for Project 1B sync
-    window.lastBoundaryLayerState = { u_tau, delta_99_m, nu, L, U };
-  }
-
-  window.runMeshYPlusCalculation = runMeshYPlusCalculation;
-
-  [meshVel, meshChord, meshTargetYPlus].forEach(input => {
-    if (input) {
-      input.addEventListener("input", runMeshYPlusCalculation);
-      input.addEventListener("change", runMeshYPlusCalculation);
-    }
-  });
-
-  updateFluidAtmosphereState();
-  runMeshYPlusCalculation();
-
-
-
-  // =========================================================================
-  // 4. PROJECT 2: FAY-RIDDELL HYPERSONIC AEROHEATING & GAS DYNAMICS SOLVER
-  // =========================================================================
-  const calcGas = document.getElementById("calcGas");
-  const calcMach = document.getElementById("calcMach");
-  const calcAlt = document.getElementById("calcAlt");
-  const calcNoseRadius = document.getElementById("calcNoseRadius");
-  const calcCatalysis = document.getElementById("calcCatalysis");
-  const calcLewis = document.getElementById("calcLewis");
-  const calcTw = document.getElementById("calcTw");
-  const btnThesisBenchmark = document.getElementById("btnThesisBenchmark");
-
-  const resHeatFlux = document.getElementById("resHeatFlux");
-  const resVelGrad = document.getElementById("resVelGrad");
-  const resEnthalpies = document.getElementById("resEnthalpies");
-  const resDissBracket = document.getElementById("resDissBracket");
-  const resEdgeState = document.getElementById("resEdgeState");
-  const resViscosities = document.getElementById("resViscosities");
-  const resRhoWall = document.getElementById("resRhoWall");
-  const resFreestream = document.getElementById("resFreestream");
-  const resP02Loss = document.getElementById("resP02Loss");
-
-  function runAerothermoCalculation() {
-    if (!calcMach || !calcAlt || !calcGas) return;
-
-    const M = Math.max(0.1, parseFloat(calcMach.value) || 5.0);
-    const altKm = Math.max(0.0, parseFloat(calcAlt.value) || 0.0);
-    const gas = calcGas.value; // 'co2' or 'air'
-    const Rn = Math.max(0.001, parseFloat(calcNoseRadius ? calcNoseRadius.value : 0.04445) || 0.04445);
-    const catalysis = calcCatalysis ? calcCatalysis.value : "eq";
-    const Le = Math.max(0.1, parseFloat(calcLewis ? calcLewis.value : 1.4) || 1.4);
-    const Tw = Math.max(50.0, parseFloat(calcTw ? calcTw.value : 300.0) || 300.0);
-
-    const isT5Benchmark = gas === "co2_t5";
-    const isMars = gas === "co2" || gas === "co2_mars" || isT5Benchmark;
-
-    // 1. Thermodynamic & Gas constants (Master's Thesis p. 20–23)
-    let gamma, R_gas, cp, Pr;
-    let suth_mu0, suth_T0, suth_S;
-    let diss_Tmid, diss_Tscale, diss_hmax;
-
-    if (isMars) {
-      // Martian CO2 Atmosphere (Thesis p. 22: R_CO2 = 188.9 J/kg·K, gamma = 1.30, Pr = 0.70)
-      gamma = 1.30;
-      R_gas = 188.90;                               // J/(kg·K)
-      cp = (gamma / (gamma - 1.0)) * R_gas;         // ~818.57 J/(kg·K) (Thesis cp ≈ 818 J/kg·K)
-      Pr = 0.70;                                    // Thesis p. 23
-      suth_mu0 = 1.370e-5;                          // Pa·s at T0
-      suth_T0 = 273.15;                             // K
-      suth_S = 222.0;                               // Sutherland temperature K
-      diss_Tmid = 3800.0;                           // K (CO2 -> CO + O dissociation onset/midpoint)
-      diss_Tscale = 1200.0;
-      diss_hmax = 1.20e7;                           // J/kg effective dissociation enthalpy limit
-    } else {
-      // Earth Air Atmosphere (gamma = 1.40, R_air = 287.05 J/kg·K, Pr = 0.71)
-      gamma = 1.40;
-      R_gas = 287.05;                               // J/(kg·K)
-      cp = (gamma / (gamma - 1.0)) * R_gas;         // ~1004.7 J/(kg·K)
-      Pr = 0.71;
-      suth_mu0 = 1.716e-5;                          // Pa·s
-      suth_T0 = 273.15;                             // K
-      suth_S = 110.4;                               // Sutherland temperature K
-      diss_Tmid = 4600.0;                           // K (O2, N2 dissociation)
-      diss_Tscale = 1500.0;
-      diss_hmax = 1.50e7;                           // J/kg
-    }
-
-    // 2. Freestream conditions: Altitude Model vs T5 Shock Tunnel Benchmark
-    let T_inf, P_inf, rho_inf, V_inf, a_inf, effective_M;
-
-    if (isT5Benchmark) {
-      // Exact T5 Hypervelocity Tunnel Shot 2254 conditions (Master's Thesis p. 21–22)
-      V_inf = 3367.0;                               // m/s
-      rho_inf = 0.03116;                            // kg/m³
-      T_inf = 1828.0;                               // K
-      P_inf = rho_inf * R_gas * T_inf;              // ~1.08 × 10⁴ Pa
-      a_inf = Math.sqrt(gamma * R_gas * T_inf);     // ~670 m/s
-      effective_M = V_inf / a_inf;                  // ~5.025
-    } else if (isMars) {
-      // Mars atmospheric model: scale height H ≈ 11.1 km
-      P_inf = 699.0 * Math.exp(-altKm / 11.1);
-      if (altKm <= 7.0) {
-        T_inf = 242.15 - 0.998 * altKm;
-      } else {
-        T_inf = Math.max(120.0, 249.7 - 2.22 * altKm);
-      }
-      rho_inf = P_inf / (R_gas * T_inf);
-      a_inf = Math.sqrt(gamma * R_gas * T_inf);
-      effective_M = M;
-      V_inf = effective_M * a_inf;
-    } else {
-      // Earth US Standard Atmosphere 1976
-      if (altKm <= 11.0) {
-        T_inf = 288.15 - 6.5 * altKm;
-        P_inf = 101325.0 * Math.pow(288.15 / T_inf, -5.2561);
-      } else if (altKm <= 20.0) {
-        T_inf = 216.65;
-        P_inf = 22632.1 * Math.exp(-((altKm - 11.0) * 1000.0) / 6341.62);
-      } else if (altKm <= 32.0) {
-        T_inf = 216.65 + 1.0 * (altKm - 20.0);
-        P_inf = 5474.89 * Math.pow(216.65 / T_inf, 34.1632);
-      } else if (altKm <= 47.0) {
-        T_inf = 228.65 + 2.8 * (altKm - 32.0);
-        P_inf = 868.019 * Math.pow(228.65 / T_inf, 17.0816);
-      } else {
-        T_inf = Math.max(150.0, 270.65 - 2.8 * (altKm - 47.0));
-        P_inf = 110.906 * Math.exp(-((altKm - 47.0) * 1000.0) / 7922.0);
-      }
-      rho_inf = P_inf / (R_gas * T_inf);
-      a_inf = Math.sqrt(gamma * R_gas * T_inf);
-      effective_M = M;
-      V_inf = effective_M * a_inf;
-    }
-
-    // 3. Stagnation streamline post-normal shock edge state (Thesis p. 22)
-    let p_ratio, rho_ratio, T_ratio;
-    if (effective_M > 1.0) {
-      p_ratio = 1.0 + ((2.0 * gamma) / (gamma + 1.0)) * (effective_M * effective_M - 1.0);
-      rho_ratio = ((gamma + 1.0) * effective_M * effective_M) / (2.0 + (gamma - 1.0) * effective_M * effective_M);
-      T_ratio = p_ratio / rho_ratio;
-    } else {
-      p_ratio = 1.0;
-      rho_ratio = 1.0;
-      T_ratio = 1.0;
-    }
-
-    const p_e = P_inf * p_ratio;
-    const rho_e = rho_inf * rho_ratio;
-    const T_e = T_inf * T_ratio;
-
-    // 4. Cold Wall State (Thesis p. 22: Tw = 300 K, pw ≈ pe)
-    const p_w = p_e;
-    const rho_w = p_w / (R_gas * Tw);
-
-    // 5. Sutherland Viscosities (Thesis p. 22–23)
-    function sutherlandMu(T) {
-      return suth_mu0 * Math.pow(T / suth_T0, 1.5) * ((suth_T0 + suth_S) / (T + suth_S));
-    }
-    // High-temperature edge viscosity (for T5, thesis reports ~2.45e-4 Pa·s)
-    const mu_e = isT5Benchmark ? 2.45e-4 : sutherlandMu(T_e);
-    const mu_w = sutherlandMu(Tw);
-
-    // 6. Stagnation-Line Velocity Gradient (Thesis Eq. 9 p. 21 & p. 23)
-    //    (du_e / dx)_s = (1 / R_n) * sqrt( 2 * (p_e - P_inf) / rho_e )
-    const delta_p = Math.max(1.0, p_e - P_inf);
-    const beta = (1.0 / Rn) * Math.sqrt((2.0 * delta_p) / rho_e);
-
-    // 7. Enthalpies: Stagnation h_0e and Wall h_w (Thesis p. 23)
-    // For T5 shot 2254, total kinetic/reservoir enthalpy h0 ≈ 10.6 MJ/kg
-    const h_0e = isT5Benchmark ? 10.60e6 : (cp * T_inf + 0.5 * V_inf * V_inf);
-    const h_w = cp * Tw;
-    const delta_h = Math.max(100.0, h_0e - h_w);
-
-    // 8. Dissociation Enthalpy h_D & Catalysis Bracket (Thesis Eqs. 5, 7, 8, p. 20–23)
-    const alpha_diss = 1.0 / (1.0 + Math.exp(-(T_e - diss_Tmid) / diss_Tscale));
-    const h_D = alpha_diss * diss_hmax;
-    const hD_over_h0e = Math.min(0.75, h_D / h_0e);
-
-    let catalysisBracket = 1.0;
-    if (catalysis === "eq") {
-      // Thesis Eq. 5: [1 + (Le^0.52 - 1) * (h_D / h_0e)]
-      catalysisBracket = 1.0 + (Math.pow(Le, 0.52) - 1.0) * hD_over_h0e;
-    } else if (catalysis === "frozen_cat") {
-      // Thesis Eq. 7: [1 + (Le^0.63 - 1) * (h_D / h_0e)]
-      catalysisBracket = 1.0 + (Math.pow(Le, 0.63) - 1.0) * hD_over_h0e;
-    } else if (catalysis === "frozen_noncat") {
-      // Thesis Eq. 8: [1 - (h_D / h_0e)]
-      catalysisBracket = Math.max(0.1, 1.0 - hD_over_h0e);
-    } else {
-      // Thesis p. 23: Le ≈ 1.0, convective simplification bracket = 1.0
-      catalysisBracket = 1.0;
-    }
-
-    // 9. Classical Fay-Riddell Laminar Stagnation Heat Flux Equation (Thesis Eq. 5)
-    //    q_w = 0.76 * Pr^(-0.6) * (rho_e * mu_e)^0.4 * (rho_w * mu_w)^0.1 * sqrt(beta) * (h_0e - h_w) * [bracket]
-    const term_Pr = 0.76 * Math.pow(Pr, -0.6);
-    const term_edge = Math.pow(rho_e * mu_e, 0.4);
-    const term_wall = Math.pow(rho_w * mu_w, 0.1);
-    const term_grad = Math.sqrt(beta);
-
-    const qw_W_m2 = term_Pr * term_edge * term_wall * term_grad * delta_h * catalysisBracket;
-    const qw_kW_m2 = qw_W_m2 / 1000.0;
-    const qw_MW_m2 = qw_W_m2 / 1e6;
-    const qw_W_cm2 = qw_W_m2 / 1e4;
-
-    // 10. Normal Shock Total Pressure Retention (Rayleigh Pitot)
-    let p02_loss_str = "100.0% (Isentropic)";
-    if (M > 1.0) {
-      const term1 = ((gamma + 1.0) * M * M) / (2.0 + (gamma - 1.0) * M * M);
-      const term2 = (gamma + 1.0) / (2.0 * gamma * M * M - (gamma - 1.0));
-      const p02_p01 = Math.pow(term1, gamma / (gamma - 1.0)) * Math.pow(term2, 1.0 / (gamma - 1.0));
-      p02_loss_str = `${(p02_p01 * 100.0).toFixed(1)}% (${((1.0 - p02_p01) * 100.0).toFixed(1)}% entropy loss)`;
-    }
-
-    // Update DOM Displays
-    if (resHeatFlux) {
-      if (qw_MW_m2 >= 1.0) {
-        resHeatFlux.textContent = `${qw_MW_m2.toFixed(2)} MW/m² (${qw_W_cm2.toFixed(1)} W/cm²)`;
-      } else {
-        resHeatFlux.textContent = `${qw_kW_m2.toFixed(1)} kW/m² (${qw_W_cm2.toFixed(2)} W/cm²)`;
-      }
-    }
-
-    if (resVelGrad) {
-      resVelGrad.textContent = `${beta.toExponential(2)} s⁻¹ (${Math.round(beta).toLocaleString()} s⁻¹)`;
-    }
-
-    if (resEnthalpies) {
-      resEnthalpies.textContent = `${(h_0e / 1e6).toFixed(2)} MJ/kg / ${(h_w / 1e6).toFixed(2)} MJ/kg (Δh = ${(delta_h / 1e6).toFixed(2)} MJ/kg)`;
-    }
-
-    if (resDissBracket) {
-      resDissBracket.textContent = `${catalysisBracket.toFixed(3)} (h_D/h_0e = ${hD_over_h0e.toFixed(3)})`;
-    }
-
-    if (resEdgeState) {
-      const pe_str = p_e >= 1e5 ? `${(p_e / 1e3).toFixed(1)} kPa` : `${p_e.toFixed(0)} Pa`;
-      resEdgeState.textContent = `${pe_str} | ${Math.round(T_e).toLocaleString()} K | ${rho_e.toFixed(3)} kg/m³`;
-    }
-
-    if (resViscosities) {
-      resViscosities.textContent = `${(mu_e * 1e6).toFixed(1)} μPa·s / ${(mu_w * 1e6).toFixed(1)} μPa·s`;
-    }
-
-    if (resRhoWall) {
-      resRhoWall.textContent = `${rho_w.toFixed(2)} kg/m³ (Tw = ${Tw} K)`;
-    }
-
-    if (resFreestream) {
-      const pinf_str = P_inf >= 1e3 ? `${(P_inf / 1e3).toFixed(2)} kPa` : `${P_inf.toFixed(1)} Pa`;
-      resFreestream.textContent = `${pinf_str} | ${Math.round(T_inf)} K | ${rho_inf.toFixed(4)} kg/m³ | ${Math.round(V_inf).toLocaleString()} m/s`;
-    }
-
-    if (resP02Loss) {
-      resP02Loss.textContent = p02_loss_str;
-    }
-  }
-
-  window.runAerothermoCalculation = runAerothermoCalculation;
-
-  // Event listeners for Fay-Riddell calculator
-  [calcGas, calcMach, calcAlt, calcNoseRadius, calcCatalysis, calcLewis, calcTw].forEach(input => {
-    if (input) {
-      input.addEventListener("input", runAerothermoCalculation);
-      input.addEventListener("change", runAerothermoCalculation);
-    }
-  });
-
-  // Benchmark button handler: Load Thesis T5 Shot 2254 Benchmark
-  if (btnThesisBenchmark) {
-    btnThesisBenchmark.addEventListener("click", () => {
-      if (calcGas) calcGas.value = "co2_t5";
-      if (calcMach) calcMach.value = "5.02";
-      if (calcAlt) calcAlt.value = "0";
-      if (calcNoseRadius) calcNoseRadius.value = "0.04445";
-      if (calcCatalysis) calcCatalysis.value = "convective";
-      if (calcLewis) calcLewis.value = "1.0";
-      if (calcTw) calcTw.value = "300";
-      runAerothermoCalculation();
-    });
-  }
-
-  runAerothermoCalculation();
-
-  // =========================================================================
-  // 6. TRAVEL PHOTO FILTERING
-  // =========================================================================
-  const travelChips = document.querySelectorAll(".travel-chip");
-  const travelThumbs = document.querySelectorAll(".travel-combined-grid .travel-thumb, .travel-thumb");
-
-  travelChips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      travelChips.forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-
-      const filter = chip.getAttribute("data-country");
-      travelThumbs.forEach(thumb => {
-        if (filter === "all" || thumb.getAttribute("data-country") === filter) {
-          thumb.style.display = "block";
-        } else {
-          thumb.style.display = "none";
-        }
+  document.querySelectorAll(".chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var c = chip.getAttribute("data-country");
+      document.querySelectorAll(".chip").forEach(function (o) {
+        var on = o === chip;
+        o.classList.toggle("is-on", on);
+        o.setAttribute("aria-pressed", String(on));
+      });
+      document.querySelectorAll(".photo").forEach(function (p) {
+        p.hidden = !(c === "all" || p.getAttribute("data-country") === c);
       });
     });
   });
-});
+
+  /* ------------------------------------------------------------------ launch intro */
+
+  var launchEl = $("launch"), canvas = $("launchCanvas"), skipBtn = $("launchSkip");
+  var replayBtn = $("replayLaunch");
+  var root = document.documentElement;
+  var running = false;
+
+  function markSeen() { try { sessionStorage.setItem("kf-launch-played", "1"); } catch (e) {} }
+
+  var LAUNCH_VIDEO = "./images/intro/launch.mp4";
+  var LAUNCH_POSTER = "./images/intro/launch_poster.jpg";
+
+  function runLaunch() {
+    if (running) return;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (!saveData && document.createElement("video").canPlayType("video/mp4")) runVideoLaunch();
+    else runCanvasLaunch();
+  }
+
+  // Full-screen launch footage; at the end the smoke-filled frame dissolves into the page.
+  function runVideoLaunch() {
+    running = true;
+    markSeen();
+    root.classList.add("launching");
+    launchEl.classList.add("is-running", "is-video");
+    launchEl.style.transition = "";
+    launchEl.style.opacity = "1";
+
+    var video = document.createElement("video");
+    video.className = "launch-video";
+    video.muted = true; video.defaultMuted = true;
+    video.playsInline = true; video.setAttribute("playsinline", "");
+    video.preload = "auto";
+    video.poster = LAUNCH_POSTER;
+    video.src = LAUNCH_VIDEO;
+    launchEl.insertBefore(video, launchEl.firstChild);
+
+    var fading = false, done = false, FADE_LEAD = 0.9, FADE_TIME = 2600;
+
+    function cleanup() {
+      if (done) return;
+      done = true;
+      document.removeEventListener("keydown", onKey);
+      video.pause(); video.removeAttribute("src"); video.load(); video.remove();
+      launchEl.classList.remove("is-running", "is-video");
+      launchEl.style.transition = ""; launchEl.style.opacity = "";
+      running = false;
+      setTimeout(function () { root.classList.remove("revealing"); }, 1200);
+    }
+    function fadeOut(ms) {
+      if (fading) return;
+      fading = true;
+      clearTimeout(stallTimer);
+      root.classList.remove("launching");
+      root.classList.add("revealing");
+      launchEl.style.transition = "opacity " + ms + "ms cubic-bezier(0.4, 0, 0.2, 1)";
+      requestAnimationFrame(function () { launchEl.style.opacity = "0"; video.classList.add("is-dissolving"); });
+      setTimeout(cleanup, ms + 60);
+    }
+    function fallback() {
+      // Video could not start (blocked autoplay, offline, missing file): use the drawn launch instead.
+      if (fading || done) return;
+      done = true;
+      document.removeEventListener("keydown", onKey);
+      video.remove();
+      launchEl.classList.remove("is-video");
+      running = false;
+      runCanvasLaunch();
+    }
+
+    video.addEventListener("timeupdate", function () {
+      if (video.duration && video.currentTime >= video.duration - FADE_LEAD) fadeOut(FADE_TIME);
+    });
+    video.addEventListener("ended", function () { fadeOut(FADE_TIME); });
+    video.addEventListener("error", fallback);
+    var stallTimer = setTimeout(function () { if (video.currentTime === 0) fallback(); }, 4000);
+    video.addEventListener("loadedmetadata", function () { video.playbackRate = 0.85; });
+    var p = video.play();
+    if (p && p.catch) p.catch(fallback);
+
+    function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " ") { e.preventDefault(); fadeOut(450); } }
+    skipBtn.onclick = function () { fadeOut(450); };
+    document.addEventListener("keydown", onKey);
+  }
+
+  function runCanvasLaunch() {
+    if (!canvas || running) return;
+    running = true;
+    root.classList.add("launching");
+    launchEl.classList.add("is-running");
+    launchEl.style.background = "transparent";
+    launchEl.style.opacity = "";
+    markSeen();
+
+    var ctx = canvas.getContext("2d");
+    var W = 0, H = 0, dpr = 1;
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var PAPER = [246, 247, 245];
+    var INK = "#14181c";
+    var smoke = [];
+    var MAX = 1700;
+    var t = 0, last = performance.now(), done = false, revealed = false;
+    var T_IGNITE = 0.8, T_LIFT = 1.6, FLIGHT = 2.2, T_FADE = 3.9, T_END = 5.7;
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function scale() { return Math.max(1.4, Math.min(3.4, H * 0.0034)); }
+    function groundY() { return H * 0.8; }
+    function padX() { return W * 0.5; }
+    function rocketLift(time) {
+      if (time < T_LIFT) return 0;
+      var s = time - T_LIFT;
+      var dist = groundY() + 120 * scale();
+      var acc = 2 * dist / (FLIGHT * FLIGHT);
+      return 0.5 * acc * s * s;
+    }
+
+    function puff(x, y, vx, vy, r, grow, life, shade, alpha) {
+      if (smoke.length >= MAX) smoke.shift();
+      smoke.push({ x: x, y: y, vx: vx, vy: vy, r: r, grow: grow, life: life, age: 0, shade: shade, a: alpha });
+    }
+
+    function drawTower(x, gy, s) {
+      var h = 92 * s, w = 9 * s, left = x - 26 * s;
+      ctx.strokeStyle = INK; ctx.lineWidth = 1.2; ctx.beginPath();
+      ctx.moveTo(left, gy); ctx.lineTo(left, gy - h);
+      ctx.moveTo(left + w, gy); ctx.lineTo(left + w, gy - h);
+      for (var y = gy; y > gy - h + 1; y -= 9 * s) {
+        ctx.moveTo(left, y); ctx.lineTo(left + w, y - 9 * s);
+        ctx.moveTo(left + w, y); ctx.lineTo(left, y - 9 * s);
+      }
+      ctx.moveTo(left, gy - h); ctx.lineTo(left + w, gy - h);
+      // swing arm
+      ctx.moveTo(left + w, gy - 70 * s); ctx.lineTo(x - 7 * s, gy - 70 * s);
+      ctx.stroke();
+      // pad and ground
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(0, gy + 0.5); ctx.lineTo(W, gy + 0.5); ctx.strokeStyle = "rgba(20,24,28,0.35)"; ctx.stroke();
+      ctx.fillStyle = INK; ctx.fillRect(x - 22 * s, gy - 3 * s, 44 * s, 3 * s);
+    }
+
+    function drawRocket(x, base, s, armGone) {
+      // base = y of nozzle exit; rocket is 100 units tall above it
+      ctx.save();
+      ctx.translate(x, base);
+      ctx.scale(s, s);
+      ctx.lineWidth = 1.4 / s;
+      ctx.strokeStyle = INK;
+      ctx.fillStyle = "#ffffff";
+      // fins
+      ctx.beginPath();
+      ctx.moveTo(-7, -26); ctx.lineTo(-15, -6); ctx.lineTo(-15, -2); ctx.lineTo(-7, -8); ctx.closePath();
+      ctx.moveTo(7, -26); ctx.lineTo(15, -6); ctx.lineTo(15, -2); ctx.lineTo(7, -8); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      // nozzle
+      ctx.beginPath(); ctx.moveTo(-3.5, -8); ctx.lineTo(-5.5, 0); ctx.lineTo(5.5, 0); ctx.lineTo(3.5, -8); ctx.closePath();
+      ctx.fillStyle = "#d9dcd9"; ctx.fill(); ctx.stroke();
+      // body and nose
+      ctx.beginPath();
+      ctx.moveTo(-7, -8); ctx.lineTo(-7, -76);
+      ctx.bezierCurveTo(-7, -88, -3, -97, 0, -101);
+      ctx.bezierCurveTo(3, -97, 7, -88, 7, -76);
+      ctx.lineTo(7, -8); ctx.closePath();
+      ctx.fillStyle = "#ffffff"; ctx.fill(); ctx.stroke();
+      // interstage line and orange band
+      ctx.beginPath(); ctx.moveTo(-7, -46); ctx.lineTo(7, -46); ctx.stroke();
+      ctx.fillStyle = "#e8490f"; ctx.fillRect(-7, -71, 14, 3.2);
+      ctx.beginPath(); ctx.rect(-7, -71, 14, 3.2); ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawFlame(x, y, s, power, time) {
+      if (power <= 0) return;
+      var len = (22 + 44 * power + Math.sin(time * 61) * 3 + rand(-3, 3)) * s;
+      var w = (6.2 + rand(-0.5, 0.5)) * s;
+      var layers = [["#e8490f", 1, 1], ["#ff9a2e", 0.72, 0.68], ["#ffe08a", 0.42, 0.4]];
+      layers.forEach(function (L) {
+        ctx.beginPath();
+        ctx.moveTo(x - w * L[1], y);
+        ctx.bezierCurveTo(x - w * L[1], y + len * 0.35 * L[2], x - w * 0.25 * L[1], y + len * 0.8 * L[2], x, y + len * L[2]);
+        ctx.bezierCurveTo(x + w * 0.25 * L[1], y + len * 0.8 * L[2], x + w * L[1], y + len * 0.35 * L[2], x + w * L[1], y);
+        ctx.closePath();
+        ctx.fillStyle = L[0];
+        ctx.globalAlpha = Math.min(1, power * 1.4);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+    }
+
+    function frame(now) {
+      if (done) return;
+      var dt = Math.min(0.05, (now - last) / 1000);
+      last = now; t += dt;
+      var s = scale(), gy = groundY(), x = padX();
+      var lift = rocketLift(t);
+      var shake = t > T_IGNITE && t < T_LIFT + 0.4 ? rand(-0.6, 0.6) : 0;
+      var nozzleY = gy - 3 * s - lift;
+      var power = t < T_IGNITE ? 0 : Math.min(1, (t - T_IGNITE) / 0.45);
+
+      // emit smoke
+      if (t < T_IGNITE) {
+        if (Math.random() < 0.35) puff(x + 7 * s, gy - 55 * s, rand(10, 30), rand(-14, -4), 2 * s, 9 * s, rand(1.2, 2), 222, 0.5);
+      } else if (nozzleY > -40) {
+        var onPad = lift < 40 * s;
+        var n = onPad ? 14 : 8;
+        for (var i = 0; i < n; i++) {
+          if (onPad) {
+            var dir = Math.random() < 0.5 ? -1 : 1;
+            puff(x + rand(-6, 6) * s, gy - rand(0, 8) * s, dir * rand(60, 360) * s / 1.4, rand(-50, -5), rand(6, 11) * s, rand(16, 34) * s, rand(2.6, 4.2), rand(150, 205), rand(0.32, 0.52));
+          } else {
+            puff(x + rand(-4, 4) * s, nozzleY + rand(28, 60) * s, rand(-22, 22), rand(20, 80), rand(4, 8) * s, rand(14, 28) * s, rand(3.2, 5), rand(150, 210), rand(0.3, 0.5));
+          }
+        }
+      }
+
+      // update smoke
+      var drag = Math.pow(0.35, dt);
+      for (var k = smoke.length - 1; k >= 0; k--) {
+        var p = smoke[k];
+        p.age += dt;
+        if (p.age > p.life) { smoke.splice(k, 1); continue; }
+        p.vx *= drag; p.vy = p.vy * drag - 10 * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.r += p.grow * dt;
+      }
+
+      // background fade reveals the page underneath
+      var fade = t < T_FADE ? 0 : Math.min(1, (t - T_FADE) / (T_END - T_FADE));
+      var bgA = 1 - (1 - Math.pow(1 - fade, 3));
+      if (fade > 0 && !revealed) { revealed = true; root.classList.add("revealing"); root.classList.remove("launching"); }
+
+      ctx.clearRect(0, 0, W, H);
+      if (bgA > 0) { ctx.fillStyle = "rgba(" + PAPER.join(",") + "," + bgA + ")"; ctx.fillRect(0, 0, W, H); }
+
+      ctx.globalAlpha = bgA;
+      drawTower(x, gy, s);
+      ctx.globalAlpha = 1;
+      if (nozzleY > -130 * s) {
+        drawFlame(x + shake, nozzleY, s, power, t);
+        drawRocket(x + shake, nozzleY, s);
+      }
+
+      var smokeFade = t < T_FADE + 0.3 ? 1 : Math.max(0, 1 - (t - T_FADE - 0.3) / (T_END - T_FADE - 0.3));
+      for (var j = 0; j < smoke.length; j++) {
+        var q = smoke[j];
+        var lifeA = q.age < 0.25 ? q.age / 0.25 : 1 - (q.age - 0.25) / (q.life - 0.25);
+        var a = q.a * lifeA * smokeFade;
+        if (a <= 0.003) continue;
+        var g = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, q.r);
+        g.addColorStop(0, "rgba(" + q.shade + "," + (q.shade + 3) + "," + (q.shade + 4) + "," + a + ")");
+        g.addColorStop(1, "rgba(" + q.shade + "," + (q.shade + 3) + "," + (q.shade + 4) + ",0)");
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, Math.PI * 2); ctx.fill();
+      }
+
+      if (t >= T_END) { finish(); return; }
+      requestAnimationFrame(frame);
+    }
+
+    function finish() {
+      if (done) return;
+      done = true;
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("keydown", onKey);
+      root.classList.remove("launching");
+      launchEl.classList.remove("is-running");
+      launchEl.style.background = "";
+      ctx.clearRect(0, 0, W, H);
+      smoke.length = 0;
+      running = false;
+      setTimeout(function () { root.classList.remove("revealing"); }, 1400);
+    }
+
+    function skip() {
+      if (done) return;
+      launchEl.style.transition = "opacity 0.35s ease";
+      launchEl.style.opacity = "0";
+      root.classList.add("revealing");
+      setTimeout(function () { launchEl.style.transition = ""; launchEl.style.opacity = ""; finish(); }, 360);
+    }
+    function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " ") { e.preventDefault(); skip(); } }
+
+    skipBtn.onclick = skip;
+    document.addEventListener("keydown", onKey);
+    requestAnimationFrame(function (n) { last = n; requestAnimationFrame(frame); });
+  }
+
+  if (root.classList.contains("launching")) runLaunch();
+
+  if (replayBtn) {
+    if (reduceMotion) replayBtn.parentElement.hidden = true;
+    replayBtn.addEventListener("click", function () { window.scrollTo(0, 0); runLaunch(); });
+  }
+})();
